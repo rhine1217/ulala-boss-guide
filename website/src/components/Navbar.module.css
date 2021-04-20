@@ -1,0 +1,16 @@
+.header {
+  height: 100%;
+  border-bottom: solid 1px #e8e8e8;
+  box-shadow: 0 0 10px #f3f1f1;
+}
+
+.navmenu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  padding: 15px 0;
+  width: 120px;
+}
