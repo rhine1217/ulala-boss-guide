@@ -1,13 +1,13 @@
 import React from 'react'
 import { Row, Col, Form, Tag } from 'antd'
-import { useRecoilState, useRecoilValue } from 'recoil'
-import { classTagState, classTagsColorState, classForSetupState } from '../states/atoms'
+import { useRecoilState } from 'recoil'
+import { classTagState, classForSetupState } from '../states/atoms'
+import { classTagsColor } from '../utils/charClassUtils'
 
 const ClassSelection = () => {
 
   const [selectedClasses, setSelectedClasses] = useRecoilState(classTagState)
   const [classForSetup, setClassForSetup] = useRecoilState(classForSetupState)
-  const classTagsColor = useRecoilValue(classTagsColorState)
 
   const toggleSelectedClasses = (charClass) => {
     const newSelectedClasses = [...selectedClasses]

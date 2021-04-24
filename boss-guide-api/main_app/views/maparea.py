@@ -1,12 +1,12 @@
 from rest_framework import generics
 from rest_framework.response import Response
 
-from main_app.models import UlalaMapArea, BossSetup
-from main_app.serializers import UlalaMapAreaSerializer, BossSetupSerializer
+from main_app.models import UlalaMapArea, BossSetup, UlalaBoss, UlalaSkill, UlalaClass
+from main_app.serializers import UlalaMapAreaSerializer, BossSetupSerializer, UlalaBossSerializer, UlalaSkillSerializer, UlalaToyByClassSerializer
 
-class MapAreaList(generics.ListCreateAPIView):
+class MapAreaList(generics.ListAPIView):
     """
-    list all map areas, or create a new map area.
+    List all map areas.
     """
     queryset = UlalaMapArea.objects.all()
     serializer_class=UlalaMapAreaSerializer
@@ -62,3 +62,19 @@ class BossSetupList(generics.ListCreateAPIView):
 class BossSetupDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = BossSetup.objects.all()
     serializer_class=BossSetupSerializer
+
+class UlalaBossList(generics.ListAPIView):
+    queryset = UlalaBoss.objects.all()
+    serializer_class=UlalaBossSerializer
+
+class UlalaBossDetail(generics.RetrieveAPIView):
+    queryset = UlalaBoss.objects.all()
+    serializer_class=UlalaBossSerializer
+    
+class UlalaSkillList(generics.ListAPIView):
+    queryset = UlalaSkill.objects.all()
+    serializer_class=UlalaSkillSerializer
+
+class UlalaToyByClassList(generics.ListAPIView):
+    queryset = UlalaClass.objects.all()
+    serializer_class=UlalaToyByClassSerializer

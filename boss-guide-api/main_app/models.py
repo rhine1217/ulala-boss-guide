@@ -12,17 +12,17 @@ class DiscordUser(models.Model):
     locale = models.CharField(max_length=16)
     last_login = models.DateTimeField()
     
-    # def __str__(self):
-    #     return f'{self.username}#{self.discriminator}'
+    def is_authenticated(self):
+        return True
     
-    def is_authenticated(self, request):
+    def is_active(self):
         return True
 
 class UlalaMapArea(models.Model):
     continent = models.CharField(max_length=100)
     area = models.CharField(max_length=100)
     def __str__(self):
-        return f'{self.continent} - {self.area}'
+        return f'{self.continent} Continent, {self.area}'
 
 class UlalaBoss(models.Model):
     name = models.CharField(max_length=100)
@@ -30,19 +30,23 @@ class UlalaBoss(models.Model):
 
 class UlalaClass(models.Model):
     name = models.CharField(max_length=16)
+    def __str__(self):
+        return self.name
     
 class UlalaCommonInfo(models.Model):
     name = models.CharField(max_length=100)
     description = models.TextField()
-    img_url = models.URLField(null=True)
+    img_url = models.CharField(max_length=100, null=True)
     class Meta:
         abstract = True
 
 class UlalaToy(UlalaCommonInfo):
-    related_class = models.ManyToManyField(UlalaClass)
+    related_class = models.ManyToManyField(UlalaClass, related_name="toy_list")
 
 class UlalaSkill(UlalaCommonInfo):
     related_class = models.ForeignKey(UlalaClass, on_delete=models.RESTRICT)
+    energy = models.IntegerField(null=True)
+    energy_type = models.CharField(max_length=16, blank=True, null=True)
 
 class BossSetup(models.Model):
     boss = models.ForeignKey(UlalaBoss, on_delete=models.RESTRICT)
@@ -54,7 +58,7 @@ class BossSetup(models.Model):
     note = models.TextField(blank=True)
   
 class PlayerSetup(models.Model):
-    boss_setup = models.ForeignKey(BossSetup, on_delete=models.CASCADE)
+    boss_setup = models.ForeignKey(BossSetup, related_name='players', on_delete=models.CASCADE)
     player_class = models.ForeignKey(UlalaClass, on_delete=models.RESTRICT)
     skills = models.ManyToManyField(UlalaSkill)
     toys = models.ManyToManyField(UlalaToy)

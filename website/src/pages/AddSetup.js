@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { PageHeader, Button, Form, Select, Radio } from 'antd'
 import BossInput from '../components/BossInput'
 import ClassSelection from '../components/ClassSelection'
-import SkillSelection from '../components/SkillSelection'
-import { useRecoilValue, useRecoilState } from 'recoil'
-import { classTagState, classForSetupState } from '../states/atoms'
+import SetupSelection from '../components/SetupSelection'
+import { useRecoilValue, useRecoilState, useSetRecoilState } from 'recoil'
+import { classTagState, classForSetupState, activeSetupTypeState } from '../states/atoms'
+import Ulala from '../Models/Ulala'
 
 const { Option } = Select
 
@@ -12,8 +13,29 @@ const AddSetup = () => {
 
   const selectedClasses = useRecoilValue(classTagState)
   const [classForSetup, setClassForSetup] = useRecoilState(classForSetupState)
+  const setActiveSetupType = useSetRecoilState(activeSetupTypeState)
 
   const onSelect = (value) => setClassForSetup(value)
+  const onChange = (e) => setActiveSetupType(e.target.value)
+  
+  const [skills, setSkills] = useState([])
+  const [toys, setToys] = useState([])
+
+
+  // Grab a list of all of the skills and toys
+  useEffect(() => {
+    const getSkillToyList = async () => {
+      try {
+        const skillList = await Ulala.SkillList()
+        const toyList = await Ulala.ToyList()
+        setSkills(skillList.data)
+        setToys(toyList.data)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    getSkillToyList()
+  }, [])
 
   return (
     <div>
@@ -43,13 +65,13 @@ const AddSetup = () => {
       </Form>
 
       <div style={{padding: '0 24px', textAlign: 'center'}}>
-      <Radio.Group size="small" defaultValue="skill" buttonStyle="solid">
+      <Radio.Group size="small" defaultValue="skill" buttonStyle="solid" onChange={onChange}>
         <Radio.Button style={{width: '100px'}} value="skill">Skill</Radio.Button>
         <Radio.Button style={{width: '100px'}} value="toy">Toy</Radio.Button>
       </Radio.Group>
       </div>
 
-      <SkillSelection />
+      <SetupSelection skills={skills} toys={toys}/>
 
     </div>
   )

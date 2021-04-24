@@ -42,3 +42,7 @@ body {
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2; 
 }
+
+.ant-card-body {
+  padding: 16px;
+}

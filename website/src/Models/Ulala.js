@@ -11,6 +11,8 @@ class Ulala {
 
   static SkillList = () => instance.get(`skill/`)
 
+  static ToyList = () => instance.get(`toy/`)
+
 }
 
 export default Ulala

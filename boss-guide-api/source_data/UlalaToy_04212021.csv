@@ -1,0 +1,76 @@
+pk,name,description,img_url,related_class
+1,Big Tongue Flower,"Three-piece Set: Set ATK+16%, Impale+1002
+Six-piece Set: Before casting the next skill, each basic attack deals a bonus 40% Life-steal effect. Any overflow Healing and converted into a shield for 10 seconds (shield is up to 30% Max Hp)
+Awakening effect: Hit+2004, Evasion+2004",dashehua6,2:3:4:7::
+2,Black Moblin,"Three-piece Set: Crit+1002, Hit+1002
+Six-piece Set: ATK increases by 50%, until the next skill
+Awakening effect: Set ATK+33%, Evasion+2004",heizhubulin6,2:3:4:7::
+3,Black Rock T. Rex,"Three-piece Set: Block+1002, Evasion+1002
+Six-piece Set: Current Skill rank+2 (Effective after skill breakthrough. Max breakthrough level: 50)
+Awakening effect: Set HP+33%, Impale+2004",heiyanbawanglong6,2:3:4:7:1:8:5:6
+4,Bone Ankylosaur,"Three-piece Set: Tenacity+2004
+Six-piece Set: Before next skill casts, immune to 1 fatal DMG. It can only be triggered 2 times per combat
+Awakening effect: Block+2004, Set ATK+33%",jiagulong6,2:3:4:7:1:8:5:6
+5,Brown Bear,"Three-piece Set: Set ATK+33%
+Six-piece Set: Resist 33% of enemy's Armor, until the next skill
+Awakening effect: Hit+2004, Set Armor+33%",zongxiong6,2:3:4:7::
+6,Dandelion,"Three-piece Set: Block+2004
+Six-piece Set: After casting a skill, remove all the debuff
+Awakening effect: Set Armor+33%, Crit+2004",pugongying6,2:3:4:7:1:8:
+7,Dimetrodon,"Three-piece Set: Set HP+16%, Evasion+1002
+Six-piece Set: After casting a skill, Next basic attack will decrease target's Atk and Crit by 10%, over 10 secs
+Awakening effect: Tenacity+2004, Hit+2004",fanlong6,::5:6
+8,Hermit Crab,"Three-piece Set: Set Armor+16%, Crit+1002
+Six-piece Set: After casting a skill, increase ATK by 25% for all teammates for 10 seconds (it only can be triggered once per battle)
+Awakening effect: Evasion+2004, Tenacity+2004",jujuxie6,:1:8:
+9,Irish Elk,"Three-piece Set: Block+1002, Tenacity+1002
+Six-piece Set: Reduce DMG received by 32%, until the next skill
+Awakening effect: Set Amor+33%, Hit+2004",dajiaolu6,::5:6
+10,Marmot,"Three-piece Set: Set HP+33%
+Six-piece Set: After casting a skill, recover 1 point of energy
+Awakening effect: Evasion+2004, Set ATK+33%",tuboshu6,2:3:4:7:1:8:5:6
+11,Moblin,"Three-piece Set: Set ATK+33%
+Six-piece Set: ATK increases by 33%, until the next skill
+Awakening effect: Hit+2004, Set Armor+33%",zhu6,2:3:4:7:1:8:5:6
+12,Narwhal King,"Three-piece Set: Set HP+33%
+Six-piece Set: Convert 36% of DMG received into your HP, until the next skill
+Awakening effect: Evasion+2004, Set ATK+33%",jiaojingwang6,::5:6
+13,Sabre Tiger King,"Three-piece Set: Set ATK+33%
+Six-piece Set: Crit rate increases by 20% and Crit.Dmg increases by 50%, until the next skill
+Awakening effect: Hit+2004, Set Armor+33%",jianchihuwang6,2:3:4:7::
+14,Snowfield Marmot,"Three-piece Set: Evasion+2004
+Six-piece Set: After casting a skill, recover 2 points of energy
+Awakening effect: Set HP+33%, Set ATK+33%",xuedituboshu6,2:3:4:7:1:8:5:6
+15,T. Rex,"Three-piece Set: Set HP+33%
+Six-piece Set: Current Skill Level +2 (Max skill level 20)
+Awakening effect: Evasion+2004, Set ATK+33%",bawanglong6,2:3:4:7:1:8:5:6
+16,Unicorn Gorilla,"Three-piece Set: Set ATK+33%
+Six-piece Set: Before casting the next skill, each basic attack will attack 2 nearby enemy units and inflicts bonus 100% of DMG
+Awakening effect: Hit+2004, Set Armor+33%",xingxing6,2:3:4:7:1:8:
+17,Walrus,"Three-piece Set: Block+1002, Tenacity+1002
+Six-piece Set: Healing and Shield increase by 50%, until the next skill
+Awakening effect: Set Armor+33%, Hit+2004",haixiang6,::5:6
+18,Warg King,"Three-piece Set: Set HP+33%
+Six-piece Set: Before casting the next skill, recover 2 point of energy upon each enemy dead
+Awakening effect: Crit+2004, Tenacity+2004",zuolangwang6,2:3:4:7::
+19,White Camel,"Three-piece Set: Set HP+33%
+Six-piece Set: Before casting the next skill, 60% of the received DMG is deducted by bleeding over 6 seconds, during which if you received each DMG, it will reduce 1 sec bleeding DMG (lower than 3 secs' bleeding Dmg can't enjoy that reduction effect)
+Awakening effect: Evasion+2004, Set ATK+33%",bailuotuo6,::5:6
+20,Wind Dragon,"Three-piece Set: Set Armor+33%
+Six-piece Set: Before next skill casts, gain Control Immunity. Gain a shield with 10% Max Hp upon each successful immunity, over 10 secs
+Awakening effect: Tenacity+2004, Crit+2004",jufenglong6,2:3:4:7:1:8:5:6
+21,Yak King,"Three-piece Set: Hit+1002, Set HP+16%
+Six-piece Set: Basic ATK DMG increases by 80% for each point of energy, until the next skill
+Awakening effect: Impale+2004, Block+2004",maoniuwang6,2:3:4:7::
+22,Queen Dragon,"Three-piece Set: Set ATK+33%
+Six-piece Set: After casting a skill, Next basic attack will remove all the enemy's buffs
+Awakening effect: Evasion+2004, Hit+2004",nvwanglong6,:1:8:
+23,Sheep,"Three-piece Set: Crit+1002, Set HP+16%
+Six-piece Set: Before casting the next skill, increase healing by 50%
+Awakening effect: Set Amorr+33%, Tenacity+2004",pengpengyang6,:1:8:
+24,Dodo Bird,"Three-piece Set: Set HP+16%, Set ATK+16%
+Six-piece Set: After casting a skill, Next basic attack will silent target for 1s
+Awakening effect: Crit+2004, Block+2004",duduniao6,:1:8:
+25,Triceratops,"Three-piece Set: Tenacity+1002, Set Armor+16%
+Six-piece Set: After casting a skill, Next basic attack will decrease target's Armor and Tenacity by 15%, over 10 secs
+Awakening effect: Evasion+2004, Impale+2004",sanjiaolong6,::5:6

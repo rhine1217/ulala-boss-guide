@@ -3,16 +3,23 @@ import requests
 from django.shortcuts import redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 
 from utils import getenv
 
 auth_url_discord = getenv()["AUTH_URL_DISCORD"]
 
-@login_required(login_url="/oauth2/login")
+# @login_required(login_url="/oauth2/login")
 def get_authenticated_user(request):
     user = request.user
-    return JsonResponse({"msg": "Authenticated"})
+    if user.is_authenticated:
+      return JsonResponse({
+        "uid": user.id,
+        "username": user.username + '#' + user.discriminator,
+        "avatar": user.avatar
+      })
+    else: 
+      return HttpResponse(status=401)
 
 def discord_login(request):
     return redirect(auth_url_discord)
@@ -22,7 +29,7 @@ def discord_login_redirect(request):
     user = exchange_code(code)
     discord_user = authenticate(request, user=user)
     login(request, discord_user)
-    return redirect('/auth/user')
+    return redirect('http://127.0.0.1:3000')
   
 def exchange_code(code):
     data = {
@@ -49,4 +56,4 @@ def exchange_code(code):
 
 def user_logout(request):
     logout(request)
-    return redirect('/admin')
+    return redirect('http://127.0.0.1:3000')

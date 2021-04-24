@@ -10,21 +10,12 @@ export const classTagState = atom({
   default: []
 })
 
-export const classTagsColorState = atom({
-  key: 'classTagsColorState',
-  default: {
-    Mage: 'blue',
-    Warlock: 'purple',
-    Hunter: 'orange',
-    Assassin: 'volcano',
-    Shaman: 'cyan',
-    Druid: 'green',
-    Warrior: 'red',
-    Gladiator: 'error'
-  }
-})
-
 export const classForSetupState = atom({
   key: 'classForSetupState',
   default: ''
+})
+
+export const activeSetupTypeState = atom({
+  key: 'activeSetupTypeState',
+  default: 'skill'
 })
