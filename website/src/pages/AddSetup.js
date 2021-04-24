@@ -4,7 +4,7 @@ import BossInput from '../components/BossInput'
 import ClassSelection from '../components/ClassSelection'
 import SetupSelection from '../components/SetupSelection'
 import { useRecoilValue, useRecoilState, useSetRecoilState } from 'recoil'
-import { classTagState, classForSetupState, activeSetupTypeState } from '../states/atoms'
+import { classTagState, classForSetupState, activeSetupTypeState, skillListState, toyListState } from '../states/atoms'
 import Ulala from '../Models/Ulala'
 
 const { Option } = Select
@@ -18,8 +18,8 @@ const AddSetup = () => {
   const onSelect = (value) => setClassForSetup(value)
   const onChange = (e) => setActiveSetupType(e.target.value)
   
-  const [skills, setSkills] = useState([])
-  const [toys, setToys] = useState([])
+  const [skills, setSkills] = useRecoilState(skillListState)
+  const [toys, setToys] = useRecoilState(toyListState)
 
 
   // Grab a list of all of the skills and toys
