@@ -4,12 +4,19 @@ import { useRecoilValue } from 'recoil'
 import { classForSetupState } from '../states/atoms'
 import styles from './SetupIcons.module.css'
 
-const Skill = ({skill}) => {
+// Icons: Depending on context (If in the top level selection, onClick = open the choice modal. If in the modal, onClick = swap in this skill/toy)
+
+const Skill = ({skill, context}) => {
 
   const classForSetup = useRecoilValue(classForSetupState)
 
+  const onClickSkill = (skill) => {
+    console.log(context)
+    console.log(skill)
+  }
+
   return (
-    <div className={styles['skill-icon-wrapper']}>
+    <div className={styles['skill-icon-wrapper']} onClick={() => onClickSkill(skill)}>
 
       <div className={styles['skill-energy-wrapper']}>
         <img alt="" className={styles['skill-energy-img']} src={`${process.env.REACT_APP_HOSTED_IMG_URL_PREFIX}/cast+%23360820.png`} />
@@ -31,10 +38,15 @@ const Skill = ({skill}) => {
   )
 }
 
-const Toy = ({toy}) => {
+const Toy = ({toy, context}) => {
+
+  const onClickToy = (toy) => {
+    console.log(context)
+    console.log(toy)
+  }
 
   return (
-    <div className={styles['toy-icon-wrapper']}>
+    <div className={styles['toy-icon-wrapper']} onClick={() => onClickToy(toy)}>
       <img className={styles['toy-img']} src={`${process.env.REACT_APP_HOSTED_IMG_URL_PREFIX}/${toy['img_url']}.png`} alt="toy" />
     </div>
   )

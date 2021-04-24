@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { useRecoilValue } from 'recoil'
-import { classTagState, classForSetupState, activeSetupTypeState } from '../states/atoms'
+import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil'
+import { classTagState, classForSetupState, activeSetupTypeState, skillsForCurrClassState, toysForCurrClassState, currCharSelectionsState } from '../states/atoms'
 import arrayMove from 'array-move'
 import CardList from './CardList'
 
@@ -11,8 +11,10 @@ const SetupSelection = ({skills, toys}) => {
   const selectedClasses = useRecoilValue(classTagState)
   const classForSetup = useRecoilValue(classForSetupState)
   const activeSetupType = useRecoilValue(activeSetupTypeState)
-  const [changeCounter, setChangeCounter] = useState(0)
-  const [currCharSelections, setCurrCharSelections] = useState({})
+  const setSkillsForCurrClass = useSetRecoilState(skillsForCurrClassState)
+  const setToysForCurrClass = useSetRecoilState(toysForCurrClassState)
+  const [changeCounter, setChangeCounter] = useState(1)
+  const [currCharSelections, setCurrCharSelections] = useRecoilState(currCharSelectionsState)
   // {
   //   skills: []
   //   toys: []
@@ -28,17 +30,19 @@ const SetupSelection = ({skills, toys}) => {
     let refreshedSkills = [], refreshedToys = []
     if (skills.length > 0) {
       const skillsForCurrClass = skills.filter(skill => skill['related_class'] === classForSetup)
-      refreshedSkills = skillsForCurrClass.slice(0,4)
+      refreshedSkills = skillsForCurrClass
+      setSkillsForCurrClass(refreshedSkills)
     }
     if (toys.length > 0) {
       const toysForCurrClass = toys.filter(toy => toy.name === classForSetup)
       if (toysForCurrClass.length > 0) {
-        refreshedToys = toysForCurrClass[0]['toy_list'].slice(0,4)
+        refreshedToys = toysForCurrClass[0]['toy_list']
+        setToysForCurrClass(refreshedToys)
       }
     }
     return {
-      skills: refreshedSkills,
-      toys: refreshedToys
+      skills: refreshedSkills.slice(0,4),
+      toys: refreshedToys.slice(0,4)
     }
   }
 
