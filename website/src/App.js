@@ -4,6 +4,7 @@ import { Route, Switch } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import LandingPage from './pages/LandingPage'
 import AddSetup from './pages/AddSetup'
+import SearchResults from './pages/SearchResults'
 import Auth from './Models/Auth'
 import { useRecoilState } from 'recoil'
 import { userState } from './states/atoms' 
@@ -31,6 +32,7 @@ function App() {
         <Switch>
           <Route exact path='/' render={() => <LandingPage />}/>
           <Route exact path='/add' render={() => <AddSetup />} />
+          <Route path='/boss' render={() => <SearchResults />} />
         </Switch>
       </div>
     </div>
