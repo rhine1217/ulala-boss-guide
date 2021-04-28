@@ -19,3 +19,28 @@ export const activeSetupTypeState = atom({
   key: 'activeSetupTypeState',
   default: 'skill'
 })
+
+export const skillListState = atom({
+  key: 'skillListState',
+  default: []
+})
+
+export const toyListState = atom({
+  key: 'toyListState',
+  default: []
+})
+
+export const skillsForCurrClassState = atom({
+  key: 'skillsForCurrClassState',
+  default: []
+})
+
+export const toysForCurrClassState = atom({
+  key: 'toysForCurrClassState',
+  default: []
+})
+
+export const currCharSelectionsState = atom({
+  key: 'currCharSelectionsState',
+  default: {}
+})

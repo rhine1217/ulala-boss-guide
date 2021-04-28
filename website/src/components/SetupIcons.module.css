@@ -1,0 +1,62 @@
+.skill-icon-wrapper {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  max-width: 55px;
+  padding-top: 5px
+}
+
+.skill-energy-wrapper {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.skill-energy-img {
+  position: absolute;
+  width: 25px;
+}
+
+.skill-energy-text {
+  position: absolute;
+  padding-bottom: 2px;
+  color: white;
+  font-weight: bold;
+  font-size: 12px
+}
+
+.skill-img-wrapper {
+  height: 50px;
+  min-width: 55px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.skill-img-border {
+  position: absolute;
+  z-index: 1;
+  width: 55px;
+}
+
+.skill-img {
+  position: absolute;
+  width: 50px
+}
+
+.skill-energy-type-text {
+  font-size: 12px;
+  padding-top: 4px
+}
+
+.toy-icon-wrapper {
+  width: 60px;
+  height: 60px;
+  padding-left: 6px;
+}
+
+.toy-img {
+  max-height: 100%;
+}
