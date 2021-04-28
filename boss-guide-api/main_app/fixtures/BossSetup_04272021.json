@@ -1,0 +1,1 @@
+[{"model": "main_app.bosssetup", "pk": 1, "fields": {"boss": "32", "created_by": "733879070907170866"}}, {"model": "main_app.bosssetup", "pk": 2, "fields": {"boss": "82", "created_by": "733879070907170866"}}, {"model": "main_app.bosssetup", "pk": 3, "fields": {"boss": "5", "created_by": "733879070907170866"}}]

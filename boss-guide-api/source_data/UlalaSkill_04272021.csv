@@ -1,0 +1,208 @@
+pk,name,description,related_class,img_url,energy,energy_type
+1,Aimed Shot,Inflict xx%(+xx) ATK DMG to the enemy and gain 2 layer of Concentration(Each layer of Concentration increases Hit rate by 1%),3,MiaoZhunSheJi,2,Charge
+2,Arrow Barrage,Inflict xx%(+xx) ATK DMG on all enemy units,3,JianYu,3,
+3,Aspect of the Eagle,Inflict xx%(+xx) ATK DMG on enemy units and command Hawks to aid. Heal yourself for xx%(+xx) of ATK over 10 seconds,3,LieYingYuanHu,3,Charge
+4,Boar's Rush,Summon a boar to ram into the enemy and inflict xx%(+xx) ATK DMG and stun the target for x seconds (The Stun effect has a 100% hit rate for enemy units at Lv x or lower),3,YeZhuChongZhuang,3,Charge
+5,Burning Shot,"Fire 3 burning shots to inflict xx%(+xx) ATK DMG on 3 enemy units, apply the Scorch state and reduce their healing effects by x% for 10s.",3,BaoZhaXianJing,2,Charge
+6,Explosive Shot,"Fire an explosive charge into the enemy target and inflict xx%(+xx) ATK DMG on 3 enemy units. If the targets are in the Scorch effect, the DMG dealt increases by 20%",3,BaoZhaJian,3,Charge
+7,Flaying Arrow,Inflict xx%(+xx) ATK DMG on enemy units and heal yourself for xx%(+xx) of ATK,3,LieYingChuJi,3,
+8,Hawk Call - Gal,"Summon Hawk - Gal. It inflicts xx%(+xx) ATK DMG on the enemy upon each strike and lasts for 12 seconds. For each Hawk present on the battlefield when summoned, increase DMG by 25%",3,ZhaoHuanJia,3,Charge
+9,Hawk Call - Gal II,"Summon 3 Hawk - Gal. It inflicts xx%(+xx) ATK DMG on the enemy upon each strike and lasts for 10 seconds. For each Hawk present on the battlefield when summoned, increase DMG by 25%",3,ZhaoHuanJia,3,Charge
+10,Hawk Call - Pan,Summon Hawk - Pan and increase Hunter's Impale rate by x%. Pan inflicts xx%(+xx) ATK DMG upon each strike and lasts for 22 seconds.,3,ZhaoHuanPan,2,
+11,Hawk Call - Sheen,Summon Hawk - Sheen and increase Hunter's Crit rate by x%. Sheen inflicts xx%(+xx) ATK DMG upon each strike and lasts for 22 seconds.,3,ZhaoHuanXin,3,
+12,Lunar Shot,Inflict xx%(+xx) ATK DMG to the enemy and lower the target's Healing by x% for 10 seconds,3,LingXiYiJian,3,
+13,Lunar Shot II,Inflict xx%(+xx) ATK DMG on the enemy and lower the target xx%'s healing for 10 seconds. The effect doubles on none player units,3,LingXiYiJian,3,
+14,Multi-Shot,Inflict xx%(+xx) ATK DMG on 3 enemy units,3,FenSanSheJi,3,
+15,Numbing Shot,Fire a spearhead Arrow to inflict xx%(+xx) ATK DMG on the target and interrupt its skill casting (The Interrupted effect has a 100% hit rate for enemy units at Lv x or lower),3,MaBiZhiJian,2,Charge
+16,Piercing Shot,"Inflict xx%(+xx) ATK DMG to the enemy and release up to 3 layers of Concentration, each dealing a bonus 25% of DMG",3,GuanTongYiJian,3,Charge
+17,Quick Shot,Inflict xx%(+xx) ATK DMG to the enemy and release 1 layer of Concentration.,3,KuaiSuSheJi,2,
+18,Quick Shot II,Inflict xx%(+xx) ATK DMG to the enemy and release 1 layer of Concentration. Next skill increase 20% DMG,3,KuaiSuSheJi,2,
+19,Scatter Shot,Inflict xx%(+xx) ATK DMG on the enemy and remove x random buffs. Successful removal increases DMG by 10%,3,QuSanZhiJian,3,
+20,Steady Shot,Inflict xx%(+xx) ATK DMG on the enemy and shorten the next skill's charging time by x%,3,ChongNengJian,2,
+21,Storm Shot,Inflict xx%(+xx) ATK DMG on the enemy.,3,JiFengYiJian,3,Charge
+22,Storm Shot II,"Inflict xx%(+xx) ATK DMG on the enemy. If you are in possession of any Concentration Point, DMG increase by 20%",3,JiFengYiJian,3,Charge
+23,Sunder Armor Shot,Deal xx%(+xx) ATK DMG to enemy. Skill ignores 20% of enemy's Armor.,3,PoDunSheJi,3,Charge
+24,Sunder Armor Shot II,Deal xx%(+xx) ATK DMG to enemy. Skill ignores 20% of enemy's Armor. Get bonus 5% Armor Resistance for each Concentration,3,PoDunSheJi,3,Charge
+25,Volley,"Launch 4 random attacks, each inflicting xx%(+xx) ATK DMG. If a same target is hit consecutively, the DMG dealt decreases (by 25% every time to a maximum 50%)",3,FengKuangSanShe,3,Charge
+26,Weakpoint Shot,"Inflict xx%(+xx) ATK DMG to the enemy. The lower the enemy's HP, the higher the DMG",3,RuoDianSheJi,3,Charge
+27,Weakpoint Shot II,"Inflict xx%(+xx) ATK DMG. The lower the enemy's HP, the higher the DMG. For every 10% of the enemy's HP dropped, deal an additional 5% of skill bleeding DMG within 3 seconds",3,RuoDianSheJi,3,Charge
+28,Song of Protection,"Sing the Song of Protection to heal the teammate with the lowest HP for xx%(+xx) of ATK over 3 seconds. The lower the teammate's HP, the higher the heal",1,ShouHuZhiGe,3,Cast
+29,Seed of Replenishment,Throw 2 Seeds to heal 2 teammates with the lowest HP for xx%(+xx) of ATK,1,ZiYangZhongZi,4,
+30,Force of Bud,"Heal all party for xx%(+xx) of ATK over 5 seconds and gift them the seed of life. If a target already has a seed of life, increase healing by 10%",1,ChuanBo,3,
+31,Tranquility,Heal all party for xx%(+xx) of ATK over 4 seconds. Instantly heal for another 25% of the HP restored for each layer of seed of life the teammates own,1,WanWuNinJing,3,Guide
+32,Ukaka Transform,"Transform into Ukaka and increase your DMG by xx%. For the first 10 seconds after the transformation, each attack inflicts a bonus xx%(+xx) ATK DMG.",1,BianShenWuKeKe,2,
+33,Quills,"Attack 3 random enemy units and inflict xx%(+xx) ATK DMG. At the same time, heal the teammate with the lowest HP for xx%(+xx)",1,FeiYu,4,
+34,Flower Seed,"Throw Flower Seeds at 3 random enemy units and inflict xx%(+xx) ATK DMG. If the targets are killed within xx seconds, the seeds will heal the teammate with the lowest HP for xx%(+xx) of ATK",1,XianHuaZhongZi,3,Cast
+35,Mend,Heal the most injured teammate for xx%(+xx) of ATK and another same amount of HP over 5 seconds.,1,ZhiYu,3,
+36,Mend II,"Heal the most injured teammate for xx%(+xx) of ATK and another same amount of HP over 5 seconds. Also, obtain a shield of 60% of that skill for 10 seconds",1,ZhiYu,3,
+37,Lilly Transform II,Transform into the Lilly form to increase xx% heal effect and Heal over time effect by 10% and restore HP of xx%(+xx) ATK for the teammate with the lowest HP within 5 seconds,1,BianShenLiLi,2,
+38,Lilly Transform,Transform into the Lilly form to increase xx% heal effect and restore HP of xx%(+xx) ATK for the teammate with the lowest HP within 5 seconds,1,BianShenLiLi,2,
+39,Quills Thrust,Inflict xx%(+xx) ATK DMG on all enemy units and lower the enemy's Healing by xx%,1,FeiYuTuCi,3,Cast
+40,Extended Healing,Cast a Branch Shield for the teammate with the lowest HP. The shield's value equals to xx%(+xx) ATK. It absorbs 80% of the DMG received by the teammate for 10 seconds,1,YanXuZhiLi,3,Cast
+41,Tree Ward,"Cast the Tree Ward for the most injured teammate and heal for xx%(+xx) of ATK. If in the Lily state, cast an extra shield with xx% of the HP recovered. It lasts for 10 seconds",1,ShuZhiJieJie,4,Cast
+42,New Bud,Inflict xx%(+xx) ATK DMG on all enemy units and silence the targets for xx seconds(The Silence effect has a 100% hit rate for enemy units at Lv x or lower),1,XinShengZhiYa,3,Cast
+43,Song of Life,Sing the Song of Life to heal the most injured teammate for xx%(+xx) of ATK,1,ShengMingZhiGe,3,Cast
+44,Purification Seed,Purify the teammate with the lowest HP. Heal for xx%(+xx) of ATK and shield it from any debuff for xx seconds,1,ShuZhiQuSan,3,Cast
+45,Life Bloom,Remove x debuffs for all party members and heal xx%(+xx) of ATK. Increase the HP recovered by 10% for each debuff removed,1,ShengMingZhanFang,3,
+46,Revitalize Nature,"Cast a shield of xx%(+xx) of ATK for teammates, alsting 10 seconds",1,WanWuZhiXi,3,
+47,Natural Aegis,"Heal the teammate with the lowest HP for xx%(+xx) of ATK over 5 seconds, and shorten your next skill's guiding time by 0.8 seconds",1,BuWenDingShengMingZhongZi,2,
+48,Seed of Life,Heal all party for xx%(+xx) of ATK over 5 seconds and gift them the seed of life.,1,ShengMingZhongZi,2,
+49,Binding Heal,Heal yourself and the most injured teammate for xx%(+xx) of ATK over 5 seconds,1,GongShengZhuFu,4,
+50,Luna Blessing,Guide the Luna Blessing and heal 2 most injured teammates for xx%(+xx) of ATK over 4 seconds,1,YueGuangZhuFu,2,Guide
+51,Soul Seal,"Apply bonus Soul Seal to the enemy. Each layer of Soul Seal causes xx%(+xx) ATK DMG every 2 seconds for 24 seconds. 1 layer is added upon inflicting DMG each time, to a max of 10 layers. When the target dies, the seals will be passed on to nearby enemy units (Seal Damage with a Crit Hit)",7,LingHunYinJi,3,
+52,Soul Seal II,"Apply Soul Seal to the enemy. Each layer of Soul Seal causes xx%(+xx) ATK DMG every 2 seconds for 24 seconds. 1 layer is added upon inflicting DMG each time, to a max of 11 layers. When the target dies, the seals will be passed on to nearby enemy units (Seal Damage with a Crit Hit)",7,LingHunYinJi,3,
+53,Life Tap,Sacrifice 30% of your HP to instantly restore 3 points of energy. xx%(+xx) of the sacrificed HP will return to the warlock over 12 seconds,7,ShengMingFenLiu,1,
+54,Life Tap II,Sacrifice 30% of your HP to instantly restore 3 points of energy. xx%(+xx) of the sacrificed HP will return to the warlock over 12 seconds. Next skill DMG increase 6%,7,ShengMingFenLiu,1,
+55,Dragonfire,"Attack all enemy units and inflict xx%(+xx) ATK DMG over 5 seconds. For enemy targets with the Burn Seal, deal bonus 20% DMG. During the duration of the skill, the DMG received by Warlocks increases by 25%.",7,KuangRe,3,Guide
+56,Multi-Ignition,Inflict xx%(+xx) ATK DMG on 3 random enemy units,7,DuoChongYinRan,3,
+57,Multi-Ignition II,"Deal Warlock of ATK DMG on 3 random enemies, and damage is increased by xx% if enemies are afflicted with Burn Seal",7,DuoChongYinRan,3,
+58,Incinerate,Inflict xx%(+xx) ATK DMG on all the enemies over 5 seconds,7,LiaoYuan,3,
+59,Soul Twins,"Inflict xx%(+xx) ATK DMG on the enemy. If the target has the Soul Seal, add 1 bonus Soul Seal (deal the same amount of DMG with the Soul Twins over 6 seconds)",7,LingHunShuangSheng,3,
+60,Soul Wave,Inflict xx%(+xx) ATK DMG on the enemy and reset the effective duration of its Soul Seal,7,LingHunBoDong,2,Cast
+61,Summon Violent Frog,Summon the Violent Frog for xx%(+xx) of Warlock's ATK for 14 seconds,7,ZhaoHuanBaoLiWa,2,
+62,Conflagrate,Inflict xx%(+xx) ATK DMG on all enemy units and apply bonus Burn Seal,7,RanShaoChongJi,2,
+63,Chain Ignition,"Attack an enemy unit twice, each inflicting xx%(+xx) ATK DMG. If the target's HP is below x%, launch 1 bonus attack",7,LianSuoYinRan,3,Cast
+64,Chain Ignition II,"Attack the enemy target twice, each time of which inflicts xx%(+xx) ATK DMG. If the target's HP is below xx%, launch 2 bonus attacks",7,LianSuoYinRan,3,Cast
+65,Ignition,Burn the enemy. Inflict xx%(+xx) ATK DMG over 10 seconds and lower its Healing by x%.,7,RanShaoYinJi,3,Cast
+66,Ignition II,"Burn the enemy, inflict xx%(+xx) ATK DMG within 10 seconds, and lower xx%'s healing. The effect doubles on none player units.",7,RanShaoYinJi,3,Cast
+67,Soul Lash,Deal xx%(+xx) ATK DMG to enemy over 3 seconds. Skill ignores 20% of enemy's Armor.,7,LingHunBianChi,3,Cast
+68,Soul Lash II,"Deal xx%(+xx) ATK DMG to enemy over 3 seconds. Skill ignores 20% of enemy's Armor. For every layer of Soul Seal on the enemy, an additional 1% increase in Armor Resistance is applied.",7,LingHunBianChi,3,Cast
+69,Summon Pharmacist Frog,Summon a Pharmacist Frog with xx%(+xx) of Warlock's ATK for 26 secs. Pharmacist Frog's attacks heal warlock for 20% of its DMG. Up to 30% of the warlock's Max HP can be restored,7,ZhaoHuanYaoShiWa,3,
+70,Drain,Inflict xx%(+xx) ATK DMG on the enemy over 12 seconds and remove x buffs. Successful removal increases DMG by 10%,7,JiQu,3,
+71,Painful Ignition,Inflict xx%(+xx) ATK DMG to the enemy,7,TongKuYinRan,3,Cast
+72,Polymorph: Frog,Inflict xx%(+xx) ATK DMG on an enemy unit and transform the target into a Big-Eyed Frog for x seconds. Successful interruption doubles the effective duration of the transformation (The Transformed effect has a 100% Hit rate for enemy units at Lvx or lower),7,DaYanWaBianXingShu,3,Cast
+73,Summon Elder Frog,Summon the Elder Frog with xx%(+xx) of Warlock's ATK for 14 seconds. The Elder Frog can attack 3 enemy units at the same time,7,ZhaoHuanZhangLaoWa,3,
+74,Soul Rebirth,"Guide the Soul Force to inflict xx%(+xx) ATK DMG on the enemy every 2 seconds, and heal xx%(+xx) of ATK. Lasts for 8 seconds",7,LingHunXinSheng,2,Guide
+75,Quack quack quack,Imitate a frog's croak to amuse the enemy. Silence the target for x seconds and inflict a bonus xx%(+xx) ATK DMG (The Silence effect has a 100% hit rate for enemy units at Lv x or lower),7,GuaGuaGua,3,Cast
+76,Frog Synergy,Attack 3 enemy units. Inflict xx%(+xx) ATK DMG and extend Elder Frog's effective duration by 6 seconds,7,QingWaXieTongShu,2,Cast
+77,Dehydration,Inflict xx%(+xx) ATK DMG on the enemy over 12 seconds,7,TuoShui,3,
+78,Stockpile,"Gain a shield of xx%(+xx) Armor for 12 seconds, during which recover 1 point of energy if xx% of HP lost",5,ZhuiJi,2,Charge
+79,Call to Arms,Inspire your party and increase ATK by xx%(+xx) for 6 seconds,5,YingYongYiJi,3,
+80,Call to Arms II,"Inspire your party and increase ATK by xx%(+xx) , increasing Block Rate by 15% for 6 seconds. Also, obtain a shield, absorbing 30% of Armor damage for 6 seconds",5,YingYongYiJi,3,
+81,Last Stand,"Gain a shield of xx%(+xx) Armor for 12 seconds, during which the DMG received is reduced by 10%",5,DuoLianZhan,4,
+82,Unbreakable Will,"Gain a shield of xx%(+xx) Armor for 12 seconds. The lower the HP, the higher the shield points",5,HuiShenZhan,3,
+83,Unbreakable Will II,"Obtain a shield of xx%(+xx) Armor for 12 seconds. The lower the HP, the higher the shield value. If the HP is below 30%, gain an additional 20% of Armor for 5 seconds",5,HuiShenZhan,3,
+84,Swipe,Inflict xx%(+xx) ATK DMG to enemy units ahead of you. Gain a shield of xx%(+xx) Armor for each enemy target hit for 12 seconds,5,HengSao,3,
+85,Lion's Roar,Roar to interrupt the enemy's skill casting and inflict xx%(+xx) ATK DMG. Successful interruption increases your block rate by xx% for 12 seconds (The Interrupted effect has a 100% hit rate for enemy units at Lv x or lower),5,ShiZiHou,2,Charge
+86,Bramble Shield,"Gain a Thorn Shield of xx%(+xx) Armor for 12 seconds. When the shield breaks, inflict xx%(+xx) ATK DMG on the enemy unit in front of it",5,JingJiHuDun,3,
+87,Hoo hah hah,Reduce DMG taken by teammates by xx% for 12 seconds. Up to xx%(+xx) of your Armor can be reduced,5,HuHa,2,
+88,Hoo hah hah II,Reduce DMG taken by teammates by xx% for 12 seconds. Up to xx%(+xx) of your Armor can be reduced and obtain a shield of that value,5,HuHa,2,
+89,Powerful Knock up II,"Attack the enemy with heavy punches, inflict xx%(+xx) ATK DMG, and knock the target into the air (This effect has a 100% hit rate on any enemy target Lv. x or lower). If the skill casting is interrupted, cause an additional control effect of 1 second.",5,ZhongQuanJiFei,3,Charge
+90,Powerful Knock up,"Attack the enemy with heavy punches, inflict xx%(+xx) ATK DMG, and knock the target into the air (This effect has a 100% hit rate on any enemy target Lv. x or lower).",5,ZhongQuanJiFei,3,Charge
+91,Safeguard,Gain a shield with xx%(+xx) Armor and take xx% DMG received by the teammate with the lowest HP upon every attack for 12 seconds,5,YuanHu,2,
+92,Safeguard II,Gain a shield with xx%(+xx) Armor and take xx% DMG received by the teammate with the lowest HP upon every attack for 12 seconds. 30% DMG reduction,5,YuanHu,2,
+93,Giant's Return,Transform into a giant and gain Control Immunity for xx seconds. Obtain a shield of xx%(+xx) Armor for 12 seconds,5,JuRenZaiShi,3,
+94,Fearless Shield,"Gain a shield of xx%(+xx) Armor for 12 seconds, during which convert xx% of the first skill DMG received into a shield for 12 seconds",5,XuLiZhan,3,
+95,Resolution,Gain a shield of xx%(+xx) Armor for 12 seconds,5,RuoDianDaJi,3,
+96,Unwavering Will,Remove x random debuffs for yourself and gain a shield of xx%(+xx) Armor for 12 seconds,5,FanJiZiTai,3,
+97,Come here,"Inflict xx%(+xx) ATK DMG to the enemy. If in the Overwhelming Assault state, the attack will aim at the enemy unit with the lowest HP, and the target will be pulled over and stunned for 1 seconds (The Pulled effect has a 100% hit rate for enemy units at Lv x or lower)",5,JianRenYiZhi,2,
+98,Overwhelming Assault,"Enter the Overwhelming Assault state and lower Armor 30% to increase ATK by 30%. Inflict xx%(+xx) ATK DMG on the enemy with the lowest HP, and lower its healing by xx%. In the Overwhelming Assault state, the skill's DMG increases by 50%",5,ZhenDangZhongChui,2,
+99,Shield of Protection,"Obtain a shield with xx%(+xx) Armor for 12 seconds. If in the Protection Stance, the shield effect increases by 50%",5,ShouHuZhiDun,3,
+100,Final Blow,"Inflict xx%(+xx) ATK DMG on the enemy. If in the Overwhelming Assault state, DMG increases by 20%. If the target is killed within x seconds, gain a shield with HP of xx%(+xx) of Armor for 12 seconds",5,WoMenShang,3,
+101,Protection Stance,"Enter the Protection stance to increase your Block by xx%(+xx) for x seconds, during which Armor increases by 1% upon each successful block for up to 10% of Armor",5,ShouHuZiTai,3,
+102,Hoo kham kham II,Taunt all enemies to attack you and gain a shield (xx%(+xx) of Armor) for 12 seconds (The Taunt effect has a 100% hit rate for enemy units at Lv x or lower). Gain an additional shield of 5% skill for each enemy taunted,5,HuGaGa,2,
+103,Hoo kham kham,Taunt all enemies to attack you and gain a shield (xx%(+xx) of Armor) for 12 seconds (The Taunt effect has a 100% hit rate for enemy units at Lv x or lower),5,HuGaGa,2,
+104,Cloak of Bush,Disguise as a bush to gain Control Immunity for 6 seconds and increase DMG mitigation by xx% and ATK by xx%(+xx),4,CaoCongDou,2,
+105,Rupture,Inflict bleeding DMG of xx%(+xx) ATK over 6 seconds and gain 3 Technique Points (Each Technique Point increases Evasion by 1%),4,GeLie,4,
+106,Lacerations,Deal xx%(+xx) ATK DMG to enemy. Skill ignores 20% of enemy's Armor.,4,DuoMingTuCi,3,
+107,Backstab,"Create a phantom and instantly move it behind the enemy, inflicting xx%(+xx) ATK DMG. The phantom will launch a bonus attack for each Technique Point",4,BeiCi,3,
+108,Scatter Blade,Inflict xx%(+xx) ATK DMG to the enemy and remove x buffs. Successful removal increases DMG by 10%,4,YangGong,3,
+109,Poison Coat,Apply Bonus Poison effect to the enemy. Each Layer of Poison causes xx%(+xx) ATK DMG per second for 12 seconds. One layer is added upon each basic attack dealt by an Assassin to a max of 15 layers. When the target dies the seals will be passed on the nearby enemy units.,4,TuDu,2,
+110,Roundhouse,Charge 0.5 seconds and then kick the enemy. Inflict xx%(+xx) ATK DMG and interrupt the target (The Interrupted effect has a 100% hit rate for enemy units at LvX or lower),4,JiaoTi,3,Charge
+111,Shiv,Inflict xx%(+xx) ATK DMG to the enemy and reset the effective duration of Poison,4,ZhiMingDuShu,3,
+112,Pounce,Inflict xx%(+xx) ATK DMG on the enemy and gain 2 Technique Points (Each Technique Point increases Evasion by 1%),4,TuXi,3,
+113,Pursuing,"Inflict xx%(+xx) ATK DMG to the enemy. The lower the enemy's HP, the higher the DMG",4,ZhuiJi,4,
+114,Fish Bone Throwing Knife,Throw between 1 and 3 fish bone throwing knives with a barb to inflict xx%(+xx) ATK DMG to the enemy. If the enemy targets have Poison DMG increases by 25%,4,YuGuFeiDao,3,
+115,Reverberating Slam,Inflict xx%(+xx) ATK DMG to the enemy,4,HuiShenJi,3,
+116,Reverberating Slam II,"Inflict xx%(+xx) ATK DMG to the enemy. If the enemy has one layer of Poison, dealing a bonus 2% of DMG",4,HuiShenJi,3,
+117,Double Throw Knives,Hurl throwing knives at 3 random enemy units and inflict xx%(+xx) ATK DMG,4,TouZhiFeiDao,3,
+118,Reckless Lunge,"Attack the enemy 3 times, each time inflicting xx%(+xx) ATK DMG",4,LianHuanTuCi,3,
+119,Bounce Bounce Bounce,Toss 1 knife which will bounce between enemies and inflict xx%(+xx) ATK DMG (by default 1 enemy bounces once),4,YinDuFeiDao,4,Charge
+120,Fan of Knives,Inflict xx%(+xx) ATK DMG on 3 random enemy units and gain Combo,4,ShangHaiZhuanYi,3,
+121,Zeal,"Inflict xx%(+xx) ATK DMG to the enemy and heal for xx%(+xx) of ATK over 6 seconds. The lower your HP, the higher your healing",4,KuangRe,3,
+122,Ambush,Cast up to 2 Technique Points to inflict xx%(+xx) ATK DMG tot the enemy and stun the target for 1 second. Each Technique Point extends the stun by 0.5 seconds (The Stun effect has a 100% hit rate for enemy units at LvX or lower),4,MengGun,3,Charge
+123,Fatal Knife,"Inflict xx%(+xx) ATK DMG on 3 enemy units. If in the Combo state, DMG increases by xx%",4,ZhiMingFeiDao,3,Charge
+124,Swiftwind Daggers,"Hurl 4 throwing knives randomly, each inflicting xx%(+xx) ATK DMG. If the same target is hit consecutively, the DMG dealt decreases (by 25% every time to a maximum 50%)",4,LuanWu,4,
+125,Uppercut II,"Attack the enemy with uppercuts, inflicting xx%(+xx) ATK DMG, and knock the target into the air (This effect has a 100% hit rate for enemy units at Lv x or lower). If the skill casting is interrupted, cause the additional control effect for x second",6,ShangGouQuan,3,Charge
+126,Intercept,Inflict xx%(+xx) ATK DMG on an enemy unit and interrupt its skill casting. Successful interruption reduces DMG received from the enemy by xx% for 10 seconds (The Interrupted effect has a 100% hit rate for enemy units at Lv x or lower),6,LanJie,3,Charge
+127,Cleave,Inflict xx%(+xx) ATK DMG on enemy units ahead of you and restore xx%(+xx) HP,6,ShunPiZhan,3,
+128,Sacrifice,Restore xx%(+xx) HP over 10 seconds and take xx% of the DMG received every time for the teammate with the lowest HP,6,XiSheng,2,
+129,Sacrifice II,"Recover xx%(+xx) HP over 10 sec, take xx% of the damage for the teammate with the lowest HP, and decrease the damage taken by 30%",6,XiSheng,2,
+130,Severing Strike,"Consume 20% of your current HP to inflict xx%(+xx) ATK DMG to enemy units in the back row. If the targets are killed within xx seconds, restore xx%(+xx) of your HP. If in the Frenzied state, DMG increases by 50%",6,ManHuangDaJi.,3,
+131,Fevered Pursuit,"Attack 3 times and inflict xx%(+xx) ATK DMG. If in the Frenzied state, attack range increases and attacks focus on the enemy unit with the lowest HP, stunning the target for x seconds (The Stun effect has a 100% hit rate for enemy units at Lv x or lower)",6,FenLiYiJi,2,Charge
+132,Frenzy,"Enter the Frenzied state to increase ATK by 30%, at the cost of 30% Max HP. Inflict xx%(+xx) ATK DMG on the enemy with the lowest HP, and lower its healing by xx%. In the Frenzied state, DMG increases by 50%",6,LingKongZhan,4,
+133,Let's charge,Inspire your party and increase ATK by xx%(+xx) for 6 seconds,6,KuangReDaji,3,
+134,Let's charge II,"Inspire your party and increase ATK by xx%(+xx). Damage received is reduced by 15% for 6 seconds. Also, Heal 4.5% HP immediately",6,KuangReDaji,3,
+135,Barbarian Veins,Activate Barbarian Veins to raise Max hP by 10% for x seconds and restore HP of xx%(+xx) over 10 seconds,6,ManHuangXu,3,
+136,Blood Force,"Restore xx%(+xx) HP over 10 seconds. If in the Barbarian Veins state, increase healing by 50%",6,XueMaiZhiLi,3,
+137,Blood Howl,Restore xx%(+xx) HP over 10 seconds and reduce the DMG received by 10% for 10 seconds,6,WuWeiZhan,3,
+138,Hoo hoo hoo,Reduce DMG received by other teammates by xx% over 10 seconds. Up to xx%(+xx) of your HP can be restored,6,HuHuHu,2,
+139,Hoo hoo hoo II,Reduce DMG taken by other teammates by xx% over 10 seconds. Up to xx%(+xx) of your HP can be reduced and recover HP of that value,6,HuHuHu,2,
+140,Toughen,"Heal xx%(+xx) over 10 seconds, during which healing another xx% of the first skill DMG received",6,JueJiang,3,
+141,Uppercut,"Attack the enemy with an uppercut, inflicting xx%(+xx) ATK DMG, and knock the target into the air (This effect has a 100% hit rate for enemy units at Lv x or lower)",6,ShangGouQuan,3,Charge
+142,Hoo kham kham,Taunt all the enemies to attack you and restore xx%(+xx) HP over 10 seconds (The Taunt effect has a 100% hit rate for targets at Lv x or lower),6,HuGaGa,2,
+143,Hoo kham kham II,"Restore xx%(+xx) HP within 10 seconds, and taunt all the enemy targets (The Taunt effect has a 100% hit rate on targets Lv x or lower). Increase the Max HP by 5% skill for each target taunted",6,HuGaGa,2,
+144,Ancestral Protection,Call for Ancestral Protection to increase healing by xx%. Heal the teammate with the lowest HP for xx%(+xx) of ATK,8,XianZuShouHu,3,
+145,Ancestral Protection II,Summon the Ancestral Protection to increase your own xx% Totem heal effect by 10% and restore HP of xx%(+xx) ATK for the teammate with the lowest HP,8,XianZuShouHu,3,
+146,Thunder Heart,Guide the Thunder Force and inflict xx%(+xx) ATK DMG on 3 enemy units upon the next 3 basic attacks. Heal the teammate with the lowest HP for xx%(+xx),8,LeiDianZhiXin,3,
+147,Electric Shock,"Heal the teammate with the lowest HP for xx%(+xx) of ATK and cast an electric current to travel back and forth between enemy units 5 times, each time inflicting xx%(+xx) ATK DMG",8,DianLiuChuanSuo,3,
+148,Drums of Recovery,"Play the drums and heal the teammate with the lowest HP for xx%(+xx) of ATK. The lower the teammate's HP, the higher the healing",8,FanJiGuDian,3,Cast
+149,Drums of Recovery II,"Sound the Drums of Recovery and restore xx%(+xx) ATK HP for the teammate with the lowest HP. The lower HP the teammate has, the higher HP it restores. If the teammate's HP is below 30%, provide an additional shield of 30% of the restored HP for 5 seconds",8,FanJiGuDian,3,Cast
+150,Fury of the Ancestors,Inflict xx%(+xx) ATK DMG on all enemy units and lower the enemy's Healing by xx%,8,ShanDianTuTeng,2,
+151,Spring Totem,Summon 1 Spring Totem to heal the 2 teammates with the lowest HP for xx%(+xx) of ATK over 5 seconds,8,QuanShuiTuTeng,3,
+152,Recovery Totem,Summon 1 Recovery Totem to heal the entire party for xx%(+xx) of ATK over 5 seconds,8,BenLiuBuXi,3,
+153,Font of Purge,Remove x debuffs for all party members and heal xx%(+xx) of ATK. Increase the HP recovered by 10% for each debuff removed,8,QuSanGuDian,3,Cast
+154,Rain Dance,Dance in the Rain to heal the teammate with the lowest HP for xx%(+xx) of ATK,8,YuZhongWu,3,Cast
+155,Riptide,"Heal the teammate with the lowest HP for xx%(+xx) of ATK, and another same amount of HP over 5 seconds",8,YuRun,3,
+156,Riptide II,"Heal the teammate with the lowest HP for xx%(+xx) of ATK, and another same amount of HP over 5 seconds. Also increases 10% Healing in 8 seconds",8,YuRun,3,
+157,Ancestral Gift,Pray for Ancestor's Strength to heal the party for xx%(+xx) of ATK and obtain 1 Ancestral Mark,8,XianZuEnZe,3,Cast
+158,Blessing of Spirits,"Pray for Ancestor's Strength to heal the party for xx%(+xx) of ATK and obtain 1 Ancestral Mark. For those who already own the Ancestral Mark, healing increases by 10%",8,XianZuZhuFu,4,
+159,Faith Protection,"Heal the teammate with the lowest HP for xx%(+xx) of ATK. If in the Ancestral Protection state, provide the target with extra protection for 10 seconds and heal for another xx% of the HP restored when it is attacked in the next time.",8,ChaoXiYongDong,3,Cast
+160,Chain Heal,Release the Ancestral Mark to heal the party for xx%(+xx) of ATK. Increase healing by 25% for each Ancestral Mark you own,8,ZhiLiaoLian,4,cast
+161,Chain Heal II,"Release the Ancestral Mark to heal the party for xx%(+xx) of ATK. Increase healing by 25% for each Ancestral Mark you own and give 30% Damage Reduction to the targets, Up to 10% of that skill can be reduced from each Ancestral Mark for 10 seconds",8,ZhiLiaoLian,4,cast
+162,Drums of Purge,Purity the teammate with the lowest HP. Heal them for xx%(+xx) of ATK and shield from any debuff for x seconds,8,ShanDianGuDian,3,Cast
+163,Life Totem,Summon a Life Totem with HP of xx%(+xx) of ATK. Links to the teammate with the lowest HP to transfer 80% of their DMG received to the totem for 10 seconds,8,ShengMingTuTeng,2,
+164,Drums of Rain,Heal the 2 teammates with the lowest HP for xx%(+xx) of ATK,8,XiYuGuDian,3,Cast
+165,Drums of Rain II,Sound the hand drum to restore HP of xx%(+xx) ATK for 2 teammates with the lowest HP and reduce the DMG it receives by 15% for 5 seconds,8,XiYuGuDian,3,Cast
+166,Dance With Me,Heal yourself and the teammate with the lowest HP for xx%(+xx) of ATK,8,YuWoGongWu,3,Cast
+167,Surge,Use the Life Force and heal the 2 teammates with the lowest HP for xx%(+xx) of ATK. Shorten the next skill's casting time by xx%,8,JiDang,3,
+168,Ancestral Aegis,"Protect the teammate with the lowest HP. Within 10 seconds, heal xx%(+xx) of ATK for each basic attack it receives. Can be triggered up to xx times",8,LangHunTuTeng,3,
+169,Charm Dance,Inflict xx%(+xx) ATK DMG on all enemy units and silence the targets for xx seconds (The Silence effect has a 100% hit rate for enemy units at Lv x or lower),8,MeiHuoZhiWu,3,Cast
+170,Whirlwind,Spin 3 times to inflict xx%(+xx) ATK DMG on all enemy units nearby. Restore xx%(+xx) HP per hit,6,XuanFengZhan,3,
+171,Battle Shout,Remove x debuffs for yourself and restore xx%(+xx) HP over 10 seconds,6,KuangZhanNuHou,3,
+172,Bloody Combat,"Restore xx%(+xx) HP over 10 seconds, during which recovers 1 point of energy if the damage taken is more than xx% of HP",6,ChongNengZhan,2,Charge
+173,Death Denied,"Restore xx%(+xx) HP over 5 seconds. The lower the HP, the higher the healing",6,JueJingQiuSheng,3,
+174,Death Denied II,"Restore xx%(+xx) HP over 5 seconds. The lower the HP, the higher the healing. If the HP is below 30%, restore additional 20% of the damage received within the next 5 seconds",6,JueJingQiuSheng,3,
+175,Boil Blood,Restore xx%(+xx) HP over 10 seconds,6,HuiKan,2,
+176,Fan of Knives II,Inflict xx%(+xx) of ATK DMG on 4 random enemy unit and get the Combo,4,ShangHaiZhuanYi,3,
+177,Rising Rage,Immune to control effects for xx seconds and restore xx%(+xx) HP over 10 seconds,6,NuHuoZhongShao,3,
+178,Magic Blast,Cast a Magic Blast to inflict xx%(+xx) ATK DMG on the enemy,2,MoFaChongJi,3,Cast
+179,Magic Intellect,Break through the upper limits of magic control. Shorten the next skill's casting time by xx% and inflict xx%(+xx) ATK DMG on the enemy,2,MoFaZhiHui,3,
+180,Magic Intellect II,Break through the upper limits of magic control. The next skill's casting time become zero and inflict xx%(+xx) ATK DMG on the enemy,2,MoFaZhiHui,3,
+181,Mirror Image,Inflict xx%(+xx) ATK DMG on the enemy and link yourself with 1 magic clone with HP of xx%(+xx) of ATK. Your DMG received will be transferred to the mirror Image. It lasts for 12 seconds,2,MoFaFenShen,2,Cast
+182,Meteorite,Form 3 huge fireballs to inflict xx%(+xx) ATK DMG on 3 random enemy units,2,YanBaoShu,4,Cast
+183,Lightning Wave,Attack all enemy units and inflict xx%(+xx) ATK DMG,2,ShanDianHuanRao,3,
+184,Fireball,"Throw 1 fireball and inflict xx%(+xx) ATK DMG on the enemy. The lower the enemy's HP, the higher the DMG",2,HuoQiuShu,3,Cast
+185,Fireball II,"Release 1 fireball to inflict xx%(+xx) ATK DMG. The lower the target's HP, the higher the damage. For each 10% of the enemy's HP dropped, summon 1 additional fireball to inflict 4% skill DMG",2,HuoQiuShu,3,Cast
+186,Scorch,Scorch the enemy and inflict xx%(+xx) ATK DMG on the enemy target. Crits cast the skill again,2,ZhuoShao,3,
+187,Fire Blast,Control fire to attack the enemy and inflict xx%(+xx) ATK DMG. Next skill's Crit rate increases by xx%,2,HuoYanChongJi,3,Cast
+188,Fire Blast II,"Control fire to blast the enemy, inflict xx%(+xx) ATK DMG, and increase the next 2 skills xx%'s Crit. rate and 30% Crit DMG",2,HuoYanChongJi,3,Cast
+189,Purification Wave,Inflict xx%(+xx) ATK DMG on the enemy and remove x random buffs. Successful removal increases DMG by 10%,2,MoLiQuSan,3,
+190,Seal Storm,Inflict xx%(+xx) ATK DMG on 3 random enemy units and apply bonus Magic Seal,2,MofaZhiLi,2,Cast
+191,Terminal Storm,"Inflict xx%(+xx) ATK DMG on 3 random enemy units. If the targets have the Magic Seal, deal a bonus 50% of DMG",2,MoFaZhongJie,3,
+192,Lightning Blast,"Cast Lightning Charge, deal xx%(+xx) ATK DMG to enemy. Skill ignores 20% of enemy's Armor",2,ShanDianChongJi,3,Cast
+193,Lightning Blast II,"Cast Lightning Charge, deal xx%(+xx) ATK DMG to enemy. Skill ignores 20% of enemy's Armor and restore 1 point of energy",2,ShanDianChongJi,3,Cast
+194,Serenity,Inflict bonus xx%(+xx) ATK DMG on the first target of the next skill,2,MoLiHuiLiu,1,
+195,Serenity II,"Inflict bonus xx%(+xx) ATK DMG on the first target of the next skill, and increase the next 2 skills' Crit. rate by 15%",2,MoLiHuiLiu,1,
+196,Frost Missile,Fire 3 Frost Missiles to inflict xx%(+xx) ATK DMG on the enemy and apply 3 layers of Frost (Every 4 layers of Frost will stun the target for 2 seconds) (The Frost effect has a 100% Hit rate for enemy units at Lv x or lower),2,BingShuangSheXian,3,Cast
+197,Cone of Cold,"Cast Ice to attack the enemy. Inflict xx%(+xx) ATK DMG on the target, and apply 1 extra layer of Frost (Every 4 layers of Frost will stun the target for 2 seconds) (The Frost effect has a 100% Hit rate for enemy units at Lv x or lower)",2,BingZhuiShu,1,
+198,Frostbolt,"Launches a bolt of frost at the enemy, inflicting xx%(+xx) ATK DMG and adds 2 layers of Frost to the target (Every 4 layers of Frost will stun the target for 2 seconds) (The Frost effect has a 100% Hit rate for enemy units at Lv x or lower)",2,HanBingJian,2,
+199,Magic Missile,"Launches three waves of Magic Missiles at the enemy for 2 sec, causing xx%(+xx) ATK DMG per wave, with a 50% chance of recovering 1 point of energy - up to 2 points",2,MoFaFeiDan,3,Guide
+200,Blizzard,"Control a blizzard to inflict xx%(+xx) ATK DMG on all enemy units for 3 seconds. The DMG dealt to the enemy in the Cold state increases by 30%. Afterwards, apply bonus Cold state to all enemy units",2,BaoFengXue,4,Guide
+201,Frost Nova,Inflict xx%(+xx) ATK DMG on all enemy units and apply bonus Cold state to all targets. The DMG dealt to the enemy in the Cold state increases by 30%,2,BingShuangXinXing,3,Cast
+202,Magic Suppression,Inflict xx%(+xx) ATK DMG on the enemy and lower the target xx%'s healing for 10 seconds.,2,YeZhuBianXingShu,3,
+203,Magic Suppression II,Inflict xx%(+xx) ATK DMG on the enemy and lower the target xx%'s healing for 10 seconds. The effect doubles on none player units,2,YeZhuBianXingShu,3,
+204,Silence,Silence the enemy target for x seconds and inflict xx%(+xx) ATK DMG (The Silence effect has a 100% hit rate for enemy units at Lv xx or lower),2,ChenMo,3,Cast
+205,Mortal Wounds,Inflict xx%(+xx) ATK DMG to the enemy and lower the target's Healing by xx% for 6 seconds,4,YiZhiZhiRen,3,
+206,Pursuing II,"Inflict xx%(+xx) ATK DMG on the enemy. The lower the enemy's HP, the higher the DMG. For every 10% of the enemy's HP dropped, summon an additional phantom to deal 4% skill DMG",4,ZhuiJi,4,
+207,Poison Coat II,"Cast the Poison effect on the enemy, each layer of which inflicts xx%(+xx) ATK DMG for 12 seconds. 1 layer is stacked upon each basic attack received from an assassin to a max of 17 layers. The seals will be passed on to nearby enemy targets upon the target's death",4,TuDu,2,

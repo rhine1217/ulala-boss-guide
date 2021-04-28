@@ -21,8 +21,6 @@ class DiscordUser(models.Model):
 class UlalaMapArea(models.Model):
     continent = models.CharField(max_length=100)
     area = models.CharField(max_length=100)
-    def __str__(self):
-        return f'{self.continent} Continent, {self.area}'
 
 class UlalaBoss(models.Model):
     name = models.CharField(max_length=100)
@@ -50,18 +48,25 @@ class UlalaSkill(UlalaCommonInfo):
 
 class BossSetup(models.Model):
     boss = models.ForeignKey(UlalaBoss, on_delete=models.RESTRICT)
+    # PLACEHOLDER - add a field to choose a related area
     created_by = models.ForeignKey(DiscordUser, on_delete=models.CASCADE)
-    created_on = models.DateTimeField()
+    created_on = models.DateTimeField(auto_now_add=True)
     published_on = models.DateTimeField(null=True)
     STATUS_CHOICES = [('P', 'Published'), ('D', 'Draft')]
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='D')
-    note = models.TextField(blank=True)
+    note = models.TextField(blank=True, null=True)
   
 class PlayerSetup(models.Model):
     boss_setup = models.ForeignKey(BossSetup, related_name='players', on_delete=models.CASCADE)
     player_class = models.ForeignKey(UlalaClass, on_delete=models.RESTRICT)
-    skills = models.ManyToManyField(UlalaSkill)
-    toys = models.ManyToManyField(UlalaToy)
+    skill1 = models.ForeignKey(UlalaSkill, on_delete=models.RESTRICT, related_name='+')
+    skill2 = models.ForeignKey(UlalaSkill, on_delete=models.RESTRICT, related_name='+')
+    skill3 = models.ForeignKey(UlalaSkill, on_delete=models.RESTRICT, related_name='+')
+    skill4 = models.ForeignKey(UlalaSkill, on_delete=models.RESTRICT, related_name='+')
+    toy1 = models.ForeignKey(UlalaToy, on_delete=models.RESTRICT, related_name='+')
+    toy2 = models.ForeignKey(UlalaToy, on_delete=models.RESTRICT, related_name='+')
+    toy3 = models.ForeignKey(UlalaToy, on_delete=models.RESTRICT, related_name='+')
+    toy4 = models.ForeignKey(UlalaToy, on_delete=models.RESTRICT, related_name='+')
 
 class UserInteractions(models.Model):
     boss_setup = models.ForeignKey(BossSetup, on_delete=models.CASCADE)

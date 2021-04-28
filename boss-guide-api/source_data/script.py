@@ -89,12 +89,16 @@ UlalaMapArea = DataFixtures(model="UlalaMapArea", fields=['continent', 'area'])
 UlalaBoss = DataFixtures_M2M(model="UlalaBoss", fields=['name'], m2m_fields=['map_area'])
 UlalaToy = DataFixtures_M2M(model="UlalaToy", fields=['name', 'description', 'img_url'], m2m_fields=['related_class'], m2m_data_type="many")
 UlalaSkill = DataFixtures(model="UlalaSkill", fields=['name', 'description', 'related_class', 'img_url', 'energy', 'energy_type'])
+BossSetup = DataFixtures(model="BossSetup", fields=['boss', 'created_by'])
+PlayerSetup = DataFixtures(model="PlayerSetup", fields=['boss_setup', 'player_class', 'skill1', 'skill2', 'skill3', 'skill4', 'toy1', 'toy2', 'toy3', 'toy4'])
 
 # UlalaClass.create_fixtures('04152021')
 # UlalaMapArea.create_fixtures('04152021')
 # UlalaBoss.create_fixtures('04172021')
 # UlalaToy.create_fixtures('04212021')
-# UlalaSkill.create_fixtures('04212021')
+# UlalaSkill.create_fixtures('04272021')
+# BossSetup.create_fixtures('04272021')
+# PlayerSetup.create_fixtures('04272021')
 
 
 # command: python manage.py loaddata <fixturename>
