@@ -4,7 +4,7 @@ import { useRecoilState } from 'recoil'
 import { classTagState, classForSetupState } from '../states/atoms'
 import { classTagsColor } from '../utils/charClassUtils'
 
-const ClassSelection = () => {
+const ClassSelection = ({context}) => {
 
   const [selectedClasses, setSelectedClasses] = useRecoilState(classTagState)
   const [classForSetup, setClassForSetup] = useRecoilState(classForSetupState)
@@ -26,8 +26,19 @@ const ClassSelection = () => {
     setSelectedClasses(newSelectedClasses)
   }
 
+  const formLabel = context === 'new' ? "Character Classes (Select 4)" : 'Filter by Class'
+  const validateStatusLabel = () => {
+    let status = ""
+    if (context === 'new') {
+      status = selectedClasses.length === 4 ? "success" : "warning"
+    } else {
+      status = selectedClasses.length <=4 ? "success" : "warning"
+    }
+    return status
+  }
+
   return (
-    <Form.Item label="Character Classes (Select 4)" hasFeedback validateStatus={selectedClasses.length === 4 ? "success" : "warning"}>
+    <Form.Item label={formLabel} hasFeedback validateStatus={validateStatusLabel()}>
       <Row>
         <Col span={23}>
           <Row  gutter={[4,8]}>

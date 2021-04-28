@@ -19,15 +19,16 @@ const SearchResults = () => {
 
     return (
         <>
-        <div>{query.get("name")}</div>
-        <div style={{width: '100%', paddingTop: '2rem'}}><BossInput type="search" /></div>
-        <ClassSelection />
-        <div>100 Results</div>
-        <div>Sort By:</div>
+        <div style={{width: '100%', paddingTop: '2rem'}}><BossInput context="search" /></div>
+        <ClassSelection context="search" />
+        <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+            <div>100 Results for {query.get("name")}</div>
+            <div>Sort: 
         <Select defaultValue="top-rated" style={{width: 120}} onChange={handleSortChange}>
             <Select.Option value="top-rated">Top Rated</Select.Option>
             <Select.Option value="most-recent">Most Recent</Select.Option>
-        </Select>
+        </Select></div>
+            </div>
         <Row>
             <Col xs={24} sm={12} lg={8}>
         <Card>

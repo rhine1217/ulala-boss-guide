@@ -49,9 +49,9 @@ const AddSetup = () => {
 
       <Form layout="vertical" style={{padding: '16px 24px 0px'}}>
         <Form.Item label="Boss">
-          <BossInput type="form" />
+          <BossInput context="new" />
         </Form.Item>
-        <ClassSelection />
+        <ClassSelection context="new" />
       </Form>
 
       <Form layout="horizontal" style={{padding: '0 24px'}}>

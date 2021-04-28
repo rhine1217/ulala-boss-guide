@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
+import { useHistory } from 'react-router-dom'
 import { Input, AutoComplete } from 'antd'
 import Ulala from '../Models/Ulala'
 
-const BossInput = ( {type}) => {
+const BossInput = ( {context}) => {
 
   const [bossList, setBossList] = useState([])
-
   const [options, setOptions] = useState([]);
+  let history = useHistory()
 
   useEffect(() => {
     const getBossData = async () => {
@@ -26,7 +27,12 @@ const BossInput = ( {type}) => {
     
   }, [])
 
-  const onSelect = (data) => console.log(data) // INITIATE A SEARCH & DO SOMETHING ELSE
+  const onSelect = (data) => {
+    if (context === 'search') {
+      history.push(`/boss?name=${encodeURI(data)}`)
+    } 
+  }
+  
   const onSearch = (text) => {
     !text ? setOptions([]) : setOptions(bossList || ['Loading...'])
   }
@@ -40,7 +46,7 @@ const BossInput = ( {type}) => {
       filterOption={(inputValue, option) =>
         option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
     }>
-      {type === 'search' ? 
+      {context === 'search' ? 
         <Input.Search size="large" placeholder="Type in Boss name to search for setup" /> :
         <Input placeholder="Type in Boss name and select from dropdown" />
       }
