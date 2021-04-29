@@ -30,6 +30,7 @@ const BossInput = ( {context}) => {
   const onSelect = (data) => {
     if (context === 'search') {
       history.push(`/boss?name=${encodeURI(data)}`)
+      window.location.reload()
     } 
   }
   

@@ -6,7 +6,7 @@ from django.utils import timezone
 # Create your models here.
 class DiscordUser(models.Model):
     objects = DiscordUserOAuth2Manager()
-    id = models.BigIntegerField(primary_key=True)
+    id = models.CharField(max_length=32, primary_key=True)
     username = models.CharField(max_length=32)
     discriminator = models.CharField(max_length=4)
     avatar = models.CharField(max_length=100)
@@ -20,7 +20,7 @@ class DiscordUser(models.Model):
         return True
     
     def __str__(self):
-        return f"{self.username}@{self.discriminator}"
+        return f"{self.username}#{self.discriminator}"
 
 class UlalaMapArea(models.Model):
     continent = models.CharField(max_length=100)

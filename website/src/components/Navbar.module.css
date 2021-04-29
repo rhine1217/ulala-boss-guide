@@ -14,3 +14,21 @@
   padding: 15px 0;
   width: 120px;
 }
+
+.dropdown:active {
+  transform: translateY(2px);
+  transition: transform 0.3s;
+}
+
+.dropdown:hover {
+  cursor: pointer;
+}
+
+.dropdown > *:nth-child(2) {
+  margin-left: 12px;
+}
+
+.dropdown {
+  display: flex;
+  align-items: center;
+}

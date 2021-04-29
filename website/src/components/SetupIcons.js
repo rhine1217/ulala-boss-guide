@@ -1,14 +1,10 @@
 import React from 'react'
 import { classImgPrefix } from '../utils/charClassUtils'
-import { useRecoilValue } from 'recoil'
-import { classForSetupState } from '../states/atoms'
 import styles from './SetupIcons.module.css'
 
 // Icons: Depending on context (If in the top level selection, onClick = open the choice modal. If in the modal, onClick = swap in this skill/toy)
 
-const Skill = ({skill, context}) => {
-
-  const classForSetup = useRecoilValue(classForSetupState)
+const Skill = ({activeClass, skill, context}) => {
 
   const onClickSkill = (skill) => {
     console.log(context)
@@ -27,7 +23,7 @@ const Skill = ({skill, context}) => {
         <img alt="" className={styles['skill-img-border']} src={`${process.env.REACT_APP_HOSTED_IMG_URL_PREFIX}/10.png`} />
         <img 
           className={styles['skill-img']}
-          src={`${process.env.REACT_APP_HOSTED_IMG_URL_PREFIX}/${classImgPrefix[classForSetup]}_${skill['img_url']}.png`}
+          src={`${process.env.REACT_APP_HOSTED_IMG_URL_PREFIX}/${classImgPrefix[activeClass]}_${skill['img_url']}.png`}
           alt="Character Skill" />
       </div>
 
