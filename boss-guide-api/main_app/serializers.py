@@ -51,12 +51,25 @@ class PlayerSetupSerializer(serializers.ModelSerializer):
     class Meta:
         model = PlayerSetup
         fields = ['player_class', 'skills', 'toys']
-        
+
+class PlayerClassSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UlalaClass
+    
 class BossSetupSerializer(serializers.ModelSerializer):
     created_by = serializers.StringRelatedField()
     status = serializers.CharField(source='get_status_display')
     boss = UlalaBossSerializer(read_only=True)
     player_setup = PlayerSetupSerializer(many=True, read_only=True)
+    player_classes = serializers.SerializerMethodField('get_player_classes')
+    
+    def get_player_classes(self, obj):
+        output = []
+        player_setups = PlayerSetup.objects.filter(boss_setup=obj.id)
+        for setup in player_setups:
+            output.append(PlayerSetupSerializer(setup).data['player_class'])
+        return output
+      
     class Meta:
         model = BossSetup
-        fields = ['id', 'boss', 'player_setup', 'note', 'created_by', 'created_on', 'published_on', 'status']
+        fields = ['id', 'boss', 'player_classes', 'player_setup', 'note', 'created_by', 'created_on', 'published_on', 'status']
