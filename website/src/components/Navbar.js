@@ -1,10 +1,25 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import styles from './Navbar.module.css'
 import logo from './logo-lg.png'
 import { Avatar, Menu, Dropdown } from 'antd'
-
+import BossInput from '../components/BossInput'
+import debounce from '../utils/debounce';
 
 const Navbar = ({currentUser}) => {
+
+  const [width, setWidth] = useState(window.innerWidth)
+
+  useEffect(() => {
+    const debouncedHandleResize = debounce(() => {
+      setWidth(window.innerWidth)
+    }, 500)
+
+    window.addEventListener('resize', debouncedHandleResize)
+
+    return _ => {
+      window.removeEventListener('resize', debouncedHandleResize)
+    }
+  }, [])
 
   const menu = (
     <Menu>
@@ -19,19 +34,20 @@ const Navbar = ({currentUser}) => {
       </Menu.Item>
     </Menu>
   )
+  console.log(window.innerWidth)
 
   return (
     <div className={styles.header}>
     <div className="container">
       <div className={styles.navmenu}>
         <a href="/"><img className={styles.logo} src={logo} alt="logo"/></a>
+        <div style={{width: `${width*0.5}px`, maxWidth: '400px'}}><BossInput context="search" /></div>
         { currentUser ? 
             <>
-
               <Dropdown overlay={menu} trigger={['click']}>
               <div className={styles.dropdown}>
                 <Avatar src={`https://cdn.discordapp.com/avatars/${currentUser.uid}/${currentUser.avatar}.png`} />
-                <div>{currentUser.username}</div>
+                {width >= 576 ? <div>{currentUser.username}</div> : <></>}
               </div>
               </Dropdown>
             </> : 

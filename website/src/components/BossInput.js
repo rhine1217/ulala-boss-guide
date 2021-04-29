@@ -40,7 +40,7 @@ const BossInput = ( {context}) => {
 
   return (
     <AutoComplete
-      style={{ width: 500, maxWidth: '100%' }}
+      style={{ width: '100%' }}
       options={options}
       onSelect={onSelect}
       onSearch={onSearch}
