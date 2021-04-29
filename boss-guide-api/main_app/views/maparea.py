@@ -4,6 +4,8 @@ from rest_framework.response import Response
 from main_app.models import UlalaMapArea, BossSetup, UlalaBoss, UlalaSkill, UlalaClass
 from main_app.serializers import UlalaMapAreaSerializer, BossSetupSerializer, UlalaBossSerializer, UlalaSkillSerializer, UlalaToyByClassSerializer
 
+import urllib.parse
+
 class MapAreaList(generics.ListAPIView):
     """
     List all map areas.
@@ -54,12 +56,17 @@ class MapAreaDetail(generics.RetrieveUpdateDestroyAPIView):
     #     return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-class BossSetupList(generics.ListCreateAPIView):
-    queryset = BossSetup.objects.all()
+class BossSetupList(generics.ListAPIView):
     serializer_class=BossSetupSerializer
+    def get_queryset(self):
+        queryset = BossSetup.objects.all()
+        bossname_encoded = self.request.query_params.get('name')
+        if bossname_encoded is not None:
+          bossname = urllib.parse.unquote(bossname_encoded)
+          queryset = queryset.filter(boss__name=bossname)
+        return queryset
 
-
-class BossSetupDetail(generics.RetrieveUpdateDestroyAPIView):
+class BossSetupDetail(generics.RetrieveAPIView):
     queryset = BossSetup.objects.all()
     serializer_class=BossSetupSerializer
 
