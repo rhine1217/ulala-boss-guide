@@ -1,6 +1,7 @@
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from .managers import DiscordUserOAuth2Manager
+from django.utils import timezone
 
 # Create your models here.
 class DiscordUser(models.Model):
@@ -17,14 +18,25 @@ class DiscordUser(models.Model):
     
     def is_active(self):
         return True
+    
+    def __str__(self):
+        return f"{self.username}@{self.discriminator}"
 
 class UlalaMapArea(models.Model):
     continent = models.CharField(max_length=100)
     area = models.CharField(max_length=100)
+    
+    def __str__(self):
+      if self.continent == 'Other':
+        return f"{self.area}"
+      else:
+        return f"{self.continent} Continent, {self.area}"
 
 class UlalaBoss(models.Model):
     name = models.CharField(max_length=100)
     map_area = models.ManyToManyField(UlalaMapArea)
+    def __str__(self):
+      return f"{self.name}"
 
 class UlalaClass(models.Model):
     name = models.CharField(max_length=16)
@@ -50,14 +62,14 @@ class BossSetup(models.Model):
     boss = models.ForeignKey(UlalaBoss, on_delete=models.RESTRICT)
     # PLACEHOLDER - add a field to choose a related area
     created_by = models.ForeignKey(DiscordUser, on_delete=models.CASCADE)
-    created_on = models.DateTimeField(auto_now_add=True)
+    created_on = models.DateTimeField(default=timezone.now)
     published_on = models.DateTimeField(null=True)
     STATUS_CHOICES = [('P', 'Published'), ('D', 'Draft')]
     status = models.CharField(max_length=1, choices=STATUS_CHOICES, default='D')
     note = models.TextField(blank=True, null=True)
   
 class PlayerSetup(models.Model):
-    boss_setup = models.ForeignKey(BossSetup, related_name='players', on_delete=models.CASCADE)
+    boss_setup = models.ForeignKey(BossSetup, related_name='player_setup', on_delete=models.CASCADE)
     player_class = models.ForeignKey(UlalaClass, on_delete=models.RESTRICT)
     skill1 = models.ForeignKey(UlalaSkill, on_delete=models.RESTRICT, related_name='+')
     skill2 = models.ForeignKey(UlalaSkill, on_delete=models.RESTRICT, related_name='+')

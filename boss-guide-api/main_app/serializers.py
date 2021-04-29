@@ -1,21 +1,16 @@
 from rest_framework import serializers
-from main_app.models import UlalaMapArea, BossSetup, UlalaBoss, UlalaSkill, UlalaToy, UlalaClass
+from main_app.models import UlalaMapArea, BossSetup, PlayerSetup, UlalaBoss, UlalaSkill, UlalaToy, UlalaClass
 
 class UlalaMapAreaSerializer(serializers.ModelSerializer):
     class Meta:
         model = UlalaMapArea
         fields = '__all__'
-
-class BossSetupSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = BossSetup
-        fields = '__all__'
-
+        
 class UlalaBossSerializer(serializers.ModelSerializer):
     map_area = serializers.StringRelatedField(many=True)
     class Meta:
         model = UlalaBoss
-        fields = '__all__'
+        fields = ['id', 'name', 'map_area']
 
 class UlalaSkillSerializer(serializers.ModelSerializer):
     related_class = serializers.StringRelatedField()
@@ -33,3 +28,35 @@ class UlalaToyByClassSerializer(serializers.ModelSerializer):
     class Meta:
         model = UlalaClass
         fields = ['id', 'name', 'toy_list']
+        
+class PlayerSetupSerializer(serializers.ModelSerializer):
+    player_class = serializers.StringRelatedField()
+    skills = serializers.SerializerMethodField('get_skills')
+    toys = serializers.SerializerMethodField('get_toys')
+    
+    def get_skills(self, obj):
+        output = []
+        skills = [obj.skill1, obj.skill2, obj.skill3, obj.skill4]
+        for skill in skills:
+            output.append(UlalaSkillSerializer(skill).data)
+        return output
+    
+    def get_toys(self, obj):
+        output = []
+        toys = [obj.toy1, obj.toy2, obj.toy3, obj.toy4]
+        for toy in toys:
+            output.append(UlalaToySerializer(toy).data)
+        return output
+      
+    class Meta:
+        model = PlayerSetup
+        fields = ['player_class', 'skills', 'toys']
+        
+class BossSetupSerializer(serializers.ModelSerializer):
+    created_by = serializers.StringRelatedField()
+    status = serializers.CharField(source='get_status_display')
+    boss = UlalaBossSerializer(read_only=True)
+    player_setup = PlayerSetupSerializer(many=True, read_only=True)
+    class Meta:
+        model = BossSetup
+        fields = ['id', 'boss', 'player_setup', 'note', 'created_by', 'created_on', 'published_on', 'status']

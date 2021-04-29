@@ -8,7 +8,6 @@ const ChoiceModal = () => {
 
   const activeSetupType = useRecoilValue(activeSetupTypeState)
 
-  }
   // modal choices = all current Class stuff, minus anything in currently selected.
   return (
     <Modal
