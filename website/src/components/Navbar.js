@@ -34,7 +34,6 @@ const Navbar = ({currentUser}) => {
       </Menu.Item>
     </Menu>
   )
-  console.log(window.innerWidth)
 
   return (
     <div className={styles.header}>

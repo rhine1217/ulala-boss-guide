@@ -44,3 +44,8 @@ export const currCharSelectionsState = atom({
   key: 'currCharSelectionsState',
   default: {}
 })
+
+export const isChoiceModalVisibleState = atom({
+  key: 'isChoiceModalVisibleState',
+  default: false
+})

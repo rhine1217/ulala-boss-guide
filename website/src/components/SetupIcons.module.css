@@ -1,3 +1,12 @@
+.skill-icon-button {
+  z-index:1000;
+  width: 55px;
+  height: 55px;
+  border: none;
+  background: none;
+  position: absolute;
+}
+
 .skill-icon-wrapper {
   display: flex;
   justify-content: center;
@@ -46,6 +55,13 @@
 .skill-img {
   position: absolute;
   width: 50px
+}
+
+.skill-up {
+  z-index: 2;
+  padding-right: 24px;
+  padding-top: 24px;
+  width: 80%;
 }
 
 .skill-energy-type-text {

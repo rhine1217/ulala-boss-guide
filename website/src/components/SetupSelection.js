@@ -3,7 +3,7 @@ import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil'
 import { classTagState, classForSetupState, activeSetupTypeState, skillsForCurrClassState, toysForCurrClassState, currCharSelectionsState } from '../states/atoms'
 import arrayMove from 'array-move'
 import CardList from './CardList'
-
+import ChoiceModal from './ChoiceModal'
 
 const SetupSelection = ({skills, toys}) => {
   // has full list of skills & toys passed down as props.
@@ -87,6 +87,7 @@ const SetupSelection = ({skills, toys}) => {
     { currCharSelections && currCharSelections.hasOwnProperty('skills') && currCharSelections.hasOwnProperty('toys') &&
       <CardList activeClass={classForSetup} skills={currCharSelections.skills} toys={currCharSelections.toys} onSortEnd={onSortEnd}></CardList>
     }
+    <ChoiceModal />
     </>
   )
 
