@@ -57,8 +57,22 @@ export const skillsSelectedIdxState = selector({
   }
 })
 
-export const isChoiceModalVisibleState = atom({
-  key: 'isChoiceModalVisibleState',
+export const toysToSelectFromState = selector({
+  key: 'toysToSelectFromState',
+  get: ({get}) => {
+    const toysSelected = get(currCharSelectionsState)
+    const toysForCurrClass = get(toysForCurrClassState)
+    if (toysSelected.hasOwnProperty('toys')) {
+      const toysSelectedIdx = toysSelected.toys.map(toy => toy.id)
+      return toysForCurrClass.filter(toy => toysSelectedIdx.includes(toy.id) === false)
+    } else {
+      return toysForCurrClass
+    }
+  }
+})
+
+export const isSkillChoiceModalVisibleState = atom({
+  key: 'isSkillChoiceModalVisibleState',
   default: false
 })
 
@@ -74,5 +88,25 @@ export const skillForDetailsState = atom({
 
 export const skillToChangeIdxState = atom({
   key: 'skillToChangeIdxState', 
+  default: -1
+})
+
+export const isToyChoiceModalVisibleState = atom({
+  key: 'isToyChoiceModalVisibleState',
+  default: false
+})
+
+export const isToyDetailModalVisibleState = atom({
+  key: 'isToyDetailModalVisibleState',
+  default: false
+})
+
+export const toyForDetailsState = atom({
+  key: 'toyForDetailsState',
+  default: {}
+})
+
+export const toyToChangeIdxState = atom({
+  key: 'toyToChangeIdxState', 
   default: -1
 })

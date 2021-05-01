@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil'
-import { classTagState, classForSetupState, activeSetupTypeState, skillsForCurrClassState, toysForCurrClassState, currCharSelectionsState, skillToChangeIdxState } from '../states/atoms'
+import { classTagState, classForSetupState, activeSetupTypeState, skillsForCurrClassState, toysForCurrClassState, currCharSelectionsState, skillToChangeIdxState, toyToChangeIdxState } from '../states/atoms'
 import arrayMove from 'array-move'
 import CardList from './CardList'
-import ChoiceModal from './ChoiceModal'
+import SkillChoiceModal from './SkillChoiceModal'
+import ToyChoiceModal from './ToyChoiceModal'
 
 const SetupSelection = ({skills, toys}) => {
   // has full list of skills & toys passed down as props.
@@ -15,6 +16,7 @@ const SetupSelection = ({skills, toys}) => {
   const setToysForCurrClass = useSetRecoilState(toysForCurrClassState)
   const [changeCounter, setChangeCounter] = useState(1)
   const skillToChangeIdx = useRecoilValue(skillToChangeIdxState)
+  const toyToChangeIdx = useRecoilValue(toyToChangeIdxState)
   const [currCharSelections, setCurrCharSelections] = useRecoilState(currCharSelectionsState)
   // {
   //   skills: []
@@ -69,11 +71,10 @@ const SetupSelection = ({skills, toys}) => {
     })
     setAllSelections(refreshedAllSelections)
 
-  }, [changeCounter, selectedClasses.length, skillToChangeIdx]) // when sorting happens, when class tags change (select/unselect classes from the tags), when a new skill gets swapped in
+  }, [changeCounter, selectedClasses.length, skillToChangeIdx, toyToChangeIdx]) // when sorting happens, when class tags change (select/unselect classes from the tags), when a new skill gets swapped in, when a new toy gets swapped in
 
 
   const onSortEnd = ({oldIndex, newIndex}) => {
-    console.log('inside onSortEnd')
     setCurrCharSelections( selections => {
       return {
         skills: activeSetupType === 'skill' ? arrayMove(selections.skills, oldIndex, newIndex) : selections.skills,
@@ -88,7 +89,8 @@ const SetupSelection = ({skills, toys}) => {
     { currCharSelections && currCharSelections.hasOwnProperty('skills') && currCharSelections.hasOwnProperty('toys') &&
       <CardList activeClass={classForSetup} skills={currCharSelections.skills} toys={currCharSelections.toys} onSortEnd={onSortEnd}></CardList>
     }
-    <ChoiceModal />
+    <SkillChoiceModal />
+    <ToyChoiceModal />
     </>
   )
 

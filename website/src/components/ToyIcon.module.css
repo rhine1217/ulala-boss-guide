@@ -1,0 +1,22 @@
+.toy-icon-button {
+  z-index:1000;
+  width: 60px;
+  height: 60px;
+  border: none;
+  background: none;
+  position: absolute;
+}
+
+.toy-icon-button {
+  cursor: pointer;
+}
+
+.toy-icon-wrapper {
+  width: 60px;
+  height: 60px;
+  padding-left: 6px;
+}
+
+.toy-img {
+  max-height: 100%;
+}

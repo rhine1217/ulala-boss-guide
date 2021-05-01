@@ -1,7 +1,5 @@
 import React from 'react'
 import LoginButton from '../components/LoginButton'
-import BossInput from '../components/BossInput'
-
 
 const LandingPage = () => (
   <div style={{padding: '2rem 10%', display: 'flex', flexWrap: 'wrap', justifyContent: 'center', textAlign: 'center'}}>
@@ -14,6 +12,3 @@ const LandingPage = () => (
 )
 
 export default LandingPage
-         
-         
-         

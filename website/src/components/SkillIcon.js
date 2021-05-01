@@ -1,34 +1,35 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { classImgPrefix } from '../utils/charClassUtils'
-import styles from './SetupIcons.module.css'
-import { useSetRecoilState, useRecoilValue } from 'recoil'
-import { isChoiceModalVisibleState, isSkillDetailModalVisibleState, skillsSelectedIdxState, skillForDetailsState, skillToChangeIdxState } from '../states/atoms'
+import styles from './SkillIcon.module.css'
+import { useSetRecoilState, useRecoilValue, useRecoilState } from 'recoil'
+import { isSkillChoiceModalVisibleState, isSkillDetailModalVisibleState, skillsSelectedIdxState, skillForDetailsState, skillToChangeIdxState} from '../states/atoms'
 
-const Skill = ({activeClass, skill, context}) => {
+const SkillIcon = ({activeClass, skill, context}) => {
 
-  const setIsChoiceModalVisible = useSetRecoilState(isChoiceModalVisibleState)
+  const setIsSkillChoiceModalVisible = useSetRecoilState(isSkillChoiceModalVisibleState)
   const setIsSkillDetailModalVisible = useSetRecoilState(isSkillDetailModalVisibleState)
   const setSkillForDetails = useSetRecoilState(skillForDetailsState)
   const setSkillToChangeIdx = useSetRecoilState(skillToChangeIdxState)
+  // const [skillToChangeIdx, setSkillToChangeIdx] = useRecoilState(skillToChangeIdxState)
   const skillsSelectedIdx = useRecoilValue(skillsSelectedIdxState)
 
-  const onClickSkill = (e) => {
-
+  const onClickSkill = () => {
     if (context === 'choiceModal') {
       setSkillForDetails(skill)
       setIsSkillDetailModalVisible(true)
-    } else {
-      console.log('context', context)
-      console.log('context type', typeof context)
-      setSkillToChangeIdx(context)
-      setIsChoiceModalVisible(true)
+    } else if (context.split('-')[0] === 'skill') {
+      setSkillToChangeIdx(parseInt(context.split('-')[1]))
+      setIsSkillChoiceModalVisible(true)
+    } else if (context.split('-')[0] === 'toy') {
+      setSkillForDetails(skill)
+      setIsSkillDetailModalVisible(true)
     }
   }
 
   return (
     <>
     <div>
-      <button className={styles['skill-icon-button']} onClick={(e) => onClickSkill(e)} />
+      <button className={styles['skill-icon-button']} onClick={onClickSkill} />
       <div className={styles['skill-icon-wrapper']}>
         <div className={styles['skill-energy-wrapper']}>
           <img
@@ -62,23 +63,4 @@ const Skill = ({activeClass, skill, context}) => {
   )
 }
 
-const Toy = ({toy, context}) => {
-
-  const onClickToy = (toy) => {
-    console.log(context)
-    console.log(toy)
-  }
-
-  return (
-    <div className={styles['toy-icon-wrapper']} onClick={() => onClickToy(toy)}>
-      <img className={styles['toy-img']} src={`${process.env.REACT_APP_HOSTED_IMG_URL_PREFIX}/${toy['img_url']}.png`} alt="toy" />
-    </div>
-  )
-}
-
-const SetupIcons = {
-  Skill,
-  Toy
-}
-
-export default SetupIcons
+export default SkillIcon

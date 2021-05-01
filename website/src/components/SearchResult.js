@@ -2,7 +2,8 @@ import React, { useState } from 'react'
 import { Card, Tag, Col, Row } from 'antd'
 import { ShareAltOutlined, LikeOutlined, StarOutlined, LikeFilled, StarFilled} from '@ant-design/icons'
 import { classTagsColor } from '../utils/charClassUtils'
-import SetupIcons from './SetupIcons.js'
+import SkillIcon from './SkillIcon'
+import ToyIcon from './ToyIcon'
 
 const SearchResult = ({bossName, result}) => {
 
@@ -31,12 +32,12 @@ const SearchResult = ({bossName, result}) => {
       </Col>
       {activeSetup['skills'].map((skill, idx) => (
         <Col span={6} key={idx} style={{display: 'flex', justifyContent: 'center'}}>
-          <SetupIcons.Skill skill={skill} context='' activeClass={activeSetup['player_class']} />
+          <SkillIcon skill={skill} context='' activeClass={activeSetup['player_class']} />
         </Col>
       ))}
       {activeSetup['toys'].map((toy, idx) => (
         <Col span={6} key={idx} style={{display: 'flex', justifyContent: 'center'}}>
-          <SetupIcons.Toy toy={toy} context='' />
+          <ToyIcon toy={toy} context='' />
         </Col>
       ))}
 
