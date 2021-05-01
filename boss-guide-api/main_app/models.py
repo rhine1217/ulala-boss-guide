@@ -64,6 +64,7 @@ class UlalaSkill(UlalaCommonInfo):
     description = models.TextField()
     energy = models.IntegerField(null=True)
     energy_type = models.CharField(max_length=16, blank=True, null=True)
+    not_allowed_with = models.CharField(max_length=100, blank=True, null=True)
 
 class BossSetup(models.Model):
     boss = models.ForeignKey(UlalaBoss, on_delete=models.RESTRICT)

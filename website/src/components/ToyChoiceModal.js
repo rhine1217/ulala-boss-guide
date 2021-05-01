@@ -14,12 +14,11 @@ const ToyChoiceModal = () => {
 
   const isToySelectionValid = (newToy) => {
     const otherToys = currCharSelections.toys.filter((toy, idx) => idx !== toyToChangeIdx)
-    return otherToys.every((toy) => toy.name !== newToy['not_allowed_with'])
+    return otherToys.every(toy => toy.name !== newToy['not_allowed_with'])
   }
 
   const updateToy = (newToy) => {
     if (isToySelectionValid(newToy)) {
-      setIsToyChoiceModalVisible(false)
       const refreshedCurrCharSelectionsToys = [ ...currCharSelections.toys ]
       refreshedCurrCharSelectionsToys[toyToChangeIdx] = newToy
       setCurrCharSelections(selections => {
@@ -28,11 +27,12 @@ const ToyChoiceModal = () => {
           toys: refreshedCurrCharSelectionsToys
         }
       })
+      setIsToyChoiceModalVisible(false)
       setToyToChangeIdx(-1)
     } else {
       const toyType = newToy.name.split(' ').reverse()[0]
       message.warning({
-        content: `Only can equip one type of ${toyType === 'Rex' ? 'T. ' : ''} ${toyType} toy at one time`,
+        content: `Can only equip one type of ${toyType === 'Rex' ? 'T. ' : ''} ${toyType} toy at one time`,
         duration: 1,
       })
     }
