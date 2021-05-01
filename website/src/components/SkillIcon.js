@@ -3,14 +3,14 @@ import { classImgPrefix } from '../utils/charClassUtils'
 import styles from './SkillIcon.module.css'
 import { useSetRecoilState, useRecoilValue, useRecoilState } from 'recoil'
 import { isSkillChoiceModalVisibleState, isSkillDetailModalVisibleState, skillsSelectedIdxState, skillForDetailsState, skillToChangeIdxState} from '../states/atoms'
+import SkillDetailModal from './SkillDetailModal'
 
 const SkillIcon = ({activeClass, skill, context}) => {
 
   const setIsSkillChoiceModalVisible = useSetRecoilState(isSkillChoiceModalVisibleState)
   const setIsSkillDetailModalVisible = useSetRecoilState(isSkillDetailModalVisibleState)
-  const setSkillForDetails = useSetRecoilState(skillForDetailsState)
+  const [skillForDetails, setSkillForDetails] = useRecoilState(skillForDetailsState)
   const setSkillToChangeIdx = useSetRecoilState(skillToChangeIdxState)
-  // const [skillToChangeIdx, setSkillToChangeIdx] = useRecoilState(skillToChangeIdxState)
   const skillsSelectedIdx = useRecoilValue(skillsSelectedIdxState)
 
   const onClickSkill = () => {
@@ -21,6 +21,9 @@ const SkillIcon = ({activeClass, skill, context}) => {
       setSkillToChangeIdx(parseInt(context.split('-')[1]))
       setIsSkillChoiceModalVisible(true)
     } else if (context.split('-')[0] === 'toy') {
+      setSkillForDetails(skill)
+      setIsSkillDetailModalVisible(true)
+    } else if (context === 'searchResult') {
       setSkillForDetails(skill)
       setIsSkillDetailModalVisible(true)
     }
@@ -59,6 +62,7 @@ const SkillIcon = ({activeClass, skill, context}) => {
         <div className={styles['skill-energy-type-text']}>{skill['energy_type']}</div> }
       </div>
     </div>
+    {Object.keys(skillForDetails).length === 0 || skillForDetails.id !== skill.id ? <></> : <SkillDetailModal skill={skillForDetails}/>}
     </>
   )
 }

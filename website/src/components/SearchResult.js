@@ -15,6 +15,8 @@ const SearchResult = ({bossName, result}) => {
     setActiveSetup(result['player_setup'][idx])
   }
 
+  const context = 'searchResult'
+
   return (
 
   <Card>
@@ -32,12 +34,12 @@ const SearchResult = ({bossName, result}) => {
       </Col>
       {activeSetup['skills'].map((skill, idx) => (
         <Col span={6} key={idx} style={{display: 'flex', justifyContent: 'center'}}>
-          <SkillIcon skill={skill} context='' activeClass={activeSetup['player_class']} />
+          <SkillIcon skill={skill} context={context} activeClass={activeSetup['player_class']} />
         </Col>
       ))}
       {activeSetup['toys'].map((toy, idx) => (
         <Col span={6} key={idx} style={{display: 'flex', justifyContent: 'center'}}>
-          <ToyIcon toy={toy} context='' />
+          <ToyIcon toy={toy} context={context} />
         </Col>
       ))}
 

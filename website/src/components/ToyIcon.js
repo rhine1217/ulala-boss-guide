@@ -18,6 +18,8 @@ const ToyIcon = ({toy, context}) => {
       setIsToyChoiceModalVisible(true)
     } else if (context.split('-')[0] === 'skill') {
       setIsToyDetailModalVisible(true)
+    } else if (context === 'searchResult') {
+      setIsToyDetailModalVisible(true)
     }
   }
 
@@ -29,7 +31,7 @@ const ToyIcon = ({toy, context}) => {
         <img className={styles['toy-img']} src={`${process.env.REACT_APP_HOSTED_IMG_URL_PREFIX}/${toy['img_url']}.png`} alt="toy" />
       </div>
     </div>
-    {toyToChangeIdx === -1 ? <Modal title={toy.name} centered visible={isToyDetailModalVisible} footer={null} onCancel={() => setIsToyDetailModalVisible(false)}>{toy.description}</Modal> : <></>}
+    {toyToChangeIdx === -1 ? <Modal title={toy.name} centered visible={isToyDetailModalVisible} footer={null} onCancel={() => setIsToyDetailModalVisible(false)} width={300}>{toy.description}</Modal> : <></>}
     </>
   )
 }
