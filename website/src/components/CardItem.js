@@ -14,7 +14,7 @@ const CardItem = SortableElement(({index, skill, toy, activeClass}) => {
     <Col span={24}>
       <Card key={index}>
         <div style={{display: 'flex', alignItems: 'start', flexDirection: `${flexDirection}`}}>
-          <SetupIcons.Skill skill={skill} context='card' activeClass={activeClass}/>
+          <SetupIcons.Skill skill={skill} context={index} activeClass={activeClass}/>
           <SetupDesc value={activeSetupType === "skill" ? skill : toy} />
           <SetupIcons.Toy toy={toy} context='card' />
         </div>

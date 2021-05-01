@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Modal, Row, Col } from 'antd'
 import { useRecoilValue, useRecoilState } from 'recoil'
-import { classForSetupState, activeSetupTypeState, skillsForCurrClassState, toysForCurrClassState, currCharSelectionsState, isChoiceModalVisibleState } from '../states/atoms'
+import { classForSetupState, activeSetupTypeState, skillsForCurrClassState, toysForCurrClassState, isChoiceModalVisibleState, skillForDetailsState } from '../states/atoms'
 import SetupIcons from './SetupIcons'
+import SkillDetailModal from './SkillDetailModal'
 import styles from './ChoiceModal.module.css'
 
 const ChoiceModal = () => {
@@ -11,9 +12,10 @@ const ChoiceModal = () => {
   const [isChoiceModalVisible, setIsChoiceModalVisible] = useRecoilState(isChoiceModalVisibleState)
   const skillsForCurrClass = useRecoilValue(skillsForCurrClassState)
   const classForSetup = useRecoilValue(classForSetupState)
+  const skillForDetails = useRecoilValue(skillForDetailsState)
 
-  // modal choices = all current Class stuff, minus anything in currently selected.
   return (
+    <>
     <Modal
       title="Select following skills to swap"
       centered
@@ -27,6 +29,8 @@ const ChoiceModal = () => {
       ))}
         </div>
     </Modal>
+    {Object.keys(skillForDetails).length === 0 ? <></> : <SkillDetailModal skill={skillForDetails}/>}
+    </>
   )
 
 }

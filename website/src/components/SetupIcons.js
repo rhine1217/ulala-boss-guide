@@ -1,20 +1,28 @@
 import React, { useEffect } from 'react'
 import { classImgPrefix } from '../utils/charClassUtils'
 import styles from './SetupIcons.module.css'
-import { useRecoilState } from 'recoil'
-import { isChoiceModalVisibleState } from '../states/atoms'
-
-// Icons: Depending on context (If in the top level selection, onClick = open the choice modal. If in the modal, onClick = swap in this skill/toy)
+import { useSetRecoilState, useRecoilValue } from 'recoil'
+import { isChoiceModalVisibleState, isSkillDetailModalVisibleState, skillsSelectedIdxState, skillForDetailsState } from '../states/atoms'
 
 const Skill = ({activeClass, skill, context}) => {
 
-  const [isChoiceModalVisible, setIsChoiceModalVisible] = useRecoilState(isChoiceModalVisibleState)
+  const setIsChoiceModalVisible = useSetRecoilState(isChoiceModalVisibleState)
+  const setIsSkillDetailModalVisible = useSetRecoilState(isSkillDetailModalVisibleState)
+  const setSkillForDetails = useSetRecoilState(skillForDetailsState)
+  const skillsSelectedIdx = useRecoilValue(skillsSelectedIdxState)
 
   const onClickSkill = (e) => {
-    setIsChoiceModalVisible(true)
+
+    if (context === 'choiceModal') {
+      setSkillForDetails(skill)
+      setIsSkillDetailModalVisible(true)
+    } else {
+      setIsChoiceModalVisible(true)
+    }
   }
 
   return (
+    <>
     <div>
       <button className={styles['skill-icon-button']} onClick={(e) => onClickSkill(e)} />
       <div className={styles['skill-icon-wrapper']}>
@@ -39,11 +47,14 @@ const Skill = ({activeClass, skill, context}) => {
             className={styles['skill-up']}
             src={`${process.env.REACT_APP_HOSTED_IMG_URL_PREFIX}/TxtPetUp.png`} 
             alt="Skill Up" /> : <></> }
+          {context === 'choiceModal' && skillsSelectedIdx.includes(skill.id) ? 
+            <div className={styles['skill-equip']}>Equip</div> : <></> }
         </div>
         {context === 'choiceModal' ? <></> : 
         <div className={styles['skill-energy-type-text']}>{skill['energy_type']}</div> }
       </div>
     </div>
+    </>
   )
 }
 

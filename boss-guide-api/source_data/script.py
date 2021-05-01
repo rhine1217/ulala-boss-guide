@@ -96,7 +96,7 @@ PlayerSetup = DataFixtures(model="PlayerSetup", fields=['boss_setup', 'player_cl
 # UlalaMapArea.create_fixtures('04152021')
 # UlalaBoss.create_fixtures('04172021')
 # UlalaToy.create_fixtures('04212021')
-# UlalaSkill.create_fixtures('04272021')
+# UlalaSkill.create_fixtures('04302021')
 # BossSetup.create_fixtures('04272021')
 # PlayerSetup.create_fixtures('04272021')
 
