@@ -45,16 +45,23 @@ class UlalaClass(models.Model):
     
 class UlalaCommonInfo(models.Model):
     name = models.CharField(max_length=100)
-    description = models.TextField()
     img_url = models.CharField(max_length=100, null=True)
     class Meta:
         abstract = True
 
 class UlalaToy(UlalaCommonInfo):
     related_class = models.ManyToManyField(UlalaClass, related_name="toy_list")
+    not_allowed_with = models.CharField(max_length=100, null=True, blank=True)
 
+class UlalaToyDescription(models.Model):
+    toy = models.ForeignKey(UlalaToy, related_name='description', on_delete=models.CASCADE)
+    three_piece_effect = models.TextField()
+    six_piece_effect = models.TextField()
+    awakening_effect = models.TextField()
+    
 class UlalaSkill(UlalaCommonInfo):
     related_class = models.ForeignKey(UlalaClass, on_delete=models.RESTRICT)
+    description = models.TextField()
     energy = models.IntegerField(null=True)
     energy_type = models.CharField(max_length=16, blank=True, null=True)
 

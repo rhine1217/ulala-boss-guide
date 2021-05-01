@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from main_app.models import UlalaMapArea, BossSetup, PlayerSetup, UlalaBoss, UlalaSkill, UlalaToy, UlalaClass
+from main_app.models import UlalaMapArea, BossSetup, PlayerSetup, UlalaBoss, UlalaSkill, UlalaToy, UlalaToyDescription, UlalaClass
 
 class UlalaMapAreaSerializer(serializers.ModelSerializer):
     class Meta:
@@ -18,10 +18,16 @@ class UlalaSkillSerializer(serializers.ModelSerializer):
         model = UlalaSkill
         fields = '__all__'
 
+class UlalaToyDescriptionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UlalaToyDescription
+        fields = ['three_piece_effect', 'six_piece_effect', 'awakening_effect']
+        
 class UlalaToySerializer(serializers.ModelSerializer):
+    description = UlalaToyDescriptionSerializer(many=True, read_only=True)
     class Meta:
         model = UlalaToy
-        fields = ['id', 'name', 'description', 'img_url']
+        fields = ['id', 'name', 'description', 'not_allowed_with', 'img_url']
 
 class UlalaToyByClassSerializer(serializers.ModelSerializer):
     toy_list = UlalaToySerializer(many=True, read_only=True)
