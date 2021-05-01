@@ -102,14 +102,14 @@ pk,name,description,related_class,img_url,energy,energy_type,not_allowed_with
 101,Protection Stance,"Enter the Protection stance to increase your Block by xx%(+xx) for x seconds, during which Armor increases by 1% upon each successful block for up to 10% of Armor",5,ShouHuZiTai,3,,
 102,Hoo kham kham II,Taunt all enemies to attack you and gain a shield (xx%(+xx) of Armor) for 12 seconds (The Taunt effect has a 100% hit rate for enemy units at Lv x or lower). Gain an additional shield of 5% skill for each enemy taunted,5,HuGaGa,2,,Hoo kham kham
 103,Hoo kham kham,Taunt all enemies to attack you and gain a shield (xx%(+xx) of Armor) for 12 seconds (The Taunt effect has a 100% hit rate for enemy units at Lv x or lower),5,HuGaGa,2,,Hoo kham kham II
-104,Cloak of Bush,Disguise as a bush to gain Control Immunity for 6 seconds and increase DMG mitigation by xx% and ATK by xx%(+xx),4,CaoCongDou,2,,
+104,Cloak of Bush,Disguise as a bush to gain Control Immunity for 6 seconds and increase DMG mitigation by xx% and ATK by xx%(+xx),4,CaoCongDouPeng,2,,
 105,Rupture,Inflict bleeding DMG of xx%(+xx) ATK over 6 seconds and gain 3 Technique Points (Each Technique Point increases Evasion by 1%),4,GeLie,4,,
 106,Lacerations,Deal xx%(+xx) ATK DMG to enemy. Skill ignores 20% of enemy's Armor.,4,DuoMingTuCi,3,,
 107,Backstab,"Create a phantom and instantly move it behind the enemy, inflicting xx%(+xx) ATK DMG. The phantom will launch a bonus attack for each Technique Point",4,BeiCi,3,,
 108,Scatter Blade,Inflict xx%(+xx) ATK DMG to the enemy and remove x buffs. Successful removal increases DMG by 10%,4,YangGong,3,,
 109,Poison Coat,Apply Bonus Poison effect to the enemy. Each Layer of Poison causes xx%(+xx) ATK DMG per second for 12 seconds. One layer is added upon each basic attack dealt by an Assassin to a max of 15 layers. When the target dies the seals will be passed on the nearby enemy units.,4,TuDu,2,,Poison Coat II
 110,Roundhouse,Charge 0.5 seconds and then kick the enemy. Inflict xx%(+xx) ATK DMG and interrupt the target (The Interrupted effect has a 100% hit rate for enemy units at LvX or lower),4,JiaoTi,3,Charge,
-111,Shiv,Inflict xx%(+xx) ATK DMG to the enemy and reset the effective duration of Poison,4,ZhiMingDuShu,3,,
+111,Shiv,Inflict xx%(+xx) ATK DMG to the enemy and reset the effective duration of Poison,4,ZhiMingDuSu,3,,
 112,Pounce,Inflict xx%(+xx) ATK DMG on the enemy and gain 2 Technique Points (Each Technique Point increases Evasion by 1%),4,TuXi,3,,
 113,Pursuing,"Inflict xx%(+xx) ATK DMG to the enemy. The lower the enemy's HP, the higher the DMG",4,ZhuiJi,4,,Pursuing II
 114,Fish Bone Throwing Knife,Throw between 1 and 3 fish bone throwing knives with a barb to inflict xx%(+xx) ATK DMG to the enemy. If the enemy targets have Poison DMG increases by 25%,4,YuGuFeiDao,3,,
@@ -128,12 +128,12 @@ pk,name,description,related_class,img_url,energy,energy_type,not_allowed_with
 127,Cleave,Inflict xx%(+xx) ATK DMG on enemy units ahead of you and restore xx%(+xx) HP,6,ShunPiZhan,3,,
 128,Sacrifice,Restore xx%(+xx) HP over 10 seconds and take xx% of the DMG received every time for the teammate with the lowest HP,6,XiSheng,2,,Sacrifice II
 129,Sacrifice II,"Recover xx%(+xx) HP over 10 sec, take xx% of the damage for the teammate with the lowest HP, and decrease the damage taken by 30%",6,XiSheng,2,,Sacrifice
-130,Severing Strike,"Consume 20% of your current HP to inflict xx%(+xx) ATK DMG to enemy units in the back row. If the targets are killed within xx seconds, restore xx%(+xx) of your HP. If in the Frenzied state, DMG increases by 50%",6,ManHuangDaJi.,3,,
+130,Severing Strike,"Consume 20% of your current HP to inflict xx%(+xx) ATK DMG to enemy units in the back row. If the targets are killed within xx seconds, restore xx%(+xx) of your HP. If in the Frenzied state, DMG increases by 50%",6,ManHuangDaJi,3,,
 131,Fevered Pursuit,"Attack 3 times and inflict xx%(+xx) ATK DMG. If in the Frenzied state, attack range increases and attacks focus on the enemy unit with the lowest HP, stunning the target for x seconds (The Stun effect has a 100% hit rate for enemy units at Lv x or lower)",6,FenLiYiJi,2,Charge,
 132,Frenzy,"Enter the Frenzied state to increase ATK by 30%, at the cost of 30% Max HP. Inflict xx%(+xx) ATK DMG on the enemy with the lowest HP, and lower its healing by xx%. In the Frenzied state, DMG increases by 50%",6,LingKongZhan,4,,
-133,Let's charge,Inspire your party and increase ATK by xx%(+xx) for 6 seconds,6,KuangReDaji,3,,Let's charge II
-134,Let's charge II,"Inspire your party and increase ATK by xx%(+xx). Damage received is reduced by 15% for 6 seconds. Also, Heal 4.5% HP immediately",6,KuangReDaji,3,,Let's charge
-135,Barbarian Veins,Activate Barbarian Veins to raise Max hP by 10% for x seconds and restore HP of xx%(+xx) over 10 seconds,6,ManHuangXu,3,,
+133,Let's charge,Inspire your party and increase ATK by xx%(+xx) for 6 seconds,6,KuangReDaJi,3,,Let's charge II
+134,Let's charge II,"Inspire your party and increase ATK by xx%(+xx). Damage received is reduced by 15% for 6 seconds. Also, Heal 4.5% HP immediately",6,KuangReDaJi,3,,Let's charge
+135,Barbarian Veins,Activate Barbarian Veins to raise Max hP by 10% for x seconds and restore HP of xx%(+xx) over 10 seconds,6,ManHuangXueMai,3,,
 136,Blood Force,"Restore xx%(+xx) HP over 10 seconds. If in the Barbarian Veins state, increase healing by 50%",6,XueMaiZhiLi,3,,
 137,Blood Howl,Restore xx%(+xx) HP over 10 seconds and reduce the DMG received by 10% for 10 seconds,6,WuWeiZhan,3,,
 138,Hoo hoo hoo,Reduce DMG received by other teammates by xx% over 10 seconds. Up to xx%(+xx) of your HP can be restored,6,HuHuHu,2,,Hoo hoo hoo II
