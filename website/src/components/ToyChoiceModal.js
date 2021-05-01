@@ -46,7 +46,7 @@ const ToyChoiceModal = () => {
         <Card>
           <div style={{display: 'flex', alignItems: 'start'}}>
             <ToyIcon toy={toy} context='choiceModal' />
-            <SetupDesc value={toy} />
+            <SetupDesc value={toy} context='choiceModal' />
             <Button type="primary" onClick={() => updateToy(toy)}>Swap</Button>
           </div>
         </Card>      

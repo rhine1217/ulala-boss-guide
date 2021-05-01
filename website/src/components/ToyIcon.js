@@ -3,6 +3,7 @@ import styles from './ToyIcon.module.css'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import { isToyChoiceModalVisibleState, toyToChangeIdxState } from '../states/atoms'
 import { Modal } from 'antd'
+import ToyDesc from './ToyDesc'
 
 const ToyIcon = ({toy, context}) => {
 
@@ -23,6 +24,17 @@ const ToyIcon = ({toy, context}) => {
     }
   }
 
+  // const isToySelectionValid = () => {
+
+  //   // take your current list of toys selected, minus the one being swapped out.
+  //   // use the toy selected, the name. 
+  //   // loop through the current list of toys selected (minus the one being swapped out), go through their name
+  //   // does the name 'include' the toy selected's name?
+
+
+
+  // }
+
   return (
     <>
     <div>
@@ -31,7 +43,11 @@ const ToyIcon = ({toy, context}) => {
         <img className={styles['toy-img']} src={`${process.env.REACT_APP_HOSTED_IMG_URL_PREFIX}/${toy['img_url']}.png`} alt="toy" />
       </div>
     </div>
-    {toyToChangeIdx === -1 ? <Modal title={toy.name} centered visible={isToyDetailModalVisible} footer={null} onCancel={() => setIsToyDetailModalVisible(false)} width={300}>{toy.description}</Modal> : <></>}
+    {toyToChangeIdx === -1 ? 
+      <Modal title={toy.name} centered visible={isToyDetailModalVisible} footer={null} onCancel={() => setIsToyDetailModalVisible(false)} width={300}>
+      <ToyDesc description={toy.description} />
+      </Modal> 
+      : <></>}
     </>
   )
 }

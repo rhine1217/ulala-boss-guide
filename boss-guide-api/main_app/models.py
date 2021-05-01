@@ -54,7 +54,7 @@ class UlalaToy(UlalaCommonInfo):
     not_allowed_with = models.CharField(max_length=100, null=True, blank=True)
 
 class UlalaToyDescription(models.Model):
-    toy = models.ForeignKey(UlalaToy, related_name='description', on_delete=models.CASCADE)
+    toy = models.OneToOneField(UlalaToy, related_name='description', on_delete=models.CASCADE)
     three_piece_effect = models.TextField()
     six_piece_effect = models.TextField()
     awakening_effect = models.TextField()

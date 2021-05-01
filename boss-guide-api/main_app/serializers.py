@@ -24,7 +24,7 @@ class UlalaToyDescriptionSerializer(serializers.ModelSerializer):
         fields = ['three_piece_effect', 'six_piece_effect', 'awakening_effect']
         
 class UlalaToySerializer(serializers.ModelSerializer):
-    description = UlalaToyDescriptionSerializer(many=True, read_only=True)
+    description = UlalaToyDescriptionSerializer(read_only=True)
     class Meta:
         model = UlalaToy
         fields = ['id', 'name', 'description', 'not_allowed_with', 'img_url']
