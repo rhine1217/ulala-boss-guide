@@ -49,7 +49,6 @@ export const skillsSelectedIdxState = selector({
   key: 'skillsSelectedIdxState',
   get: ({get}) => {
     const skillsSelected = get(currCharSelectionsState)
-    console.log('inside Selector', skillsSelected)
     if (skillsSelected.hasOwnProperty('skills')) {
       return skillsSelected.skills.map(skill => skill.id)
     } else {
@@ -71,4 +70,9 @@ export const isSkillDetailModalVisibleState = atom({
 export const skillForDetailsState = atom({
   key: 'skillForDetailsState',
   default: {}
+})
+
+export const skillToChangeIdxState = atom({
+  key: 'skillToChangeIdxState', 
+  default: -1
 })

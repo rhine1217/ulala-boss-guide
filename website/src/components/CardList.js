@@ -8,7 +8,7 @@ const CardList = SortableContainer(({activeClass, skills, toys}) => {
   <Row gutter={[16, 16]} style={{padding: '24px 24px'}}>
     {skills.map((skill, idx) => 
       <CardItem key={idx} index={idx} 
-                skill={skill} toy={toys[idx]} activeClass={activeClass}
+                skill={skill} toy={toys[idx]} activeClass={activeClass} context={idx}
       />)}
   </Row>
   )

@@ -2,13 +2,14 @@ import React, { useEffect } from 'react'
 import { classImgPrefix } from '../utils/charClassUtils'
 import styles from './SetupIcons.module.css'
 import { useSetRecoilState, useRecoilValue } from 'recoil'
-import { isChoiceModalVisibleState, isSkillDetailModalVisibleState, skillsSelectedIdxState, skillForDetailsState } from '../states/atoms'
+import { isChoiceModalVisibleState, isSkillDetailModalVisibleState, skillsSelectedIdxState, skillForDetailsState, skillToChangeIdxState } from '../states/atoms'
 
 const Skill = ({activeClass, skill, context}) => {
 
   const setIsChoiceModalVisible = useSetRecoilState(isChoiceModalVisibleState)
   const setIsSkillDetailModalVisible = useSetRecoilState(isSkillDetailModalVisibleState)
   const setSkillForDetails = useSetRecoilState(skillForDetailsState)
+  const setSkillToChangeIdx = useSetRecoilState(skillToChangeIdxState)
   const skillsSelectedIdx = useRecoilValue(skillsSelectedIdxState)
 
   const onClickSkill = (e) => {
@@ -17,6 +18,9 @@ const Skill = ({activeClass, skill, context}) => {
       setSkillForDetails(skill)
       setIsSkillDetailModalVisible(true)
     } else {
+      console.log('context', context)
+      console.log('context type', typeof context)
+      setSkillToChangeIdx(context)
       setIsChoiceModalVisible(true)
     }
   }

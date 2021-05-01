@@ -1,15 +1,29 @@
 import React from 'react'
 import { Modal, Button } from 'antd'
-import { useRecoilState } from 'recoil'
-import { isSkillDetailModalVisibleState } from '../states/atoms'
+import { useRecoilState, useSetRecoilState } from 'recoil'
+import { isChoiceModalVisibleState, isSkillDetailModalVisibleState, skillToChangeIdxState, currCharSelectionsState } from '../states/atoms'
 
 const SkillDetailModal = ({skill}) => {
 
   const [isSkillDetailModalVisible, setIsSkillDetailModalVisible] = useRecoilState(isSkillDetailModalVisibleState)
+  const [skillToChangeIdx, setSkillToChangeIdx] = useRecoilState(skillToChangeIdxState)
+  const [currCharSelections, setCurrCharSelections] = useRecoilState(currCharSelectionsState)
+  const setIsChoiceModalVisible = useSetRecoilState(isChoiceModalVisibleState)
+
   const updateSkill = () => {
-    console.log('clicked')
     setIsSkillDetailModalVisible(false)
+    const refreshedCurrCharSelectionsSkills = [ ... currCharSelections.skills ]
+    refreshedCurrCharSelectionsSkills[skillToChangeIdx] = skill
+    setCurrCharSelections(selections => {
+      return {
+        skills: refreshedCurrCharSelectionsSkills,
+        toys: selections.toys
+      }
+    })
+    setSkillToChangeIdx(-1)
+    setIsChoiceModalVisible(false)
   }
+
   return (
     <Modal
       title={skill.name}

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil'
-import { classTagState, classForSetupState, activeSetupTypeState, skillsForCurrClassState, toysForCurrClassState, currCharSelectionsState } from '../states/atoms'
+import { classTagState, classForSetupState, activeSetupTypeState, skillsForCurrClassState, toysForCurrClassState, currCharSelectionsState, skillToChangeIdxState } from '../states/atoms'
 import arrayMove from 'array-move'
 import CardList from './CardList'
 import ChoiceModal from './ChoiceModal'
@@ -14,6 +14,7 @@ const SetupSelection = ({skills, toys}) => {
   const setSkillsForCurrClass = useSetRecoilState(skillsForCurrClassState)
   const setToysForCurrClass = useSetRecoilState(toysForCurrClassState)
   const [changeCounter, setChangeCounter] = useState(1)
+  const skillToChangeIdx = useRecoilValue(skillToChangeIdxState)
   const [currCharSelections, setCurrCharSelections] = useRecoilState(currCharSelectionsState)
   // {
   //   skills: []
@@ -68,11 +69,11 @@ const SetupSelection = ({skills, toys}) => {
     })
     setAllSelections(refreshedAllSelections)
 
-  }, [changeCounter, selectedClasses.length]) // when sorting happens * when class tags change (select/unselect classes from the tags)
+  }, [changeCounter, selectedClasses.length, skillToChangeIdx]) // when sorting happens, when class tags change (select/unselect classes from the tags), when a new skill gets swapped in
 
 
   const onSortEnd = ({oldIndex, newIndex}) => {
-
+    console.log('inside onSortEnd')
     setCurrCharSelections( selections => {
       return {
         skills: activeSetupType === 'skill' ? arrayMove(selections.skills, oldIndex, newIndex) : selections.skills,
