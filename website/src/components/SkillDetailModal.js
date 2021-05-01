@@ -37,7 +37,6 @@ const SkillDetailModal = ({skill}) => {
       })
     }
 
-
   }
 
   const footer = skillToChangeIdx === -1 ? null : 

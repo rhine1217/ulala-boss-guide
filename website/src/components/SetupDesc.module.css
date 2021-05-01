@@ -1,0 +1,10 @@
+.setup-desc-button {
+  z-index:1000;
+  border: none;
+  background: none;
+  position: absolute;
+}
+
+.setup-desc-button:hover {
+  cursor: pointer;
+}

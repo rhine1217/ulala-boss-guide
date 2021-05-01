@@ -31,6 +31,9 @@ const SkillIcon = ({activeClass, skill, context}) => {
       case 'searchResult':
         setSkillForDetails(skill)
         setIsSkillDetailModalVisible(true)
+        break;
+      default:
+        return
     }
   }
 
@@ -43,6 +46,8 @@ const SkillIcon = ({activeClass, skill, context}) => {
         return (<div className={styles['skill-energy-type-text']}>{skill['energy_type']}</div>)
       case 'toy':
         return (<div className={styles['skill-name-subtext']}>{skill.name}</div>)
+      default:
+        return (<></>)
     }
   }
 
