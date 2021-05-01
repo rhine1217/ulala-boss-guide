@@ -78,7 +78,13 @@
   margin-top: 26px;
 }
 
-.skill-energy-type-text {
+.skill-energy-type-text, .skill-name-subtext {
   font-size: 12px;
   padding-top: 4px
+}
+
+.skill-name-subtext {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }

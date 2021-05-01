@@ -20,3 +20,11 @@
 .toy-img {
   max-height: 100%;
 }
+
+.toy-name-subtext {
+  font-size: 10px;
+  padding-top: 4px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}

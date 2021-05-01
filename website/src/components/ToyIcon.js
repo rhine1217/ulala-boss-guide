@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styles from './ToyIcon.module.css'
-import { useRecoilState, useSetRecoilState } from 'recoil'
+import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil'
 import { isToyChoiceModalVisibleState, toyToChangeIdxState } from '../states/atoms'
 import { Modal } from 'antd'
 import ToyDesc from './ToyDesc'
@@ -12,16 +12,27 @@ const ToyIcon = ({toy, context}) => {
   const [isToyDetailModalVisible, setIsToyDetailModalVisible] = useState(false)
 
   const onClickToy = () => {
-    if (context === 'choiceModal') {
-      return
-    } else if (context.split('-')[0] === 'toy') {
-      setToyToChangeIdx(parseInt(context.split('-')[1]))
-      setIsToyChoiceModalVisible(true)
-    } else if (context.split('-')[0] === 'skill') {
-      setIsToyDetailModalVisible(true)
-    } else if (context === 'searchResult') {
-      setIsToyDetailModalVisible(true)
+    let currContext = context.split('-')[0] || context
+    switch (currContext) {
+      case 'choiceModal':
+        return
+      case 'toy':
+        setToyToChangeIdx(parseInt(context.split('-')[1]))
+        setIsToyChoiceModalVisible(true)
+        break;
+      case 'skill':
+        setIsToyDetailModalVisible(true)
+        break;
+      case 'searchResult':
+        setIsToyDetailModalVisible(true)
     }
+  }
+
+  const subText = () => {
+    let currContext = context.split('-')[0] || context
+    console.log(currContext)
+    return (currContext === 'skill' ? <div className={styles['toy-name-subtext']}>{toy.name}</div> 
+    : <></> )
   }
 
   return (
@@ -30,6 +41,7 @@ const ToyIcon = ({toy, context}) => {
       <button className={styles['toy-icon-button']} onClick={onClickToy} />
       <div className={styles['toy-icon-wrapper']}>
         <img className={styles['toy-img']} src={`${process.env.REACT_APP_HOSTED_IMG_URL_PREFIX}/${toy['img_url']}.png`} alt="toy" />
+      {subText()}
       </div>
     </div>
     {toyToChangeIdx === -1 ? 

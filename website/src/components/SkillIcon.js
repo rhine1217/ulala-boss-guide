@@ -2,7 +2,7 @@ import React from 'react'
 import { classImgPrefix } from '../utils/charClassUtils'
 import styles from './SkillIcon.module.css'
 import { useSetRecoilState, useRecoilValue, useRecoilState } from 'recoil'
-import { isSkillChoiceModalVisibleState, isSkillDetailModalVisibleState, skillsSelectedIdxState, skillForDetailsState, skillToChangeIdxState} from '../states/atoms'
+import { isSkillChoiceModalVisibleState, isSkillDetailModalVisibleState, skillsSelectedIdxState, skillForDetailsState, skillToChangeIdxState } from '../states/atoms'
 import SkillDetailModal from './SkillDetailModal'
 
 const SkillIcon = ({activeClass, skill, context}) => {
@@ -14,18 +14,35 @@ const SkillIcon = ({activeClass, skill, context}) => {
   const skillsSelectedIdx = useRecoilValue(skillsSelectedIdxState)
 
   const onClickSkill = () => {
-    if (context === 'choiceModal') {
-      setSkillForDetails(skill)
-      setIsSkillDetailModalVisible(true)
-    } else if (context.split('-')[0] === 'skill') {
-      setSkillToChangeIdx(parseInt(context.split('-')[1]))
-      setIsSkillChoiceModalVisible(true)
-    } else if (context.split('-')[0] === 'toy') {
-      setSkillForDetails(skill)
-      setIsSkillDetailModalVisible(true)
-    } else if (context === 'searchResult') {
-      setSkillForDetails(skill)
-      setIsSkillDetailModalVisible(true)
+    let currContext = context.split('-')[0] || context
+    switch (currContext) {
+      case 'choiceModal':
+        setSkillForDetails(skill)
+        setIsSkillDetailModalVisible(true)
+        break;
+      case 'skill':
+        setSkillToChangeIdx(parseInt(context.split('-')[1]))
+        setIsSkillChoiceModalVisible(true)
+        break;
+      case 'toy':
+        setSkillForDetails(skill)
+        setIsSkillDetailModalVisible(true)
+        break;
+      case 'searchResult':
+        setSkillForDetails(skill)
+        setIsSkillDetailModalVisible(true)
+    }
+  }
+
+  const subText = () => {
+    let currContext = context.split('-')[0] || context
+    switch (currContext) {
+      case 'choiceModal':
+        return (<></>)
+      case 'skill':
+        return (<div className={styles['skill-energy-type-text']}>{skill['energy_type']}</div>)
+      case 'toy':
+        return (<div className={styles['skill-name-subtext']}>{skill.name}</div>)
     }
   }
 
@@ -58,8 +75,7 @@ const SkillIcon = ({activeClass, skill, context}) => {
           {context === 'choiceModal' && skillsSelectedIdx.includes(skill.id) ? 
             <div className={styles['skill-equip']}>Equip</div> : <></> }
         </div>
-        {context === 'choiceModal' ? <></> : 
-        <div className={styles['skill-energy-type-text']}>{skill['energy_type']}</div> }
+        {subText()}
       </div>
     </div>
     {Object.keys(skillForDetails).length === 0 || skillForDetails.id !== skill.id ? <></> : <SkillDetailModal skill={skillForDetails}/>}
