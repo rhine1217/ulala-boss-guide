@@ -1,5 +1,5 @@
 import React from 'react'
-import { Modal, Card, Button, Row, Col } from 'antd'
+import { Modal, Card, Button, Row, Col, message } from 'antd'
 import { useRecoilValue, useRecoilState } from 'recoil'
 import { currCharSelectionsState, isToyChoiceModalVisibleState, toysToSelectFromState, toyToChangeIdxState } from '../states/atoms'
 import ToyIcon from './ToyIcon'
@@ -12,17 +12,30 @@ const ToyChoiceModal = () => {
   const [toyToChangeIdx, setToyToChangeIdx] = useRecoilState(toyToChangeIdxState)
   const [currCharSelections, setCurrCharSelections] = useRecoilState(currCharSelectionsState)
 
+  const isToySelectionValid = (newToy) => {
+    const otherToys = currCharSelections.toys.filter((toy, idx) => idx != toyToChangeIdx)
+    return otherToys.every((toy) => toy.name !== newToy['not_allowed_with'])
+  }
+
   const updateToy = (newToy) => {
-    setIsToyChoiceModalVisible(false)
-    const refreshedCurrCharSelectionsToys = [ ...currCharSelections.toys ]
-    refreshedCurrCharSelectionsToys[toyToChangeIdx] = newToy
-    setCurrCharSelections(selections => {
-      return {
-        skills: selections.skills,
-        toys: refreshedCurrCharSelectionsToys
-      }
-    })
-    setToyToChangeIdx(-1)
+    if (isToySelectionValid(newToy)) {
+      setIsToyChoiceModalVisible(false)
+      const refreshedCurrCharSelectionsToys = [ ...currCharSelections.toys ]
+      refreshedCurrCharSelectionsToys[toyToChangeIdx] = newToy
+      setCurrCharSelections(selections => {
+        return {
+          skills: selections.skills,
+          toys: refreshedCurrCharSelectionsToys
+        }
+      })
+      setToyToChangeIdx(-1)
+    } else {
+      const toyType = newToy.name.split(' ').reverse()[0]
+      message.warning({
+        content: `Only can equip one type of ${toyType === 'Rex' ? 'T. ' : ''} ${toyType} toy at one time`,
+        duration: 1,
+      })
+    }
   }
 
   const onCancel = () => {

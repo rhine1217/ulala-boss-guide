@@ -24,17 +24,6 @@ const ToyIcon = ({toy, context}) => {
     }
   }
 
-  // const isToySelectionValid = () => {
-
-  //   // take your current list of toys selected, minus the one being swapped out.
-  //   // use the toy selected, the name. 
-  //   // loop through the current list of toys selected (minus the one being swapped out), go through their name
-  //   // does the name 'include' the toy selected's name?
-
-
-
-  // }
-
   return (
     <>
     <div>
