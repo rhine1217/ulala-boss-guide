@@ -13,7 +13,7 @@ const ToyChoiceModal = () => {
   const [currCharSelections, setCurrCharSelections] = useRecoilState(currCharSelectionsState)
 
   const isToySelectionValid = (newToy) => {
-    const otherToys = currCharSelections.toys.filter((toy, idx) => idx != toyToChangeIdx)
+    const otherToys = currCharSelections.toys.filter((toy, idx) => idx !== toyToChangeIdx)
     return otherToys.every((toy) => toy.name !== newToy['not_allowed_with'])
   }
 

@@ -43,9 +43,24 @@ const SetupSelection = ({skills, toys}) => {
         setToysForCurrClass(refreshedToys)
       }
     }
+
+    const getRandomSelection = (selection) => {
+      const randomIdx = new Set()
+      const output = [...Array(4)].map(() => {
+        const size = randomIdx.size
+        let generatedIdx = -1
+        while (size === randomIdx.size) {
+          generatedIdx = Math.floor(Math.random() * selection.length)
+          randomIdx.add(generatedIdx)
+        }
+        return selection[generatedIdx]
+      })
+      return output
+    }
+
     return {
-      skills: refreshedSkills.slice(0,4),
-      toys: refreshedToys.slice(0,4)
+      skills: refreshedSkills.length > 0  ? getRandomSelection(refreshedSkills) : refreshedSkills.slice(0,4),
+      toys: refreshedToys.length > 0 ? getRandomSelection(refreshedToys) : refreshedToys.slice(0,4)
     }
   }
 
