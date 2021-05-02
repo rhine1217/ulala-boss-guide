@@ -24,6 +24,7 @@ const SearchResults = () => {
       const searchByName = async(name) => {
         try {
           const results = await Setup.List(name)
+          console.log(results)
           setResults(results.data)
         } catch (error) {
           console.log(error)

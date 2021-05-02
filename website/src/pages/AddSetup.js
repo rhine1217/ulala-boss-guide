@@ -75,6 +75,8 @@ const AddSetup = () => {
         })
       })
 
+      console.log(bossSetup, playerSetups)
+
       try {
         const addedSetup = await Setup.Add({bossSetup, playerSetups})
         console.log(addedSetup)

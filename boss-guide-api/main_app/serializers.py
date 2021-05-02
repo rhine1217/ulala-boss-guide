@@ -99,7 +99,6 @@ class PlayerClassField(serializers.RelatedField):
           'id': obj.id
         }
     def to_internal_value(self, data):
-        print(data)
         return UlalaClass.objects.get(name=data)
 
 class PlayerSetupCreateSerializer(serializers.ModelSerializer):

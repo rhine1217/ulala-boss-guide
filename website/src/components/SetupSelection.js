@@ -65,16 +65,6 @@ const SetupSelection = ({skills, toys}) => {
   }
 
   useEffect(() => {
-    if (allSelections[classForSetup]) {
-      setCurrCharSelections(allSelections[classForSetup])
-    } else {
-      setCurrCharSelections(initCurrCharSelections(skills, toys))
-      setChangeCounter( changeCounter * -1 )
-    }
-  }, [classForSetup])
-
-  useEffect(() => {
-
     const refreshedAllSelections = { ...allSelections }
     if (classForSetup) {
       refreshedAllSelections[classForSetup] = currCharSelections
@@ -88,6 +78,17 @@ const SetupSelection = ({skills, toys}) => {
 
   }, [changeCounter, selectedClasses.length, skillToChangeIdx, toyToChangeIdx]) // when sorting happens, when class tags change (select/unselect classes from the tags), when a new skill gets swapped in, when a new toy gets swapped in
 
+  useEffect(() => {
+    const updateCurrCharSelections = async () => {
+      if (allSelections[classForSetup]) {
+        await setCurrCharSelections(allSelections[classForSetup])
+      } else {
+        await setCurrCharSelections(initCurrCharSelections(skills, toys))
+        setChangeCounter( changeCounter * -1 )
+      }
+    }
+      updateCurrCharSelections()
+  }, [classForSetup])
 
   const onSortEnd = ({oldIndex, newIndex}) => {
     setCurrCharSelections( selections => {
