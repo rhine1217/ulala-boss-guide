@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { PageHeader, Button, Form, Select, Radio, message } from 'antd'
+import { PageHeader, Button, Form, Select, Radio, message, Input } from 'antd'
 import BossInput from '../components/BossInput'
 import ClassSelection from '../components/ClassSelection'
 import SetupSelection from '../components/SetupSelection'
@@ -16,9 +16,11 @@ const AddSetup = () => {
   const setActiveSetupType = useSetRecoilState(activeSetupTypeState)
   const allSelectionsIdx = useRecoilValue(allSelectionsIdxState)
   const [bossNameSelected, setBossNameSelected] = useState('')
+  const [setupNotes, setSetupNotes] = useState('')
 
   const onSelect = (value) => setClassForSetup(value)
   const onChange = (e) => setActiveSetupType(e.target.value)
+  const onInput = (e) => setSetupNotes(e.target.value)
   
   const [skills, setSkills] = useRecoilState(skillListState)
   const [toys, setToys] = useRecoilState(toyListState)
@@ -87,14 +89,14 @@ const AddSetup = () => {
         ]} />
 
       <Form layout="vertical" style={{padding: '16px 24px 0px'}}>
-        <Form.Item label="Boss">
+        <Form.Item required label="Boss">
           <BossInput context="new" updateBossInput={updateBossInput} />
         </Form.Item>
         <ClassSelection context="new" />
       </Form>
 
       <Form layout="horizontal" style={{padding: '0 24px'}}>
-        <Form.Item label="Select a Class to Configure Setup">
+        <Form.Item required label="Select a Class to Configure Setup">
           <Select value={classForSetup || selectedClasses[0]} onSelect={onSelect}>
             {selectedClasses.map((selectedClass, idx) => 
               <Option key={`option-${idx}`} value={selectedClass}>{selectedClass}</Option>
@@ -111,6 +113,11 @@ const AddSetup = () => {
       </div>
 
       <SetupSelection skills={skills} toys={toys}/>
+
+      <div style={{padding: '0 24px 16px', textAlign: 'right'}}>
+        <Input.TextArea placeholder="Add any other notes here" rows={2} autoSize={false} maxLength={140} onChange={onInput}/>
+        <div style={{fontSize: '12px', marginTop: '6px'}}>{setupNotes.length} / 140</div> 
+      </div>
 
     </div>
   )
