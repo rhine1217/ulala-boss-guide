@@ -23,7 +23,7 @@ const SearchResults = () => {
     useEffect(() => {
       const searchByName = async(name) => {
         try {
-          const results = await Setup.BossSetupList(name)
+          const results = await Setup.List(name)
           setResults(results.data)
         } catch (error) {
           console.log(error)

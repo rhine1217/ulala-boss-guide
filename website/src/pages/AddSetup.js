@@ -6,6 +6,7 @@ import SetupSelection from '../components/SetupSelection'
 import { useRecoilValue, useRecoilState, useSetRecoilState } from 'recoil'
 import { userState, classTagState, classForSetupState, activeSetupTypeState, skillListState, toyListState, allSelectionsIdxState } from '../states/atoms'
 import Ulala from '../Models/Ulala'
+import Setup from '../Models/Setup'
 
 const { Option } = Select
 
@@ -54,7 +55,7 @@ const AddSetup = () => {
     }
   }
 
-  const addSetup = (setupStatus) => {
+  const addSetup = async (setupStatus) => {
 
     const bossSetup = {}, playerSetups = []
 
@@ -73,8 +74,15 @@ const AddSetup = () => {
           toys: allSelectionsIdx[selectionClass].toys
         })
       })
-    }
 
+      try {
+        const addedSetup = await Setup.Add({bossSetup, playerSetups})
+        console.log(addedSetup)
+      } catch (error) {
+        console.log(error)
+      }
+
+    }
     return { bossSetup, playerSetups }
   }
 

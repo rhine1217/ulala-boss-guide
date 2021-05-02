@@ -4,7 +4,6 @@ from django.contrib.auth.models import User
 
 class DiscordAuthenticationBackend(BaseBackend):
     def authenticate(self, request, user):
-        print('CALLING FROM THE DISCORD AUTH BACKEND')
         try:
             user = DiscordUser.objects.get(id=user['id'])
         except DiscordUser.DoesNotExist:

@@ -76,16 +76,36 @@ class BossSetupListSerializer(serializers.ModelSerializer):
         model = BossSetup
         fields = ['id', 'boss', 'player_classes', 'player_setup', 'note', 'created_by', 'created_on', 'published_on', 'status']
 
-# class BossSetupCreateSerializer(serializers.ModelSerializer):
-#     boss = serializers.StringRelatedField()
-#     created_by = serializers.ForeignKeyRelatedField()
+class BossField(serializers.RelatedField):
+    def to_representation(self, obj):
+        return {
+          'id': obj.id
+        }
+    def to_internal_value(self, data):
+        return UlalaBoss.objects.get(name=data)
 
-#     class Meta:
-#         model = BossSetup
-#         exclude = ['id']
-      
-# class PlayerSetupCreateSerializer(serializers.Serializer):
-#     class Meta:
-#         model = PlayerSetup
-#         exclude = ['id', 'boss_setup']
-    
+class BossSetupCreateSerializer(serializers.ModelSerializer):
+    # created_by = serializers.ForeignKeyRelatedField()
+    boss = BossField(queryset=UlalaBoss.objects.all())
+    class Meta:
+        model = BossSetup
+        fields = '__all__'
+    def create(self, validated_data):
+        return BossSetup.objects.create(**validated_data)
+
+class PlayerClassField(serializers.RelatedField):
+    def to_representation(self, obj):
+        return {
+          'id': obj.id
+        }
+    def to_internal_value(self, data):
+        print(data)
+        return UlalaClass.objects.get(name=data)
+
+class PlayerSetupCreateSerializer(serializers.ModelSerializer):
+    player_class = PlayerClassField(queryset=UlalaClass.objects.all())
+    class Meta:
+        model = PlayerSetup
+        fields = '__all__'
+    def create(self, validated_data):
+        return PlayerSetup.objects.create(**validated_data)

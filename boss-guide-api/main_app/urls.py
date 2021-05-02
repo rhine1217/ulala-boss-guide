@@ -11,6 +11,7 @@ urlpatterns = [
     path('boss/<int:pk>', views.UlalaBossDetail.as_view()),
     path('skill/', views.UlalaSkillList.as_view()),
     path('toy/', views.UlalaToyByClassList.as_view()),
+    path('addsetup/', views.BossPlayerSetupCreate.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

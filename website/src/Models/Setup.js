@@ -5,10 +5,10 @@ const instance = axios.create({
 })
 
 class Setup {
-  static BossSetupList = (name) => instance.get(`bosssetup/`, { 
-    params: { 
-      name
-    }})
+  static List = (name) => instance.get(`bosssetup/`, { 
+    params: { name }
+  })
+  static Add = (data) => instance.post(`addsetup/`, data)
 }
 
 export default Setup
