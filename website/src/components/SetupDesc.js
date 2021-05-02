@@ -19,6 +19,7 @@ const SetupDesc = ({value, context}) => {
   const containerRef = React.createRef()
 
   const description = value.description
+  const currContext = context.split('-')[0] || context
 
   useEffect(() => {
     const setDimensions = () => {
@@ -35,7 +36,6 @@ const SetupDesc = ({value, context}) => {
   }, [containerRef])
 
   const onClickDesc = () => {
-    let currContext = context.split('-')[0] || context
     switch (currContext) {
       case 'choiceModal':
         return 
@@ -55,7 +55,7 @@ const SetupDesc = ({value, context}) => {
   return (
     <>
     <div ref={containerRef} style={{paddingLeft: '16px', width: '100%'}}>
-    <button className={styles['setup-desc-button']} style={{width: containerWidth, height: containerHeight}} onClick={onClickDesc} />
+      <button className={styles['setup-desc-button']} style={{width: containerWidth, height: containerHeight, cursor: currContext === 'choiceModal' ? 'default' : 'pointer'}} onClick={onClickDesc} />
       <Tag color={classTagsColor[classForSetup]}>{value.name}</Tag>
       <div className={context === 'choiceModal' ? '' : "text-overflow"} style={{fontSize: '12px', paddingTop: '8px', minHeight: '4em'}}>
         {typeof description === 'string' ? description : 

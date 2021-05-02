@@ -13,7 +13,7 @@ const CardItem = SortableElement(({context, skill, toy, activeClass}) => {
   const flexDirection = activeSetupType === 'skill' ? '' : 'row-reverse'
   return (
     <Col span={24}>
-      <Card key={context}>
+      <Card key={context} style={{cursor: 'grab'}}>
         <div style={{display: 'flex', alignItems: 'start', flexDirection: `${flexDirection}`}}>
           <SkillIcon skill={skill} context={`${activeSetupType}-${context}`} activeClass={activeClass}/>
           <SetupDesc value={activeSetupType === "skill" ? skill : toy} context={`${activeSetupType}-${context}`} />

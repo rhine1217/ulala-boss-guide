@@ -45,6 +45,29 @@ export const currCharSelectionsState = atom({
   default: {} // {skills: [], toys: []}
 })
 
+export const allSelectionsState = atom({
+  key: 'allSelectionsState',
+  default: {}
+})
+
+export const allSelectionsIdxState = selector({
+  key: 'allSelectionsIdxState',
+  get:({get}) => {
+    const allSelectionsIdx = {}
+    const allSelections = get(allSelectionsState)
+    const allClasses = Object.keys(allSelections)
+    if (allClasses.length > 0) {
+      allClasses.forEach(charClass => {
+        allSelectionsIdx[charClass] = {
+          skills: allSelections[charClass].skills.map(skill => skill.id),
+          toys: allSelections[charClass].toys.map(toy => toy.id)
+        }
+      })
+    }
+    return allSelectionsIdx
+  }
+})
+
 export const skillsSelectedIdxState = selector({
   key: 'skillsSelectedIdxState',
   get: ({get}) => {

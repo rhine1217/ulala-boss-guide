@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom'
 import { Input, AutoComplete } from 'antd'
 import Ulala from '../Models/Ulala'
 
-const BossInput = ( {context}) => {
+const BossInput = ({context, updateBossInput}) => {
 
   const [bossList, setBossList] = useState([])
   const [options, setOptions] = useState([]);
@@ -31,7 +31,9 @@ const BossInput = ( {context}) => {
     if (context === 'search') {
       history.push(`/boss?name=${encodeURI(data)}`)
       window.location.reload()
-    } 
+    } else {
+      updateBossInput(data)
+    }
   }
   
   const onSearch = (text) => {
@@ -49,7 +51,7 @@ const BossInput = ( {context}) => {
     }>
       {context === 'search' ? 
         <Input.Search size="large" placeholder="Type in Boss name to search for setup" /> :
-        <Input placeholder="Type in Boss name and select from dropdown" />
+        <Input onChange={(e) => updateBossInput(e.target.value)} placeholder="Type in Boss name and select from dropdown" />
       }
     </AutoComplete>
   

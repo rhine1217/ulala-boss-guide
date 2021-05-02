@@ -13,8 +13,9 @@ const SkillIcon = ({activeClass, skill, context}) => {
   const setSkillToChangeIdx = useSetRecoilState(skillToChangeIdxState)
   const skillsSelectedIdx = useRecoilValue(skillsSelectedIdxState)
 
+  const currContext = context.split('-')[0] || context
+
   const onClickSkill = () => {
-    let currContext = context.split('-')[0] || context
     switch (currContext) {
       case 'choiceModal':
         setSkillForDetails(skill)
@@ -38,7 +39,6 @@ const SkillIcon = ({activeClass, skill, context}) => {
   }
 
   const subText = () => {
-    let currContext = context.split('-')[0] || context
     switch (currContext) {
       case 'choiceModal':
         return (<></>)

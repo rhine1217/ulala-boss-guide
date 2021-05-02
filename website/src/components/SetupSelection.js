@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil'
-import { classTagState, classForSetupState, activeSetupTypeState, skillsForCurrClassState, toysForCurrClassState, currCharSelectionsState, skillToChangeIdxState, toyToChangeIdxState } from '../states/atoms'
+import { classTagState, classForSetupState, activeSetupTypeState, skillsForCurrClassState, toysForCurrClassState, currCharSelectionsState, allSelectionsState, skillToChangeIdxState, toyToChangeIdxState } from '../states/atoms'
 import arrayMove from 'array-move'
 import CardList from './CardList'
 import SkillChoiceModal from './SkillChoiceModal'
@@ -22,7 +22,7 @@ const SetupSelection = ({skills, toys}) => {
   //   skills: []
   //   toys: []
   // }
-  const [allSelections, setAllSelections] = useState({})
+  const [allSelections, setAllSelections] = useRecoilState(allSelectionsState)
   // {
   //   Warrior: 
   //     skills: [],
