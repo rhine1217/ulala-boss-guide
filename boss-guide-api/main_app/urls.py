@@ -1,6 +1,6 @@
 from django.urls import path
 from rest_framework.urlpatterns import format_suffix_patterns
-from .views import maparea as views
+from .views import ulala as views
 
 urlpatterns = [
     path('maparea/', views.MapAreaList.as_view()),

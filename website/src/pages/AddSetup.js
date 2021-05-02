@@ -74,7 +74,7 @@ const AddSetup = () => {
         })
       })
     }
-    
+
     return { bossSetup, playerSetups }
   }
 

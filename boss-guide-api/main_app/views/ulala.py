@@ -1,8 +1,8 @@
 from rest_framework import generics
 from rest_framework.response import Response
-
+from rest_framework.views import APIView
 from main_app.models import UlalaMapArea, BossSetup, UlalaBoss, UlalaSkill, UlalaClass
-from main_app.serializers import UlalaMapAreaSerializer, BossSetupSerializer, UlalaBossSerializer, UlalaSkillSerializer, UlalaToyByClassSerializer
+from main_app.serializers import UlalaMapAreaSerializer, BossSetupListSerializer, UlalaBossSerializer, UlalaSkillSerializer, UlalaToyByClassSerializer
 
 import urllib.parse
 
@@ -57,7 +57,7 @@ class MapAreaDetail(generics.RetrieveUpdateDestroyAPIView):
 
 
 class BossSetupList(generics.ListAPIView):
-    serializer_class=BossSetupSerializer
+    serializer_class=BossSetupListSerializer
     def get_queryset(self):
         queryset = BossSetup.objects.all()
         bossname_encoded = self.request.query_params.get('name')
@@ -68,7 +68,7 @@ class BossSetupList(generics.ListAPIView):
 
 class BossSetupDetail(generics.RetrieveAPIView):
     queryset = BossSetup.objects.all()
-    serializer_class=BossSetupSerializer
+    serializer_class=BossSetupListSerializer
 
 class UlalaBossList(generics.ListAPIView):
     queryset = UlalaBoss.objects.all()
@@ -85,3 +85,13 @@ class UlalaSkillList(generics.ListAPIView):
 class UlalaToyByClassList(generics.ListAPIView):
     queryset = UlalaClass.objects.all()
     serializer_class=UlalaToyByClassSerializer
+
+# class BossPlayerSetup(APIView):
+#     def post(self, request, format=None):
+#     #     serializer = UlalaMapAreaSerializer(data=request.data)
+#     #     if serializer.is_valid():
+#     #         serializer.save()
+#     #         return Response(serializer.data, status=status.HTTP_201_CREATED)
+#     #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
