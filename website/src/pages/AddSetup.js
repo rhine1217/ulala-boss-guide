@@ -4,7 +4,7 @@ import BossInput from '../components/BossInput'
 import ClassSelection from '../components/ClassSelection'
 import SetupSelection from '../components/SetupSelection'
 import { useRecoilValue, useRecoilState, useSetRecoilState } from 'recoil'
-import { classTagState, classForSetupState, activeSetupTypeState, skillListState, toyListState, allSelectionsIdxState } from '../states/atoms'
+import { userState, classTagState, classForSetupState, activeSetupTypeState, skillListState, toyListState, allSelectionsIdxState } from '../states/atoms'
 import Ulala from '../Models/Ulala'
 
 const { Option } = Select
@@ -15,6 +15,7 @@ const AddSetup = () => {
   const [classForSetup, setClassForSetup] = useRecoilState(classForSetupState)
   const setActiveSetupType = useSetRecoilState(activeSetupTypeState)
   const allSelectionsIdx = useRecoilValue(allSelectionsIdxState)
+  const currUser = useRecoilValue(userState)
   const [bossNameSelected, setBossNameSelected] = useState('')
   const [setupNotes, setSetupNotes] = useState('')
 
@@ -53,15 +54,30 @@ const AddSetup = () => {
     }
   }
 
-  const saveSetup = () => {
-    console.log(isSetupValid())
-    console.log(allSelectionsIdx)
+  const addSetup = (setupStatus) => {
+
+    const bossSetup = {}, playerSetups = []
+
+    if (isSetupValid()) {
+      bossSetup['boss'] = bossNameSelected
+      bossSetup['created_by'] = currUser.uid
+      bossSetup['created_on'] = new Date()
+      bossSetup['published_on'] = setupStatus === 'P' ? new Date() : null
+      bossSetup['status'] = setupStatus
+      bossSetup['note'] = setupNotes
+
+      Object.keys(allSelectionsIdx).forEach(selectionClass => {
+        playerSetups.push({
+          player_class: selectionClass,
+          skills: allSelectionsIdx[selectionClass].skills,
+          toys: allSelectionsIdx[selectionClass].toys
+        })
+      })
+    }
+    
+    return { bossSetup, playerSetups }
   }
 
-  const publishSetup = () => {
-    console.log(isSetupValid())
-    console.log(allSelectionsIdx)
-  }
 
   // Grab a list of all of the skills and toys
   useEffect(() => {
@@ -84,8 +100,8 @@ const AddSetup = () => {
         title="Add a Setup"
         onBack={() => window.history.back()}
         extra={[
-          <Button key="save" onClick={saveSetup}>Save</Button>,
-          <Button key="publish" type="primary" onClick={publishSetup}>Publish</Button>
+          <Button key="save" onClick={() => addSetup('D')}>Save</Button>,
+          <Button key="publish" type="primary" onClick={() => addSetup('P')}>Publish</Button>
         ]} />
 
       <Form layout="vertical" style={{padding: '16px 24px 0px'}}>
