@@ -59,7 +59,7 @@ const AddEditSetup = (props) => {
     }
   }
 
-  const actionAddEditSetup = async (action, setupStatus) => {
+  const actionAddEditSetup = async (setupStatus) => {
     const bossSetup = {}, playerSetups = []
     if (isSetupValid()) {
       if (action === 'Add') {
@@ -83,10 +83,9 @@ const AddEditSetup = (props) => {
         const response = action === 'Add' ? 
                          await Setup.Add({bossSetup, playerSetups}) : 
                          await Setup.Edit(setupId, {bossSetup, playerSetups})
-        console.log(response)
         if (response.status === 201) {
-          props.history.push(`/setup/edit/${response.data.id}/?classForSetup=${classForSetup}`)
-        } else if (response.status = 200) {
+          props.history.push(`/setup/edit/${response.data}/?classForSetup=${classForSetup}`)
+        } else if (response.status === 200) {
           props.history.push(`/`)
         }
         window.location.reload()
