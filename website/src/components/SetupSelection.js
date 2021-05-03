@@ -5,59 +5,24 @@ import arrayMove from 'array-move'
 import CardList from './CardList'
 import SkillChoiceModal from './SkillChoiceModal'
 import ToyChoiceModal from './ToyChoiceModal'
+import { setSkillToyForCurrClass, getRandomSelection } from '../utils/charClassUtils'
 
-const SetupSelection = ({skills, toys}) => {
-  // has full list of skills & toys passed down as props.
+const SetupSelection = ({context, skills, toys, bossSetupData}) => {
 
   const selectedClasses = useRecoilValue(classTagState)
   const classForSetup = useRecoilValue(classForSetupState)
   const activeSetupType = useRecoilValue(activeSetupTypeState)
   const setSkillsForCurrClass = useSetRecoilState(skillsForCurrClassState)
   const setToysForCurrClass = useSetRecoilState(toysForCurrClassState)
-  const [changeCounter, setChangeCounter] = useState(1)
   const skillToChangeIdx = useRecoilValue(skillToChangeIdxState)
   const toyToChangeIdx = useRecoilValue(toyToChangeIdxState)
   const [currCharSelections, setCurrCharSelections] = useRecoilState(currCharSelectionsState)
-  // {
-  //   skills: []
-  //   toys: []
-  // }
   const [allSelections, setAllSelections] = useRecoilState(allSelectionsState)
-  // {
-  //   Warrior: 
-  //     skills: [],
-  //     toys: [],
-  // }
+  const [changeCounter, setChangeCounter] = useState(1)
+  const [isRetrievedSetupLoaded, setIsRetrievedSetupLoaded] = useState(context === 'Add' ? true: false)
 
-  const initCurrCharSelections = (skills, toys) => {
-    let refreshedSkills = [], refreshedToys = []
-    if (skills.length > 0) {
-      const skillsForCurrClass = skills.filter(skill => skill['related_class'] === classForSetup)
-      refreshedSkills = skillsForCurrClass
-      setSkillsForCurrClass(refreshedSkills)
-    }
-    if (toys.length > 0) {
-      const toysForCurrClass = toys.filter(toy => toy.name === classForSetup)
-      if (toysForCurrClass.length > 0) {
-        refreshedToys = toysForCurrClass[0]['toy_list']
-        setToysForCurrClass(refreshedToys)
-      }
-    }
-
-    const getRandomSelection = (selection) => {
-      const randomIdx = new Set()
-      const output = [...Array(4)].map(() => {
-        const size = randomIdx.size
-        let generatedIdx = -1
-        while (size === randomIdx.size) {
-          generatedIdx = Math.floor(Math.random() * selection.length)
-          randomIdx.add(generatedIdx)
-        }
-        return selection[generatedIdx]
-      })
-      return output
-    }
-
+  const initCurrCharSelections = async (skills, toys) => {
+    const {refreshedSkills, refreshedToys} = await setSkillToyForCurrClass(skills, toys, classForSetup, setSkillsForCurrClass, setToysForCurrClass)
     return {
       skills: refreshedSkills.length > 0  ? getRandomSelection(refreshedSkills) : refreshedSkills.slice(0,4),
       toys: refreshedToys.length > 0 ? getRandomSelection(refreshedToys) : refreshedToys.slice(0,4)
@@ -65,29 +30,56 @@ const SetupSelection = ({skills, toys}) => {
   }
 
   useEffect(() => {
-    const refreshedAllSelections = { ...allSelections }
-    if (classForSetup) {
-      refreshedAllSelections[classForSetup] = currCharSelections
+    const initRetrievedSetup = () => {
+      if (bossSetupData) {
+        const refreshedAllSelections = {}
+        bossSetupData.forEach(setup => {
+          refreshedAllSelections[setup['player_class']] = {
+            skills: setup.skills,
+            toys: setup.toys
+          }
+        })
+        setAllSelections(refreshedAllSelections)
+        setSkillToyForCurrClass(skills, toys, classForSetup, setSkillsForCurrClass, setToysForCurrClass)
+        const currCharSetup = bossSetupData.filter(setup => setup['player_class'] === classForSetup)
+        setCurrCharSelections({
+          skills: currCharSetup[0].skills,
+          toys: currCharSetup[0].toys
+        })
+      } 
+      setIsRetrievedSetupLoaded(true)
     }
-    Object.keys(refreshedAllSelections).forEach(key => {
-      if (!(selectedClasses.includes(key))) {
-        delete refreshedAllSelections[key]
-      }
-    })
-    setAllSelections(refreshedAllSelections)
+    initRetrievedSetup()
+  }, [])
 
-  }, [changeCounter, selectedClasses.length, skillToChangeIdx, toyToChangeIdx]) // when sorting happens, when class tags change (select/unselect classes from the tags), when a new skill gets swapped in, when a new toy gets swapped in
+  useEffect(() => {
+    if (isRetrievedSetupLoaded) {
+      const refreshedAllSelections = { ...allSelections }
+      if (classForSetup) {
+        refreshedAllSelections[classForSetup] = currCharSelections
+      }
+      Object.keys(refreshedAllSelections).forEach(key => {
+        if (!(selectedClasses.includes(key))) {
+          delete refreshedAllSelections[key]
+        }
+      })
+      setAllSelections(refreshedAllSelections)  
+    }
+  }, [changeCounter, selectedClasses.length, skillToChangeIdx, toyToChangeIdx]) 
+  // when sorting happens, when class tags change (select/unselect classes from the tags), when a new skill gets swapped in, when a new toy gets swapped in
 
   useEffect(() => {
     const updateCurrCharSelections = async () => {
       if (allSelections[classForSetup]) {
-        await setCurrCharSelections(allSelections[classForSetup])
+        setCurrCharSelections(allSelections[classForSetup])
       } else {
-        await setCurrCharSelections(initCurrCharSelections(skills, toys))
-        setChangeCounter( changeCounter * -1 )
+        setCurrCharSelections(await initCurrCharSelections(skills, toys))
+        setChangeCounter(changeCounter * -1)
       }
     }
+    if (isRetrievedSetupLoaded) {
       updateCurrCharSelections()
+    }
   }, [classForSetup])
 
   const onSortEnd = ({oldIndex, newIndex}) => {
@@ -97,7 +89,7 @@ const SetupSelection = ({skills, toys}) => {
         toys: activeSetupType === 'toy' ? arrayMove(selections.toys, oldIndex, newIndex) : selections.toys,
       }
     })
-    setChangeCounter( changeCounter * -1 )
+    setChangeCounter(changeCounter * -1)
   }
 
   return (

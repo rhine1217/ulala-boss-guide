@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 import { Route, Switch } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import LandingPage from './pages/LandingPage'
-import AddSetup from './pages/AddSetup'
+import AddEditSetup from './pages/AddEditSetup'
 import SearchResults from './pages/SearchResults'
 import Auth from './Models/Auth'
 import { useRecoilState } from 'recoil'
@@ -31,7 +31,8 @@ function App() {
       <div className="container">
         <Switch>
           <Route exact path='/' render={() => <LandingPage />}/>
-          <Route exact path='/add' render={() => <AddSetup />} />
+          <Route exact path='/setup/add' render={() => <AddEditSetup action='Add' />} />
+          <Route exact path='/setup/edit/:id' render={() => <AddEditSetup action='Edit' />} />
           <Route path='/boss' render={() => <SearchResults />} />
         </Switch>
       </div>

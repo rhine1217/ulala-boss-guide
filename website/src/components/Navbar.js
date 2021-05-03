@@ -24,10 +24,10 @@ const Navbar = ({currentUser}) => {
   const menu = (
     <Menu>
       <Menu.Item key="0">
-        <a href="/add">Add a Setup</a>
+        <a href="/setup/add">Add a Setup</a>
       </Menu.Item>
       <Menu.Item key="1">
-        <a href="/">Saved Setups</a>
+        <a href="/">Favourite Setups</a>
       </Menu.Item>
       <Menu.Item key="2">
         <a href={`${process.env.REACT_APP_BACKEND_URL}/auth/user/logout`}>Log out</a>

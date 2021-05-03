@@ -7,15 +7,11 @@ import Setup from '../Models/Setup'
 
 const SearchResults = () => {
 
-    function useQuery() {
-        return new URLSearchParams(useLocation().search)
-    }
-
     function handleSortChange(e) {
         console.log(e)
     }
 
-    let query = useQuery()
+    let query = new URLSearchParams(useLocation().search)
     const bossName = query.get("name")
 
     const [results, setResults] = useState([])

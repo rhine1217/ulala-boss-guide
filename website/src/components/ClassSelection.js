@@ -26,13 +26,13 @@ const ClassSelection = ({context}) => {
     setSelectedClasses(newSelectedClasses)
   }
 
-  const formLabel = context === 'new' ? "Character Classes (Select 4)" : 'Filter by Class'
+  const formLabel = context === 'search' ? 'Filter by Class' : 'Character Classes (Select 4)'
   const validateStatusLabel = () => {
     let status = ""
-    if (context === 'new') {
-      status = selectedClasses.length === 4 ? "success" : "warning"
+    if (context === 'search') {
+      status = selectedClasses.length <= 4 ? "success" : "warning"
     } else {
-      status = selectedClasses.length <=4 ? "success" : "warning"
+      status = selectedClasses.length ===4 ? "success" : "warning"
     }
     return status
   }
