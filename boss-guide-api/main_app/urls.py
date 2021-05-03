@@ -6,7 +6,7 @@ urlpatterns = [
     path('maparea/', views.MapAreaList.as_view()),
     path('maparea/<int:pk>', views.MapAreaDetail.as_view()),
     path('bosssetup/', views.BossSetupList.as_view()),
-    path('bosssetup/<int:pk>', views.BossSetupDetail.as_view()),
+    path('bosssetup/<slug:slug>', views.BossSetupDetail.as_view()),
     path('boss/', views.UlalaBossList.as_view()),
     path('boss/<int:pk>', views.UlalaBossDetail.as_view()),
     path('skill/', views.UlalaSkillList.as_view()),

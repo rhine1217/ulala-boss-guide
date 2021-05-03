@@ -1,5 +1,8 @@
 from rest_framework import serializers
 from main_app.models import UlalaMapArea, BossSetup, PlayerSetup, UlalaBoss, UlalaSkill, UlalaToy, UlalaToyDescription, UlalaClass
+from utils import getenv
+from hashids import Hashids
+hashids = Hashids(salt=getenv()["HASH_ID_SALT"], min_length=16)
 
 class UlalaMapAreaSerializer(serializers.ModelSerializer):
     class Meta:
@@ -59,6 +62,7 @@ class PlayerSetupListSerializer(serializers.ModelSerializer):
         fields = ['player_class', 'skills', 'toys']
     
 class BossSetupListSerializer(serializers.ModelSerializer):
+    id = serializers.SerializerMethodField('get_hash_id')
     created_by = serializers.StringRelatedField()
     status = serializers.CharField(source='get_status_display')
     boss = UlalaBossSerializer(read_only=True)
@@ -71,7 +75,10 @@ class BossSetupListSerializer(serializers.ModelSerializer):
         for setup in player_setups:
             output.append(PlayerSetupListSerializer(setup).data['player_class'])
         return output
-      
+    
+    def get_hash_id(self, obj):
+        return hashids.encode(obj.id)
+    
     class Meta:
         model = BossSetup
         fields = ['id', 'boss', 'player_classes', 'player_setup', 'note', 'created_by', 'created_on', 'published_on', 'status']

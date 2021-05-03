@@ -5,6 +5,9 @@ from main_app.models import UlalaMapArea, BossSetup, UlalaBoss, UlalaSkill, Ulal
 from main_app.serializers import UlalaMapAreaSerializer, BossSetupListSerializer, BossSetupCreateSerializer, PlayerSetupCreateSerializer, UlalaBossSerializer, UlalaSkillSerializer, UlalaToyByClassSerializer
 
 import urllib.parse
+from utils import getenv
+from hashids import Hashids
+hashids = Hashids(salt=getenv()["HASH_ID_SALT"], min_length=16)
 
 class MapAreaList(generics.ListAPIView):
     """
@@ -31,8 +34,12 @@ class BossSetupList(generics.ListAPIView):
         return queryset
 
 class BossSetupDetail(generics.RetrieveAPIView):
-    queryset = BossSetup.objects.all()
     serializer_class=BossSetupListSerializer
+    def get_object(self):
+        slug = self.kwargs['slug']
+        boss_setup_id = hashids.decode(slug)[0]
+        obj = BossSetup.objects.get(id=boss_setup_id)
+        return obj
 
 class UlalaBossList(generics.ListAPIView):
     queryset = UlalaBoss.objects.all()
