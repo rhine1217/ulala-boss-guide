@@ -5,7 +5,7 @@ import arrayMove from 'array-move'
 import CardList from './CardList'
 import SkillChoiceModal from './SkillChoiceModal'
 import ToyChoiceModal from './ToyChoiceModal'
-import { setSkillToyForCurrClass, getRandomSelection } from '../utils/charClassUtils'
+import { setSkillToyForCurrClass, getRandomSelection } from '../utils/skillToySelections'
 
 const SetupSelection = ({context, skills, toys, bossSetupData}) => {
 

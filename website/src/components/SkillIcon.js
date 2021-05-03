@@ -70,7 +70,7 @@ const SkillIcon = ({activeClass, skill, context}) => {
             alt="Skill Border" />
           <img 
             className={styles['skill-img']}
-            src={`${process.env.REACT_APP_HOSTED_IMG_URL_PREFIX}/${classImgPrefix[activeClass]}_${skill['img_url']}.png`}
+            src={ activeClass ? `${process.env.REACT_APP_HOSTED_IMG_URL_PREFIX}/${classImgPrefix[activeClass]}_${skill['img_url']}.png` : ''}
             alt="Character Skill" />
           {skill.name.includes('II') ?
           <img 

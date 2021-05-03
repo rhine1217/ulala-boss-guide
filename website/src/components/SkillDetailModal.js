@@ -2,6 +2,7 @@ import React from 'react'
 import { Modal, Button, message } from 'antd'
 import { useRecoilState, useSetRecoilState } from 'recoil'
 import { isSkillChoiceModalVisibleState, isSkillDetailModalVisibleState, skillToChangeIdxState, currCharSelectionsState } from '../states/atoms'
+import { skillToyValidation } from '../utils/skillToySelections'
 
 const SkillDetailModal = ({skill}) => {
 
@@ -9,15 +10,10 @@ const SkillDetailModal = ({skill}) => {
   const [skillToChangeIdx, setSkillToChangeIdx] = useRecoilState(skillToChangeIdxState)
   const [currCharSelections, setCurrCharSelections] = useRecoilState(currCharSelectionsState)
   const setIsSkillChoiceModalVisible = useSetRecoilState(isSkillChoiceModalVisibleState)
-  
-  const isSkillSelectionValid = (newSkill) => {
-    const otherSkills = currCharSelections.skills.filter((skill, idx) => idx !== skillToChangeIdx)
-    return otherSkills.every(skill => skill.name !== newSkill['not_allowed_with'])
-  }
 
   const updateSkill = (newSkill) => {
-
-    if (isSkillSelectionValid(newSkill)) {
+    const otherSkills = currCharSelections.skills.filter((skill, idx) => idx !== skillToChangeIdx)
+    if (skillToyValidation(otherSkills, newSkill)) {
       setIsSkillDetailModalVisible(false)
       const refreshedCurrCharSelectionsSkills = [ ...currCharSelections.skills ]
       refreshedCurrCharSelectionsSkills[skillToChangeIdx] = newSkill
@@ -36,7 +32,6 @@ const SkillDetailModal = ({skill}) => {
         duration: 1
       })
     }
-
   }
 
   const footer = skillToChangeIdx === -1 ? null : 

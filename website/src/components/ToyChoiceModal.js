@@ -4,6 +4,7 @@ import { useRecoilValue, useRecoilState } from 'recoil'
 import { currCharSelectionsState, isToyChoiceModalVisibleState, toysToSelectFromState, toyToChangeIdxState } from '../states/atoms'
 import ToyIcon from './ToyIcon'
 import SetupDesc from './SetupDesc'
+import { skillToyValidation } from '../utils/skillToySelections'
 
 const ToyChoiceModal = () => {
 
@@ -11,14 +12,10 @@ const ToyChoiceModal = () => {
   const toysToSelectFrom = useRecoilValue(toysToSelectFromState)
   const [toyToChangeIdx, setToyToChangeIdx] = useRecoilState(toyToChangeIdxState)
   const [currCharSelections, setCurrCharSelections] = useRecoilState(currCharSelectionsState)
-
-  const isToySelectionValid = (newToy) => {
-    const otherToys = currCharSelections.toys.filter((toy, idx) => idx !== toyToChangeIdx)
-    return otherToys.every(toy => toy.name !== newToy['not_allowed_with'])
-  }
-
+  
   const updateToy = (newToy) => {
-    if (isToySelectionValid(newToy)) {
+    const otherToys = currCharSelections.toys.filter((toy, idx) => idx !== toyToChangeIdx)
+    if (skillToyValidation(otherToys, newToy)) {
       const refreshedCurrCharSelectionsToys = [ ...currCharSelections.toys ]
       refreshedCurrCharSelectionsToys[toyToChangeIdx] = newToy
       setCurrCharSelections(selections => {
