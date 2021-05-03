@@ -30,6 +30,7 @@ const AddEditSetup = (props) => {
   const [setupNotes, setSetupNotes] = useState('')
   const [bossSetupData, setBossSetupData] = useState(null)
   const [isSetupLoading, setIsSetupLoading] = useState(action === 'Add' ? false : true)
+  const [areSkillsToysLoading, setAreSkillsToysLoading] = useState(true)
 
   const onNoteInput = (e) => setSetupNotes(e.target.value)
 
@@ -40,10 +41,9 @@ const AddEditSetup = (props) => {
 
   const onBossInput = (value) => setBossName(value)
 
-  const isSelectionValid = () => Object.keys(allSelectionsIdx).length === 4
-  const isBossNameValid = () => bossName !== ''
-
   const isSetupValid = () => {
+    const isSelectionValid = () => Object.keys(allSelectionsIdx).length === 4
+    const isBossNameValid = () => bossName !== ''
     if (isSelectionValid() && isBossNameValid()) {
       return true
     } else if (!isSelectionValid()) {
@@ -59,18 +59,19 @@ const AddEditSetup = (props) => {
     }
   }
 
-  const addSetup = async (setupStatus) => {
-
+  const actionAddEditSetup = async (action, setupStatus) => {
     const bossSetup = {}, playerSetups = []
-
     if (isSetupValid()) {
+      if (action === 'Add') {
+        bossSetup['created_by'] = currUser.uid
+        bossSetup['created_on'] = new Date()
+      } else if (action === 'Edit') {
+        bossSetup['id'] = setupId
+      }
       bossSetup['boss'] = bossName
-      bossSetup['created_by'] = currUser.uid
-      bossSetup['created_on'] = new Date()
       bossSetup['published_on'] = setupStatus === 'P' ? new Date() : null
       bossSetup['status'] = setupStatus
       bossSetup['note'] = setupNotes
-
       Object.keys(allSelectionsIdx).forEach(selectionClass => {
         playerSetups.push({
           player_class: selectionClass,
@@ -79,47 +80,25 @@ const AddEditSetup = (props) => {
         })
       })
       try {
-        const response = await Setup.Add({bossSetup, playerSetups})
+        const response = action === 'Add' ? 
+                         await Setup.Add({bossSetup, playerSetups}) : 
+                         await Setup.Edit(setupId, {bossSetup, playerSetups})
+        console.log(response)
         if (response.status === 201) {
           props.history.push(`/setup/edit/${response.data.id}/?classForSetup=${classForSetup}`)
-          window.location.reload()
+        } else if (response.status = 200) {
+          props.history.push(`/`)
         }
+        window.location.reload()
       } catch (error) {
         console.log(error)
       }
     }
-    return { bossSetup, playerSetups }
   }
 
-  const editSetup = async (setupStatus) => {
-    console.log('placeholder')
-    return
-  }
+  const onSave = () => actionAddEditSetup('D')
 
-  const onSave = {
-    Add: () => addSetup('D'),
-    Edit: () => editSetup('P')
-  }
-
-  const onPublish = {
-    Add: () => addSetup('P'),
-    Edit: () => editSetup('P')
-  }
-
-  // Grab a list of all of the skills and toys
-  useEffect(() => {
-    const getSkillToyList = async () => {
-      try {
-        const skillList = await Ulala.SkillList()
-        const toyList = await Ulala.ToyList()
-        setSkills(skillList.data)
-        setToys(toyList.data)
-      } catch (error) {
-        console.log(error)
-      }
-    }
-    getSkillToyList()
-  }, [])
+  const onPublish = () => actionAddEditSetup('P')
 
   useEffect(() => {
     const retrieveSetup = async () => {
@@ -140,11 +119,26 @@ const AddEditSetup = (props) => {
     }
   }, [])
 
+  useEffect(() => {
+    const getSkillToyList = async () => {
+      try {
+        const skillList = await Ulala.SkillList()
+        const toyList = await Ulala.ToyList()
+        setSkills(skillList.data)
+        setToys(toyList.data)
+        setAreSkillsToysLoading(false)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    getSkillToyList()
+  }, [])
+
   return (
     <>
-    {isSetupLoading ? <div>Loading</div> :
+    {isSetupLoading || areSkillsToysLoading ? <div>Loading</div> :
       <>
-      <SetupPageHeader action={action} onSave={onSave[action]} onPublish={onPublish[action]} />
+      <SetupPageHeader action={action} onSave={onSave} onPublish={onPublish} />
       <SetupPageMeta context={action} bossName={bossName} onBossInput={onBossInput} />
       <SetupPageDropdown />
       <SetupPageActiveType />

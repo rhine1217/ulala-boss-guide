@@ -1,20 +1,15 @@
-export const setSkillToyForCurrClass = async (
-  skills, toys, 
-  classForSetup, 
-  setSkillsForCurrClass, 
-  setToysForCurrClass
-) => {
+export const getSkillToyForCurrClass = (skills, toys, classForSetup) => {
   let refreshedSkills = [], refreshedToys = []
   if (skills.length > 0) {
     const skillsForCurrClass = skills.filter(skill => skill['related_class'] === classForSetup)
     refreshedSkills = skillsForCurrClass
-    setSkillsForCurrClass(refreshedSkills)
+    // setSkillsForCurrClass(refreshedSkills)
   }
   if (toys.length > 0) {
     const toysForCurrClass = toys.filter(toy => toy.name === classForSetup)
     if (toysForCurrClass.length > 0) {
       refreshedToys = toysForCurrClass[0]['toy_list']
-      setToysForCurrClass(refreshedToys)
+      // setToysForCurrClass(refreshedToys)
     }
   }
   return {refreshedSkills, refreshedToys}

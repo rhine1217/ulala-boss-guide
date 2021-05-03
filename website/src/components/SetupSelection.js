@@ -5,15 +5,17 @@ import arrayMove from 'array-move'
 import CardList from './CardList'
 import SkillChoiceModal from './SkillChoiceModal'
 import ToyChoiceModal from './ToyChoiceModal'
-import { setSkillToyForCurrClass, getRandomSelection } from '../utils/skillToySelections'
+import { getSkillToyForCurrClass, getRandomSelection } from '../utils/skillToySelections'
 
 const SetupSelection = ({context, skills, toys, bossSetupData}) => {
 
   const selectedClasses = useRecoilValue(classTagState)
   const classForSetup = useRecoilValue(classForSetupState)
   const activeSetupType = useRecoilValue(activeSetupTypeState)
-  const setSkillsForCurrClass = useSetRecoilState(skillsForCurrClassState)
-  const setToysForCurrClass = useSetRecoilState(toysForCurrClassState)
+  const [skillsForCurrClass, setSkillsForCurrClass] = useRecoilState(skillsForCurrClassState)
+  const [toysForCurrClass, setToysForCurrClass] = useRecoilState(toysForCurrClassState)
+  // const setSkillsForCurrClass = useSetRecoilState(skillsForCurrClassState)
+  // const setToysForCurrClass = useSetRecoilState(toysForCurrClassState)
   const skillToChangeIdx = useRecoilValue(skillToChangeIdxState)
   const toyToChangeIdx = useRecoilValue(toyToChangeIdxState)
   const [currCharSelections, setCurrCharSelections] = useRecoilState(currCharSelectionsState)
@@ -22,7 +24,9 @@ const SetupSelection = ({context, skills, toys, bossSetupData}) => {
   const [isRetrievedSetupLoaded, setIsRetrievedSetupLoaded] = useState(context === 'Add' ? true: false)
 
   const initCurrCharSelections = async (skills, toys) => {
-    const {refreshedSkills, refreshedToys} = await setSkillToyForCurrClass(skills, toys, classForSetup, setSkillsForCurrClass, setToysForCurrClass)
+    const {refreshedSkills, refreshedToys} = getSkillToyForCurrClass(skills, toys, classForSetup)
+    setSkillsForCurrClass(refreshedSkills)
+    setToysForCurrClass(refreshedToys)
     return {
       skills: refreshedSkills.length > 0  ? getRandomSelection(refreshedSkills) : refreshedSkills.slice(0,4),
       toys: refreshedToys.length > 0 ? getRandomSelection(refreshedToys) : refreshedToys.slice(0,4)
@@ -40,7 +44,9 @@ const SetupSelection = ({context, skills, toys, bossSetupData}) => {
           }
         })
         setAllSelections(refreshedAllSelections)
-        setSkillToyForCurrClass(skills, toys, classForSetup, setSkillsForCurrClass, setToysForCurrClass)
+        const {refreshedSkills, refreshedToys} = getSkillToyForCurrClass(skills, toys, classForSetup)
+        setSkillsForCurrClass(refreshedSkills)
+        setToysForCurrClass(refreshedToys)
         const currCharSetup = bossSetupData.filter(setup => setup['player_class'] === classForSetup)
         setCurrCharSelections({
           skills: currCharSetup[0].skills,

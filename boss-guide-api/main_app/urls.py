@@ -11,6 +11,7 @@ urlpatterns = [
     path('bosssetup/', SetupViews.BossSetupList.as_view()),
     path('bosssetup/<slug:slug>', SetupViews.BossSetupDetail.as_view()),
     path('addsetup/', SetupViews.BossPlayerSetupCreate.as_view()),
+    path('editsetup/<slug:slug>', SetupViews.BossPlayerSetupUpdate.as_view())
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

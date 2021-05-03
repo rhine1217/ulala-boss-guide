@@ -10,6 +10,7 @@ class Setup {
   })
   static Add = (data) => instance.post(`addsetup/`, data)
   static Retrieve = (id) => instance.get(`bosssetup/${id}`)
+  static Edit = (id, data) => instance.patch(`editsetup/${id}`, data)
 }
 
 export default Setup

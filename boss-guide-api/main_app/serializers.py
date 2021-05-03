@@ -91,14 +91,20 @@ class BossField(serializers.RelatedField):
     def to_internal_value(self, data):
         return UlalaBoss.objects.get(name=data)
 
-class BossSetupCreateSerializer(serializers.ModelSerializer):
-    # created_by = serializers.ForeignKeyRelatedField()
+class BossSetupCreateUpdateSerializer(serializers.ModelSerializer):
     boss = BossField(queryset=UlalaBoss.objects.all())
     class Meta:
         model = BossSetup
         fields = '__all__'
     def create(self, validated_data):
         return BossSetup.objects.create(**validated_data)
+    def update(self, instance, validated_data):
+        instance.boss = validated_data.get('boss', instance.boss)
+        instance.published_on = validated_data.get('published_on', instance.published_on)
+        instance.status = validated_data.get('status', instance.status)
+        instance.note = validated_data.get('note', instance.note)
+        instance.save()
+        return instance
 
 class PlayerClassField(serializers.RelatedField):
     def to_representation(self, obj):
@@ -108,10 +114,22 @@ class PlayerClassField(serializers.RelatedField):
     def to_internal_value(self, data):
         return UlalaClass.objects.get(name=data)
 
-class PlayerSetupCreateSerializer(serializers.ModelSerializer):
+class PlayerSetupCreateUpdateSerializer(serializers.ModelSerializer):
     player_class = PlayerClassField(queryset=UlalaClass.objects.all())
     class Meta:
         model = PlayerSetup
         fields = '__all__'
     def create(self, validated_data):
         return PlayerSetup.objects.create(**validated_data)
+    def update(self, instance, validated_data):
+        instance.player_class = validated_data.get('player_class', instance.player_class)
+        instance.skill1 = validated_data.get('skill1', instance.skill1)
+        instance.skill2 = validated_data.get('skill2', instance.skill2)
+        instance.skill3 = validated_data.get('skill3', instance.skill3)
+        instance.skill4 = validated_data.get('skill4', instance.skill4)
+        instance.toy1 = validated_data.get('toy1', instance.toy1)
+        instance.toy2 = validated_data.get('toy2', instance.toy2)
+        instance.toy3 = validated_data.get('toy3', instance.toy3)
+        instance.toy4 = validated_data.get('toy4', instance.toy4)
+        instance.save()
+        return instance
