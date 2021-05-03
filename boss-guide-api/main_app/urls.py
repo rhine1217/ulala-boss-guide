@@ -1,17 +1,16 @@
 from django.urls import path
 from rest_framework.urlpatterns import format_suffix_patterns
-from .views import ulala as views
+from .views import ulala as UlalaRefViews, setup as SetupViews
 
 urlpatterns = [
-    path('maparea/', views.MapAreaList.as_view()),
-    path('maparea/<int:pk>', views.MapAreaDetail.as_view()),
-    path('bosssetup/', views.BossSetupList.as_view()),
-    path('bosssetup/<slug:slug>', views.BossSetupDetail.as_view()),
-    path('boss/', views.UlalaBossList.as_view()),
-    path('boss/<int:pk>', views.UlalaBossDetail.as_view()),
-    path('skill/', views.UlalaSkillList.as_view()),
-    path('toy/', views.UlalaToyByClassList.as_view()),
-    path('addsetup/', views.BossPlayerSetupCreate.as_view()),
+    path('maparea/', UlalaRefViews.MapAreaList.as_view()),
+    path('boss/', UlalaRefViews.UlalaBossList.as_view()),
+    path('boss/<int:pk>', UlalaRefViews.UlalaBossDetail.as_view()),
+    path('skill/', UlalaRefViews.UlalaSkillList.as_view()),
+    path('toy/', UlalaRefViews.UlalaToyByClassList.as_view()),
+    path('bosssetup/', SetupViews.BossSetupList.as_view()),
+    path('bosssetup/<slug:slug>', SetupViews.BossSetupDetail.as_view()),
+    path('addsetup/', SetupViews.BossPlayerSetupCreate.as_view()),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
