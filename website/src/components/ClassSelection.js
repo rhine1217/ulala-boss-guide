@@ -38,7 +38,7 @@ const ClassSelection = ({context}) => {
   }
 
   return (
-    <Form.Item required label={formLabel} hasFeedback validateStatus={validateStatusLabel()}>
+    <Form.Item required={context !== 'search' ? true : false} label={formLabel} hasFeedback validateStatus={validateStatusLabel()}>
       <Row>
         <Col span={23}>
           <Row  gutter={[4,8]}>
