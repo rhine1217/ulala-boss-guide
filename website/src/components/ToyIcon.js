@@ -25,7 +25,7 @@ const ToyIcon = ({toy, context}) => {
         setToyForDetails(toy)
         setIsToyDetailModalVisible(true)
         break;
-      case 'searchResult':
+      case 'result':
         setToyForDetails(toy)
         setIsToyDetailModalVisible(true)
         break;

@@ -19,6 +19,15 @@ class BossSetupList(generics.ListAPIView):
           queryset = queryset.filter(boss__name=bossname)
         return queryset
 
+class BossSetupFavouriteList(generics.ListAPIView):
+    serializer_class=BossSetupListSerializer
+    def get_queryset(self):
+        queryset = BossSetup.objects.all()
+        user = self.request.user
+        if user is not None:
+            queryset = queryset.filter(created_by=user)
+        return queryset
+
 class BossSetupDetail(generics.RetrieveAPIView):
     serializer_class=BossSetupListSerializer
     def get_object(self):

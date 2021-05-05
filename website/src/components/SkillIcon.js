@@ -29,7 +29,7 @@ const SkillIcon = ({activeClass, skill, context}) => {
         setSkillForDetails(skill)
         setIsSkillDetailModalVisible(true)
         break;
-      case 'searchResult':
+      case 'result':
         setSkillForDetails(skill)
         setIsSkillDetailModalVisible(true)
         break;

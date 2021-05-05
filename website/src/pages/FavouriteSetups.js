@@ -1,38 +1,37 @@
 import React, { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom'
-import ClassSelection from '../components/ClassSelection'
 import SetupResult from '../components/SetupResult'
-import { Select, Row, Col } from 'antd'
+import { Select, Row, Col, Spin } from 'antd'
+import { LoadingOutlined } from '@ant-design/icons'
 import Setup from '../Models/Setup'
 
-const SearchResults = () => {
+const FavouriteSetups = () => {
 
     function handleSortChange(e) {
         console.log(e)
     }
 
-    let query = new URLSearchParams(useLocation().search)
-    const bossName = query.get("name")
-
     const [results, setResults] = useState([])
+    const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
-      const searchByName = async(name) => {
+      const getFavourites = async() => {
         try {
-          const results = await Setup.List(name)
+          const results = await Setup.Favourite()
           setResults(results.data)
+          setIsLoading(false)
         } catch (error) {
           console.log(error)
         }
       }
-      searchByName(bossName)
+      getFavourites()
     }, [])
 
     return (
         <>
-        <div style={{padding: '16px 24px 0px'}}><ClassSelection context="search" /></div>
+        {isLoading ? <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} /> :
+        <>
         <div style={{padding: '0px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
-          <div>{results.length} Results for {bossName}</div>
+          <div>{results.length} Results</div>
           <div>Sort by: 
             <Select defaultValue="top-rated" style={{width: 120, fontSize: '1em'}} onChange={handleSortChange} bordered={false}>
                 <Select.Option value="top-rated">Top Rated</Select.Option>
@@ -41,17 +40,19 @@ const SearchResults = () => {
           </div>
         </div>
         <div style={{padding: '16px 24px'}}>
-          <Row>
-              <Col xs={24} sm={12} lg={8}>
-                {results.map(result => (
-                  <SetupResult key={result.id} result={result} />
-                  ))}
-              </Col>
+          <Row gutter={[16, 16]}>
+              {results.map(result => (
+                <Col xs={24} sm={12} lg={8} key={result.id} >
+                  <SetupResult result={result} />
+                </Col>
+              ))}
           </Row>
         </div>
+        </>
+        }
         </>
     )
 
 }
 
-export default SearchResults
+export default FavouriteSetups

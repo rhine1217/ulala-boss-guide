@@ -27,7 +27,7 @@ const Navbar = ({currentUser}) => {
         <a href="/setup/add">Add a Setup</a>
       </Menu.Item>
       <Menu.Item key="1">
-        <a href="/">Favourite Setups</a>
+        <a href="/favourite">Favourite Setups</a>
       </Menu.Item>
       <Menu.Item key="2">
         <a href={`${process.env.REACT_APP_BACKEND_URL}/auth/user/logout`}>Log out</a>
