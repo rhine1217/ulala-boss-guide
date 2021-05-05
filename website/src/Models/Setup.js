@@ -2,7 +2,9 @@ import axios from 'axios'
 
 const instance = axios.create({
   withCredentials: true,
-  baseURL: `${process.env.REACT_APP_BACKEND_URL}/api/v1`
+  baseURL: `${process.env.REACT_APP_BACKEND_URL}/api/v1`, 
+  xsrfHeaderName: "X-CSRFTOKEN",
+  xsrfCookieName: "csrftoken"
 })
 
 class Setup {

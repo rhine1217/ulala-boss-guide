@@ -13,6 +13,29 @@ const FavouriteSetups = () => {
     const [results, setResults] = useState([])
     const [isLoading, setIsLoading] = useState(true)
 
+  const onPublish = async (id) => {
+    try {
+      const response = await Setup.Edit(id, {
+        bossSetup: {
+          id,
+          status: 'P'
+        },
+        playerSetups: null,
+      })
+      console.log(response)
+      if (response.status === 200) {
+        const newResults = [...results]
+        const idxToUpdate = newResults.findIndex(result => result.id === id)
+        newResults[idxToUpdate] = response.data
+        setResults(newResults)
+      } else {
+        console.log(response.status)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
     useEffect(() => {
       const getFavourites = async() => {
         try {
@@ -43,7 +66,7 @@ const FavouriteSetups = () => {
           <Row gutter={[16, 16]}>
               {results.map(result => (
                 <Col xs={24} sm={12} lg={8} key={result.id} >
-                  <SetupResult result={result} />
+                  <SetupResult result={result} onPublish={onPublish} />
                 </Col>
               ))}
           </Row>

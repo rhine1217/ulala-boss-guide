@@ -4,8 +4,9 @@ import { ShareAltOutlined, LikeOutlined, StarOutlined, LikeFilled, StarFilled, I
 import { classTagsColor } from '../utils/charClassUtils'
 import SkillIcon from './SkillIcon'
 import ToyIcon from './ToyIcon'
+import Setup from '../Models/Setup'
 
-const SetupResult = ({result}) => {
+const SetupResult = ({result, onPublish}) => {
 
   const [activeClassIdx, setActiveClassIdx] = useState(0)
   const [activeSetup, setActiveSetup] = useState(result['player_setup'][0])
@@ -19,10 +20,6 @@ const SetupResult = ({result}) => {
   const changeActiveClass = (idx) => {
     setActiveClassIdx(idx)
     setActiveSetup(result['player_setup'][idx])
-  }
-
-  const onPublish = () => {
-    console.log('clicked!')
   }
 
   const onDelete = () => {
@@ -57,7 +54,7 @@ const SetupResult = ({result}) => {
 
   const cardActions = {
     Draft: [
-      <a onClick={onPublish}><CloudUploadOutlined /></a>,
+      <a onClick={() => onPublish(result.id)}><CloudUploadOutlined /></a>,
       <a href={`/setup/edit/${result.id}`}><EditOutlined /></a>,
       <a onClick={onDelete}><DeleteOutlined /></a>
     ],
@@ -86,9 +83,9 @@ const SetupResult = ({result}) => {
         <Col span={24}>
           <Row>
           {result['player_classes'].sort().map((playerClass, idx) => (
-            <Col span={6}>
+            <Col span={6} key={idx}>
             <Tag 
-            key={idx} color={idx === activeClassIdx ? classTagsColor[playerClass] : "default"}
+            color={idx === activeClassIdx ? classTagsColor[playerClass] : "default"}
             onClick={() => changeActiveClass(idx)}
             style={{display: 'block', width: '100%', textAlign: 'center'}}
             >{playerClass}</Tag>
