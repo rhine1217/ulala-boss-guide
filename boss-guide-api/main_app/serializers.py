@@ -67,14 +67,22 @@ class BossSetupListSerializer(serializers.ModelSerializer):
     status = serializers.CharField(source='get_status_display')
     boss = UlalaBossSerializer(read_only=True)
     player_setup = PlayerSetupListSerializer(many=True, read_only=True)
+    player_setup = serializers.SerializerMethodField('get_player_setup')
     player_classes = serializers.SerializerMethodField('get_player_classes')
+    
+    def get_ordered_player_setups_queryset(self, obj):
+        return PlayerSetup.objects.filter(boss_setup=obj.id).order_by('player_class__display_seq')
     
     def get_player_classes(self, obj):
         output = []
-        player_setups = PlayerSetup.objects.filter(boss_setup=obj.id)
+        player_setups = self.get_ordered_player_setups_queryset(obj)
         for setup in player_setups:
             output.append(PlayerSetupListSerializer(setup).data['player_class'])
         return output
+    
+    def get_player_setup(self, obj):
+        ordered_player_setups = self.get_ordered_player_setups_queryset(obj)
+        return PlayerSetupListSerializer(ordered_player_setups, many=True, read_only=True, context=self.context).data
     
     def get_hash_id(self, obj):
         return hashids.encode(obj.id)

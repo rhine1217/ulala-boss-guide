@@ -62,7 +62,7 @@ class BossPlayerSetupCreate(APIView):
                 if new_player_setup.is_valid():
                     new_player_setup.save()
             serializer = BossSetupListSerializer(BossSetup.objects.get(pk=new_boss_setup_id))
-            return Response(serializer.data['id'], status=status.HTTP_201_CREATED, content_type='application/json')
+            return Response(serializer.data, status=status.HTTP_201_CREATED, content_type='application/json')
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class BossPlayerSetupUpdate(APIView):

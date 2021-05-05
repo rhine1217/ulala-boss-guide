@@ -1,6 +1,7 @@
 .action-btn {
   border: none;
-  background: none
+  background: none;
+  z-index: 2;
 }
 
 .action-btn:hover {

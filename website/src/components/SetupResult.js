@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import { Card, Tag, Col, Row, Popover, Badge, Modal, Input, Button } from 'antd'
 import { ShareAltOutlined, LikeOutlined, StarOutlined, LikeFilled, StarFilled, InfoCircleOutlined, EditOutlined, DeleteOutlined, CloudUploadOutlined, MessageOutlined } from '@ant-design/icons'
 import { classTagsColor } from '../utils/charClassUtils'
@@ -7,6 +8,8 @@ import ToyIcon from './ToyIcon'
 import CardActionButton from './CardActionButton'
 
 const SetupResult = ({result, ownerAction}) => {
+
+  let history = useHistory()
 
   const [activeClassIdx, setActiveClassIdx] = useState(0)
   const [activeSetup, setActiveSetup] = useState(result['player_setup'][0])
@@ -50,34 +53,37 @@ const SetupResult = ({result, ownerAction}) => {
 
   const cardActions = {
     Draft: [
-      <CardActionButton btnAction={() => ownerAction(result.id, 'publish')} component={<CloudUploadOutlined />} />,
-      <a href={`/setup/edit/${result.id}`}><EditOutlined /></a>,
-      <CardActionButton btnAction={() => ownerAction(result.id, 'delete')} component={<DeleteOutlined />} />,
+      <CardActionButton btnAction={(e) => {e.stopPropagation(); ownerAction(result.id, 'publish')}} component={<CloudUploadOutlined />} />,
+      <a onClick={e => e.stopPropagation()} href={`/setup/edit/${result.id}`}><EditOutlined /></a>,
+      <CardActionButton btnAction={(e) => {e.stopPropagation(); ownerAction(result.id, 'delete')}} component={<DeleteOutlined />} />,
     ],
     Published: [
-      <CardActionButton btnAction={() => onInteract('like')} component={<LikeOutlined />} count={15} />,
-      <CardActionButton btnAction={() => onInteract('favourite')} component={<StarOutlined />} count={15} />,
-      <a href='/'><MessageOutlined /><span style={{marginLeft: '6px'}}>15</span></a>
+      <CardActionButton btnAction={(e) => {e.stopPropagation(); onInteract('like')}} component={<LikeOutlined />} count={15} />,
+      <CardActionButton btnAction={(e) => {e.stopPropagation(); onInteract('favourite')}} component={<StarOutlined />} count={15} />,
+      <a onClick={e => e.stopPropagation()} href='/'><MessageOutlined /><span style={{marginLeft: '6px'}}>15</span></a>
     ]
   }
 
   return (
 
-  <Badge.Ribbon text={result.status}>
-    <Card hoverable
+  <Badge.Ribbon text={result.status} color={result.status === 'Published' ? 'blue' : 'gold'}>
+      <Card hoverable
+      onClick={() => console.log('fds')}
       actions={cardActions[result.status]}>
       <Row gutter={[16,16]}>
         <Col span={24}>
           <div style={{display: 'flex', alignItems: 'center'}}>
+            <div>
             <Popover placement="bottomLeft" title={<span>Setup Notes</span>} content={infoContent}>
               <InfoCircleOutlined />
             </Popover>
+            </div>
             <div style={{marginLeft: '12px'}}>{result.boss.name}</div>
           </div>
         </Col>
         <Col span={24}>
           <Row>
-          {result['player_classes'].sort().map((playerClass, idx) => (
+          {result['player_classes'].map((playerClass, idx) => (
             <Col span={6} key={idx}>
             <Tag 
             color={idx === activeClassIdx ? classTagsColor[playerClass] : "default"}

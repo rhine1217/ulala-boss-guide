@@ -83,12 +83,16 @@ const AddEditSetup = (props) => {
         const response = action === 'Add' ? 
                          await Setup.Add({bossSetup, playerSetups}) : 
                          await Setup.Edit(setupId, {bossSetup, playerSetups})
-        if (response.status === 201) {
-          props.history.push(`/setup/edit/${response.data}/?classForSetup=${classForSetup}`)
-        } else if (response.status === 200) {
-          props.history.push(`/`)
+        console.log(response)
+        if (response.status === 201 || 200) {
+          console.log('inside here')
+          if (setupStatus === 'P') {
+            props.history.push(`/favourite`)
+          } else if (setupStatus === 'D') {
+            message.success('Setup saved!', 3)
+            props.history.push(`/setup/edit/${response.data.id}/?classForSetup=${classForSetup}`)
+          }
         }
-        window.location.reload()
       } catch (error) {
         console.log(error)
       }
