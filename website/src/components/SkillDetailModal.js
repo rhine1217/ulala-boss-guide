@@ -43,6 +43,7 @@ const SkillDetailModal = ({skill}) => {
       centered
       visible={isSkillDetailModalVisible}
       footer={footer}
+      maskStyle={{backgroundColor: 'transparent'}}
       onCancel={() => setIsSkillDetailModalVisible(false)}
       width={300}
     >

@@ -72,14 +72,10 @@ class BossPlayerSetupUpdate(APIView):
         slug = self.kwargs['slug']
         boss_setup_id = hashids.decode(slug)[0]
         obj = get_object_or_404(BossSetup.objects.all(), pk=boss_setup_id)
-        print('inside get_object')
-        print('checking perm', self.check_object_permissions(self.request, obj))
         self.check_object_permissions(self.request, obj)
         return obj
       
     def patch(self, request, slug, format=None):
-        print('fdasfsdsas')
-        print('isowner', IsOwner)
         boss_setup_obj = self.get_object()
         boss_setup_data = request.data['bossSetup']
         player_setups_data = request.data['playerSetups']
@@ -102,4 +98,7 @@ class BossPlayerSetupUpdate(APIView):
             return Response(serializer.data, status=status.HTTP_200_OK, content_type='application/json')
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-# class BossSetupDestroy(generics.DestroyAPIView):
+    def delete(self, request, slug):
+        boss_setup_obj = self.get_object()
+        boss_setup_obj.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)

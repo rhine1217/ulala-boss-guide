@@ -1,0 +1,8 @@
+.action-btn {
+  border: none;
+  background: none
+}
+
+.action-btn:hover {
+  cursor: pointer;
+}

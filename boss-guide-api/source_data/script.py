@@ -84,7 +84,7 @@ class DataFixtures_M2M(DataFixtures):
 
         self._DataFixtures__writefile(target_file)
     
-UlalaClass = DataFixtures(model="UlalaClass", fields=['name'])
+UlalaClass = DataFixtures(model="UlalaClass", fields=['name', 'display_seq'])
 UlalaMapArea = DataFixtures(model="UlalaMapArea", fields=['continent', 'area'])
 UlalaBoss = DataFixtures_M2M(model="UlalaBoss", fields=['name'], m2m_fields=['map_area'])
 UlalaToy = DataFixtures_M2M(model="UlalaToy", fields=['name', 'img_url', 'not_allowed_with'], m2m_fields=['related_class'], m2m_data_type="many")
@@ -93,12 +93,12 @@ UlalaSkill = DataFixtures(model="UlalaSkill", fields=['name', 'description', 're
 BossSetup = DataFixtures(model="BossSetup", fields=['boss', 'created_by'])
 PlayerSetup = DataFixtures(model="PlayerSetup", fields=['boss_setup', 'player_class', 'skill1', 'skill2', 'skill3', 'skill4', 'toy1', 'toy2', 'toy3', 'toy4'])
 
-# UlalaClass.create_fixtures('04152021')
+UlalaClass.create_fixtures('05052021')
 # UlalaMapArea.create_fixtures('04152021')
 # UlalaBoss.create_fixtures('04172021')
 # UlalaToy.create_fixtures('05012021')
 # UlalaToyDescription.create_fixtures('05012021')
-# UlalaSkill.create_fixtures('05012021')
+# UlalaSkill.create_fixtures('05052021')
 # BossSetup.create_fixtures('04272021')
 # PlayerSetup.create_fixtures('04272021')
 

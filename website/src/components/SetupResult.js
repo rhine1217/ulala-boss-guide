@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
-import { Card, Tag, Col, Row, Popover, Badge, Modal, Input, Button, Form } from 'antd'
+import { Card, Tag, Col, Row, Popover, Badge, Modal, Input, Button } from 'antd'
 import { ShareAltOutlined, LikeOutlined, StarOutlined, LikeFilled, StarFilled, InfoCircleOutlined, EditOutlined, DeleteOutlined, CloudUploadOutlined, MessageOutlined } from '@ant-design/icons'
 import { classTagsColor } from '../utils/charClassUtils'
 import SkillIcon from './SkillIcon'
 import ToyIcon from './ToyIcon'
-import Setup from '../Models/Setup'
+import CardActionButton from './CardActionButton'
 
-const SetupResult = ({result, onPublish}) => {
+const SetupResult = ({result, ownerAction}) => {
 
   const [activeClassIdx, setActiveClassIdx] = useState(0)
   const [activeSetup, setActiveSetup] = useState(result['player_setup'][0])
@@ -20,10 +20,6 @@ const SetupResult = ({result, onPublish}) => {
   const changeActiveClass = (idx) => {
     setActiveClassIdx(idx)
     setActiveSetup(result['player_setup'][idx])
-  }
-
-  const onDelete = () => {
-    console.log('on delete')
   }
 
   const onInteract = (action) => {
@@ -54,13 +50,13 @@ const SetupResult = ({result, onPublish}) => {
 
   const cardActions = {
     Draft: [
-      <a onClick={() => onPublish(result.id)}><CloudUploadOutlined /></a>,
+      <CardActionButton btnAction={() => ownerAction(result.id, 'publish')} component={<CloudUploadOutlined />} />,
       <a href={`/setup/edit/${result.id}`}><EditOutlined /></a>,
-      <a onClick={onDelete}><DeleteOutlined /></a>
+      <CardActionButton btnAction={() => ownerAction(result.id, 'delete')} component={<DeleteOutlined />} />,
     ],
     Published: [
-      <a onClick={() => onInteract('like')}><LikeOutlined /><span style={{marginLeft: '6px'}}>15</span></a>,
-      <a onClick={() => onInteract('favourite')}><StarOutlined /><span style={{marginLeft: '6px'}}>15</span></a>,
+      <CardActionButton btnAction={() => onInteract('like')} component={<LikeOutlined />} count={15} />,
+      <CardActionButton btnAction={() => onInteract('favourite')} component={<StarOutlined />} count={15} />,
       <a href='/'><MessageOutlined /><span style={{marginLeft: '6px'}}>15</span></a>
     ]
   }
@@ -70,7 +66,6 @@ const SetupResult = ({result, onPublish}) => {
   <Badge.Ribbon text={result.status}>
     <Card hoverable
       actions={cardActions[result.status]}>
-      {/* actions={cardActions['Published']}> */}
       <Row gutter={[16,16]}>
         <Col span={24}>
           <div style={{display: 'flex', alignItems: 'center'}}>

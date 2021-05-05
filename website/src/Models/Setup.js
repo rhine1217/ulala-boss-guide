@@ -14,6 +14,7 @@ class Setup {
   static Add = (data) => instance.post(`addsetup/`, data)
   static Retrieve = (id) => instance.get(`bosssetup/${id}`)
   static Edit = (id, data) => instance.patch(`editsetup/${id}`, data)
+  static Destroy = (id) => instance.delete(`editsetup/${id}`)
   static Favourite = () => instance.get(`bosssetup/favourite/`)
 }
 

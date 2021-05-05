@@ -40,6 +40,7 @@ class UlalaBoss(models.Model):
 
 class UlalaClass(models.Model):
     name = models.CharField(max_length=16)
+    display_seq = models.IntegerField()
     def __str__(self):
         return self.name
     
