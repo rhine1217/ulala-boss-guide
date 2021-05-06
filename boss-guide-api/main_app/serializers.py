@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from main_app.models import UlalaMapArea, BossSetup, PlayerSetup, UlalaBoss, UlalaSkill, UlalaToy, UlalaToyDescription, UlalaClass
+from main_app.models import UlalaMapArea, BossSetup, PlayerSetup, UlalaBoss, UlalaSkill, UlalaToy, UlalaToyDescription, UlalaClass, UserLikes, UserComments, SaveToUser
 from utils import getenv
 from hashids import Hashids
 hashids = Hashids(salt=getenv()["HASH_ID_SALT"], min_length=16)
@@ -69,6 +69,9 @@ class BossSetupListSerializer(serializers.ModelSerializer):
     player_setup = PlayerSetupListSerializer(many=True, read_only=True)
     player_setup = serializers.SerializerMethodField('get_player_setup')
     player_classes = serializers.SerializerMethodField('get_player_classes')
+    likes = serializers.SerializerMethodField('get_likes')
+    comments = serializers.SerializerMethodField('get_comments')
+    favourites = serializers.SerializerMethodField('get_favourites')
     
     def get_ordered_player_setups_queryset(self, obj):
         return PlayerSetup.objects.filter(boss_setup=obj.id).order_by('player_class__display_seq')
@@ -87,10 +90,34 @@ class BossSetupListSerializer(serializers.ModelSerializer):
     def get_hash_id(self, obj):
         return hashids.encode(obj.id)
     
+    def get_likes(self, obj):
+        return UserLikes.objects.filter(boss_setup=obj.id).count()
+    
+    def get_comments(self, obj):
+        return UserComments.objects.filter(boss_setup=obj.id).count()
+    
+    def get_favourites(self, obj):
+        return SaveToUser.objects.filter(boss_setup=obj.id).count()
+      
     class Meta:
         model = BossSetup
-        fields = ['id', 'boss', 'player_classes', 'player_setup', 'note', 'created_by', 'created_on', 'published_on', 'status']
+        fields = ['id', 'boss', 'player_classes', 'player_setup', 'note', 'created_by', 'created_on', 'published_on', 'status', 'likes', 'comments', 'favourites']
 
+class BossSetupListWithInteractionsSerializer(BossSetupListSerializer):
+    liked_by_current_user = serializers.SerializerMethodField('check_like')
+    saved_by_current_user = serializers.SerializerMethodField('check_save')
+    
+    def check_like(self, obj):
+        request = self.context.get('request', None)
+        return UserLikes.objects.filter(boss_setup=obj.id, user=request.user).count() > 0
+
+    def check_save(self, obj):
+        request = self.context.get('request', None)
+        return SaveToUser.objects.filter(boss_setup=obj.id, user=request.user).count() > 0
+      
+    class Meta(BossSetupListSerializer.Meta):
+        fields = BossSetupListSerializer.Meta.fields + ['liked_by_current_user', 'saved_by_current_user']
+  
 class BossField(serializers.RelatedField):
     def to_representation(self, obj):
         return {
@@ -141,3 +168,10 @@ class PlayerSetupCreateUpdateSerializer(serializers.ModelSerializer):
         instance.toy4 = validated_data.get('toy4', instance.toy4)
         instance.save()
         return instance
+
+class UserLikesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserLikes
+        fields = '__all__'
+    def create(self, validated_data):
+        return UserLikes.objects.create(**validated_data)

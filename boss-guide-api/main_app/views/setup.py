@@ -1,11 +1,11 @@
 from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.permissions import IsAuthenticated
+# from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404
-from main_app.permissions import IsOwner
+from main_app.permissions import IsSetupOwner
 from main_app.models import BossSetup, PlayerSetup
-from main_app.serializers import BossSetupListSerializer, BossSetupCreateUpdateSerializer, PlayerSetupCreateUpdateSerializer
+from main_app.serializers import BossSetupListSerializer, BossSetupListWithInteractionsSerializer, BossSetupCreateUpdateSerializer, PlayerSetupCreateUpdateSerializer
 
 import urllib.parse
 from utils import getenv
@@ -13,7 +13,6 @@ from hashids import Hashids
 hashids = Hashids(salt=getenv()["HASH_ID_SALT"], min_length=16)
 
 class BossSetupList(generics.ListAPIView):
-    serializer_class=BossSetupListSerializer
     def get_queryset(self):
         queryset = BossSetup.objects.all()
         bossname_encoded = self.request.query_params.get('name')
@@ -21,15 +20,17 @@ class BossSetupList(generics.ListAPIView):
           bossname = urllib.parse.unquote(bossname_encoded)
           queryset = queryset.filter(boss__name=bossname)
         return queryset
+    def get_serializer_class(self):
+        if self.request.user:
+            return BossSetupListWithInteractionsSerializer
+        return BossSetupListSerializer
 
 class BossSetupFavouriteList(generics.ListAPIView):
-    serializer_class=BossSetupListSerializer
+    serializer_class=BossSetupListWithInteractionsSerializer
     def get_queryset(self):
-        queryset = BossSetup.objects.all()
         user = self.request.user
         if user is not None:
-            queryset = queryset.filter(created_by=user)
-        return queryset
+            return BossSetup.objects.filter(created_by=user)
 
 class BossSetupDetail(generics.RetrieveAPIView):
     serializer_class=BossSetupListSerializer
@@ -41,7 +42,11 @@ class BossSetupDetail(generics.RetrieveAPIView):
           return obj
         except obj.DoesNotExist:
           return Response(status=status.HTTP_404_NOT_FOUND)
-
+    def get_serializer_class(self):
+        if self.request.user:
+          return BossSetupListWithInteractionsSerializer
+        return BossSetupListSerializer
+      
 class BossPlayerSetupCreate(APIView):
     def post(self, request, format=None):
         boss_setup_data = request.data['bossSetup']
@@ -66,7 +71,7 @@ class BossPlayerSetupCreate(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class BossPlayerSetupUpdate(APIView):
-    permission_classes = (IsOwner,)
+    permission_classes = (IsSetupOwner,)
     
     def get_object(self):
         slug = self.kwargs['slug']
