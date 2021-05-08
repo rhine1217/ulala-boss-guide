@@ -85,7 +85,6 @@ const AddEditSetup = (props) => {
                          await Setup.Edit(setupId, {bossSetup, playerSetups})
         console.log(response)
         if (response.status === 201 || 200) {
-          console.log('inside here')
           if (setupStatus === 'P') {
             props.history.push(`/favourite`)
           } else if (setupStatus === 'D') {
