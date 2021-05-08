@@ -13,7 +13,7 @@ const ToyDetailModal = ({toy}) => {
       visible={isToyDetailModalVisible} 
       footer={null} 
       maskStyle={{backgroundColor: 'transparent'}}
-      onCancel={() => setIsToyDetailModalVisible(false)} width={300}>
+      onCancel={(e) => {e.stopPropagation(); setIsToyDetailModalVisible(false)}} width={300}>
       <ToyDesc description={toy.description} />
     </Modal> 
   )

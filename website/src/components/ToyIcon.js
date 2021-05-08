@@ -13,7 +13,8 @@ const ToyIcon = ({toy, context}) => {
 
   const currContext = context.split('-')[0] || context
 
-  const onClickToy = (toy) => {
+  const onClickToy = (e, toy) => {
+    e.stopPropagation()
     switch (currContext) {
       case 'choiceModal':
         return
@@ -45,7 +46,7 @@ const ToyIcon = ({toy, context}) => {
       <button 
         style={{cursor: context === 'choiceModal' ? 'default' : 'pointer'}} 
         className={styles['toy-icon-button']} 
-        onClick={() => onClickToy(toy)} />
+        onClick={(e) => onClickToy(e, toy)} />
       <div className={styles['toy-icon-wrapper']}>
         <img className={styles['toy-img']} src={`${process.env.REACT_APP_HOSTED_IMG_URL_PREFIX}/${toy['img_url']}.png`} alt="toy" />
       {subText()}

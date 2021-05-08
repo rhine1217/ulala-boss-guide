@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import { Card, Tag, Col, Row, Popover, Badge, Modal, Input, Button } from 'antd'
 import { ShareAltOutlined, LikeOutlined, StarOutlined, LikeFilled, StarFilled, InfoCircleOutlined, EditOutlined, DeleteOutlined, CloudUploadOutlined, MessageOutlined } from '@ant-design/icons'
 import { classTagsColor } from '../utils/charClassUtils'
@@ -15,6 +16,7 @@ const SetupResult = ({result, userActions}) => {
   const [copyLinkBtnType, setCopyLinkBtnType] = useState('default')
 
   const context = 'result'
+  const history = useHistory()
   const setupLink = `${process.env.REACT_APP_HOST_NAME}/setup/${result.id}`
 
   const changeActiveClass = (idx) => {
@@ -23,6 +25,8 @@ const SetupResult = ({result, userActions}) => {
   }
 
   const showLinkToShare = () => setisSharingModalVisible(true)
+
+  const goToSetupDetail = () => history.push(`/setup/${result.id}`)
 
   const handleModalCancel = () => {
     setisSharingModalVisible(false)
@@ -71,7 +75,7 @@ const SetupResult = ({result, userActions}) => {
 
   <Badge.Ribbon text={result.status} color={result.status === 'Published' ? 'blue' : 'gold'}>
       <Card hoverable
-      onClick={() => console.log('fds')}
+      onClick={goToSetupDetail}
       actions={cardActions[result.status]}>
       <Row gutter={[16,16]}>
         <Col span={24}>
@@ -90,7 +94,7 @@ const SetupResult = ({result, userActions}) => {
             <Col span={6} key={idx}>
             <Tag 
             color={idx === activeClassIdx ? classTagsColor[playerClass] : "default"}
-            onClick={() => changeActiveClass(idx)}
+            onClick={(e) => {e.stopPropagation(); changeActiveClass(idx)}}
             style={{display: 'block', width: '100%', textAlign: 'center'}}
             >{playerClass}</Tag>
             </Col>
@@ -109,7 +113,7 @@ const SetupResult = ({result, userActions}) => {
         ))}
         <Col span={24} style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
         <div>Submitted by {result['created_by']}</div>
-          <a onClick={showLinkToShare}><ShareAltOutlined /></a>
+          <a onClick={(e) => {e.stopPropagation(); showLinkToShare()}}><ShareAltOutlined /></a>
         </Col>
         </Row>
     </Card>

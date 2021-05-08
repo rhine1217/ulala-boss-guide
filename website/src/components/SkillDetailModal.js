@@ -44,7 +44,7 @@ const SkillDetailModal = ({skill}) => {
       visible={isSkillDetailModalVisible}
       footer={footer}
       maskStyle={{backgroundColor: 'transparent'}}
-      onCancel={() => setIsSkillDetailModalVisible(false)}
+      onCancel={(e) => {e.stopPropagation(); setIsSkillDetailModalVisible(false)}}
       width={300}
     >
       <div>{skill.description}</div>

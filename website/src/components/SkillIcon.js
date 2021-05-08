@@ -15,7 +15,8 @@ const SkillIcon = ({activeClass, skill, context}) => {
 
   const currContext = context.split('-')[0] || context
 
-  const onClickSkill = () => {
+  const onClickSkill = (e) => {
+    e.stopPropagation()
     switch (currContext) {
       case 'choiceModal':
         setSkillForDetails(skill)
@@ -54,7 +55,7 @@ const SkillIcon = ({activeClass, skill, context}) => {
   return (
     <>
     <div>
-      <button className={styles['skill-icon-button']} onClick={onClickSkill} />
+      <button className={styles['skill-icon-button']} onClick={(e) => onClickSkill(e)} />
       <div className={styles['skill-icon-wrapper']}>
         <div className={styles['skill-energy-wrapper']}>
           <img
