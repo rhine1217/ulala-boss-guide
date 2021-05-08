@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 # from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404
+from django.db.models import Q
 from main_app.permissions import IsSetupOwner
 from main_app.models import BossSetup, PlayerSetup
 from main_app.serializers import BossSetupListSerializer, BossSetupListWithInteractionsSerializer, BossSetupCreateUpdateSerializer, PlayerSetupCreateUpdateSerializer
@@ -30,7 +31,7 @@ class BossSetupFavouriteList(generics.ListAPIView):
     def get_queryset(self):
         user = self.request.user
         if user is not None:
-            return BossSetup.objects.filter(created_by=user)
+            return BossSetup.objects.filter(Q(created_by=user) | Q(saved__user=user))
 
 class BossSetupDetail(generics.RetrieveAPIView):
     def get_object(self):

@@ -17,7 +17,7 @@ const AddEditSetup = (props) => {
   const setupId = props.match.params.id
   const action = props.action
 
-  const currUser = useRecoilValue(userState)
+  const currentUser = useRecoilValue(userState)
 
   const [skills, setSkills] = useRecoilState(skillListState)
   const [toys, setToys] = useRecoilState(toyListState)
@@ -63,7 +63,7 @@ const AddEditSetup = (props) => {
     const bossSetup = {}, playerSetups = []
     if (isSetupValid()) {
       if (action === 'Add') {
-        bossSetup['created_by'] = currUser.uid
+        bossSetup['created_by'] = currentUser.uid
         bossSetup['created_on'] = new Date()
       } else if (action === 'Edit') {
         bossSetup['id'] = setupId

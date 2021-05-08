@@ -9,7 +9,7 @@ class DiscordUser(models.Model):
     id = models.CharField(max_length=32, primary_key=True)
     username = models.CharField(max_length=32)
     discriminator = models.CharField(max_length=4)
-    avatar = models.CharField(max_length=100)
+    avatar = models.CharField(max_length=100, null=True)
     locale = models.CharField(max_length=16)
     last_login = models.DateTimeField()
     

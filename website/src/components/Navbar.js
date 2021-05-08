@@ -45,7 +45,7 @@ const Navbar = ({currentUser}) => {
             <>
               <Dropdown overlay={menu} trigger={['click']}>
               <div className={styles.dropdown}>
-                <Avatar src={`https://cdn.discordapp.com/avatars/${currentUser.uid}/${currentUser.avatar}.png`} />
+                <Avatar src={`${currentUser.avatar ? `https://cdn.discordapp.com/avatars/${currentUser.uid}/${currentUser.avatar}.png` : 'https://cdn.discordapp.com/embed/avatars/0.png'}`} />
                 {width >= 576 ? <div>{currentUser.username}</div> : <></>}
               </div>
               </Dropdown>
