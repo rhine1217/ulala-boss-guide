@@ -33,7 +33,6 @@ class BossSetupFavouriteList(generics.ListAPIView):
             return BossSetup.objects.filter(created_by=user)
 
 class BossSetupDetail(generics.RetrieveAPIView):
-    serializer_class=BossSetupListSerializer
     def get_object(self):
         slug = self.kwargs['slug']
         boss_setup_id = hashids.decode(slug)[0]
@@ -66,7 +65,7 @@ class BossPlayerSetupCreate(APIView):
                 new_player_setup = PlayerSetupCreateUpdateSerializer(data=player_setup_data)
                 if new_player_setup.is_valid():
                     new_player_setup.save()
-            serializer = BossSetupListSerializer(BossSetup.objects.get(pk=new_boss_setup_id))
+            serializer = BossSetupListWithInteractionsSerializer(BossSetup.objects.get(pk=new_boss_setup_id))
             return Response(serializer.data, status=status.HTTP_201_CREATED, content_type='application/json')
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -99,7 +98,7 @@ class BossPlayerSetupUpdate(APIView):
                     new_player_setup = PlayerSetupCreateUpdateSerializer(player_setup_obj, data=player_setup_data, partial=True)
                     if new_player_setup.is_valid():
                         new_player_setup.save()
-            serializer = BossSetupListSerializer(BossSetup.objects.get(pk=boss_setup_obj.id))
+            serializer = BossSetupListWithInteractionsSerializer(BossSetup.objects.get(pk=boss_setup_obj.id))
             return Response(serializer.data, status=status.HTTP_200_OK, content_type='application/json')
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

@@ -103,7 +103,7 @@ class UserLikes(UserInteractions):
     pass
 
 class SaveToUser(UserInteractions):
-    pass
+    boss_setup = models.ForeignKey(BossSetup, related_name='saved', on_delete=models.CASCADE)
   
 class Team(models.Model):
     members = models.ManyToManyField(DiscordUser, through='UserTeam', through_fields=('team', 'user'))

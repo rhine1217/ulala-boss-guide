@@ -105,18 +105,18 @@ class BossSetupListSerializer(serializers.ModelSerializer):
 
 class BossSetupListWithInteractionsSerializer(BossSetupListSerializer):
     liked_by_current_user = serializers.SerializerMethodField('check_like')
-    saved_by_current_user = serializers.SerializerMethodField('check_save')
+    favourited_by_current_user = serializers.SerializerMethodField('check_favourite')
     
     def check_like(self, obj):
         request = self.context.get('request', None)
         return UserLikes.objects.filter(boss_setup=obj.id, user=request.user).count() > 0
 
-    def check_save(self, obj):
+    def check_favourite(self, obj):
         request = self.context.get('request', None)
         return SaveToUser.objects.filter(boss_setup=obj.id, user=request.user).count() > 0
       
     class Meta(BossSetupListSerializer.Meta):
-        fields = BossSetupListSerializer.Meta.fields + ['liked_by_current_user', 'saved_by_current_user']
+        fields = BossSetupListSerializer.Meta.fields + ['liked_by_current_user', 'favourited_by_current_user']
   
 class BossField(serializers.RelatedField):
     def to_representation(self, obj):
@@ -175,3 +175,10 @@ class UserLikesSerializer(serializers.ModelSerializer):
         fields = '__all__'
     def create(self, validated_data):
         return UserLikes.objects.create(**validated_data)
+
+class UserFavouritesSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = SaveToUser
+        fields = '__all__'
+    def create(self, validated_data):
+        return SaveToUser.objects.create(**validated_data)

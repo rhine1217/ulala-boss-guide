@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { useHistory } from 'react-router-dom'
 import { Card, Tag, Col, Row, Popover, Badge, Modal, Input, Button } from 'antd'
 import { ShareAltOutlined, LikeOutlined, StarOutlined, LikeFilled, StarFilled, InfoCircleOutlined, EditOutlined, DeleteOutlined, CloudUploadOutlined, MessageOutlined } from '@ant-design/icons'
 import { classTagsColor } from '../utils/charClassUtils'
@@ -7,9 +6,7 @@ import SkillIcon from './SkillIcon'
 import ToyIcon from './ToyIcon'
 import CardActionButton from './CardActionButton'
 
-const SetupResult = ({result, ownerAction}) => {
-
-  let history = useHistory()
+const SetupResult = ({result, userActions}) => {
 
   const [activeClassIdx, setActiveClassIdx] = useState(0)
   const [activeSetup, setActiveSetup] = useState(result['player_setup'][0])
@@ -25,13 +22,7 @@ const SetupResult = ({result, ownerAction}) => {
     setActiveSetup(result['player_setup'][idx])
   }
 
-  const onInteract = (action) => {
-    console.log(action)
-  }
-
-  const showLinkToShare = () => {
-    setisSharingModalVisible(true)
-  }
+  const showLinkToShare = () => setisSharingModalVisible(true)
 
   const handleModalCancel = () => {
     setisSharingModalVisible(false)
@@ -53,14 +44,26 @@ const SetupResult = ({result, ownerAction}) => {
 
   const cardActions = {
     Draft: [
-      <CardActionButton btnAction={(e) => {e.stopPropagation(); ownerAction(result.id, 'publish')}} component={<CloudUploadOutlined />} />,
+      <CardActionButton 
+        btnAction={(e) => {userActions(e, result.id, 'onPublish')}} 
+        component={<CloudUploadOutlined />} 
+      />,
       <a onClick={e => e.stopPropagation()} href={`/setup/edit/${result.id}`}><EditOutlined /></a>,
-      <CardActionButton btnAction={(e) => {e.stopPropagation(); ownerAction(result.id, 'delete')}} component={<DeleteOutlined />} />,
+      <CardActionButton 
+        btnAction={(e) => {userActions(e, result.id, 'onDelete')}} 
+        component={<DeleteOutlined />} />,
     ],
     Published: [
-      <CardActionButton btnAction={(e) => {e.stopPropagation(); onInteract('like')}} component={<LikeOutlined />} count={15} />,
-      <CardActionButton btnAction={(e) => {e.stopPropagation(); onInteract('favourite')}} component={<StarOutlined />} count={15} />,
-      <a onClick={e => e.stopPropagation()} href='/'><MessageOutlined /><span style={{marginLeft: '6px'}}>15</span></a>
+      <CardActionButton 
+        btnAction={(e) => {userActions(e, result.id, `${result.liked_by_current_user ? 'onUnlike' : 'onLike'}`)}} component={result.liked_by_current_user ? <LikeFilled /> : <LikeOutlined />} 
+        count={result.likes} 
+      />,
+      <CardActionButton 
+        btnAction={(e) => {userActions(e, result.id, `${result.favourited_by_current_user ? 'onUnfavourite' : 'onFavourite'}`)}} 
+        component={result.favourited_by_current_user ? <StarFilled /> : <StarOutlined />} 
+        count={result.favourites} 
+      />,
+      <a onClick={e => e.stopPropagation()} href='/'><MessageOutlined /><span style={{marginLeft: '6px'}}>{result.comments === 0 ? '' : result.comments }</span></a>
     ]
   }
 

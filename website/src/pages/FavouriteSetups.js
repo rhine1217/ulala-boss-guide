@@ -3,6 +3,9 @@ import SetupResult from '../components/SetupResult'
 import { Select, Row, Col, Spin } from 'antd'
 import { LoadingOutlined } from '@ant-design/icons'
 import Setup from '../Models/Setup'
+import Interaction from '../Models/Interaction'
+import { userState } from '../states/atoms'
+import { useRecoilValue } from 'recoil'
 
 const FavouriteSetups = () => {
 
@@ -10,25 +13,41 @@ const FavouriteSetups = () => {
       console.log(e)
   }
 
+  const currUser = useRecoilValue(userState)
   const [results, setResults] = useState([])
   const [isLoading, setIsLoading] = useState(true)
 
-  const ownerAction = async(id, action) => {
-    // action = 'publish' or 'delete'
+  const updateResults = (id, response) => {
+    const status = response.status
+    const data = response.data
+    const newResults = [...results]
+    const idxToUpdate = newResults.findIndex(result => result.id === id)
+    if (status === 200 || status === 201) {
+      newResults[idxToUpdate] = data
+    } else if (status === 204) {
+      newResults.splice(idxToUpdate, 1)
+    }
+    setResults(newResults)
+  }
+
+  const userActions = async (e, id, action) => {
+    console.log('got to useractions')
+    e.stopPropagation()
+    const interactionData = {boss_setup: id, user: currUser.uid}
+    console.log(currUser)
+    console.log(interactionData)
+    const actionList = {
+      onPublish: async () => Setup.Edit(id, {bossSetup: { id, status: 'P' }, playerSetups: null}),
+      onDelete: async() => Setup.Destroy(id),
+      onLike: async() => Interaction.Like(interactionData),
+      onUnlike: async() => Interaction.Unlike(id),
+      onFavourite: async() => Interaction.Favourite(interactionData),
+      onUnfavourite: async() => Interaction.Unfavourite(id)
+    }
     try {
-      const response = action === 'publish' ? 
-        await Setup.Edit(id, { 
-          bossSetup: { id, status: 'P' }, playerSetups: null 
-        }) :
-        await Setup.Destroy(id)
-      const newResults = [...results]
-      const idxToUpdate = newResults.findIndex(result => result.id === id)
-      if (response.status === 200) {
-        newResults[idxToUpdate] = response.data
-      } else if (response.status === 204) {
-        newResults.splice(idxToUpdate, 1)
-      }
-      setResults(newResults)
+      const response = await actionList[action]()
+      console.log(response)
+      updateResults(id, response)
     } catch (error) {
       console.log(error)
     }
@@ -64,7 +83,7 @@ const FavouriteSetups = () => {
         <Row gutter={[16, 16]}>
             {results.map(result => (
               <Col xs={24} sm={12} lg={8} key={result.id} >
-                <SetupResult result={result} ownerAction={ownerAction} />
+                <SetupResult result={result} userActions={userActions} />
               </Col>
             ))}
         </Row>

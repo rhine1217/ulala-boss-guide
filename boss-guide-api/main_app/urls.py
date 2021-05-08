@@ -13,8 +13,8 @@ urlpatterns = [
     path('bosssetup/favourite/', SetupViews.BossSetupFavouriteList.as_view()),
     path('addsetup/', SetupViews.BossPlayerSetupCreate.as_view()),
     path('editsetup/<slug:slug>', SetupViews.BossPlayerSetupUpdate.as_view()),
-    path('interaction/like/', InteractionViews.UserLikesCreate.as_view()),
-    path('interaction/unlike/', InteractionViews.UserLikesDestroy.as_view()),
+    path('interaction/', InteractionViews.UserLikesFavouritesCreateDestroy.as_view({'post': 'create'})),
+    path('interaction/<slug:slug>', InteractionViews.UserLikesFavouritesCreateDestroy.as_view({'delete': 'destroy'}))
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)
