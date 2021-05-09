@@ -72,7 +72,6 @@ const SetupResult = ({result, userActions}) => {
   }
 
   return (
-
   <Badge.Ribbon text={result.status} color={result.status === 'Published' ? 'blue' : 'gold'}>
       <Card hoverable
       onClick={goToSetupDetail}

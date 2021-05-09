@@ -1,5 +1,5 @@
 import React from 'react'
-import { Row, Col, Tag } from 'antd'
+import { Col, Tag } from 'antd'
 import { classTagsColor } from '../utils/charClassUtils'
 
 const ClassTabs = ({result, activeClassIdx, changeActiveClass}) => (

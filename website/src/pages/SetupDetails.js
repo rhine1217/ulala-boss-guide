@@ -93,7 +93,7 @@ const SetupDetails = (props) => {
     <>
     { isLoading ? <div>Loading</div> : 
     <>
-      <SetupDetailPageHeader bossSetup={bossSetup} userActions={userActions} />
+      <SetupDetailPageHeader bossSetup={bossSetup} userActions={userActions} currentUser={currentUser} />
       <div style={{padding: '0px 24px 24px'}}>
         <Row gutter={[16,16]}>
           <ClassTabs result={bossSetup} activeClassIdx={activeClassIdx} changeActiveClass={changeActiveClass}/>

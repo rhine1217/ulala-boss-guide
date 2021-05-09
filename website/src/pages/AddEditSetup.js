@@ -29,7 +29,7 @@ const AddEditSetup = (props) => {
   const [bossName, setBossName] = useState('')
   const [setupNotes, setSetupNotes] = useState('')
   const [bossSetupData, setBossSetupData] = useState(null)
-  const [isSetupLoading, setIsSetupLoading] = useState(action === 'Add' ? false : true)
+  const [isSetupLoading, setIsSetupLoading] = useState(action === 'Edit' || props.location.state ? true : false)
   const [areSkillsToysLoading, setAreSkillsToysLoading] = useState(true)
 
   const onNoteInput = (e) => setSetupNotes(e.target.value)
@@ -99,18 +99,21 @@ const AddEditSetup = (props) => {
   }
 
   const onSave = () => actionAddEditSetup('D')
-
   const onPublish = () => actionAddEditSetup('P')
+
+  const initBossSetup = (bossSetup) => {
+    setBossName(bossSetup.boss.name)
+    setSelectedClasses(bossSetup['player_classes'])
+    setClassForSetup(bossSetup['player_classes'][0])
+    setSetupNotes(bossSetup.note)
+    setBossSetupData(bossSetup['player_setup'])
+  }
 
   useEffect(() => {
     const retrieveSetup = async () => {
       try {
         const bossSetup = await Setup.Retrieve(setupId, false)
-        setBossName(bossSetup.data.boss.name)
-        setSelectedClasses(bossSetup.data['player_classes'])
-        setClassForSetup(bossSetup.data['player_classes'][0])
-        setSetupNotes(bossSetup.data.note)
-        setBossSetupData(bossSetup.data['player_setup'])
+        initBossSetup(bossSetup.data)
         setIsSetupLoading(false)
       } catch (error) {
         console.log(error)
@@ -118,6 +121,10 @@ const AddEditSetup = (props) => {
     }
     if (action === 'Edit') {
       retrieveSetup()
+    } else if (props.location.state) {
+      const bossSetup = props.location.state
+      initBossSetup(bossSetup)
+      setIsSetupLoading(false)
     }
   }, [])
 
@@ -144,7 +151,7 @@ const AddEditSetup = (props) => {
       <SetupPageMeta context={action} bossName={bossName} onBossInput={onBossInput} />
       <SetupPageDropdown />
       <SetupPageActiveType />
-      <SetupSelection context={action} skills={skills} toys={toys} bossSetupData={bossSetupData} />
+      <SetupSelection context={props.location.state ? 'Edit' : action} skills={skills} toys={toys} bossSetupData={bossSetupData} />
       <SetupPageNotes setupNotes={setupNotes} onNoteInput={onNoteInput}/>
       </>
     }
