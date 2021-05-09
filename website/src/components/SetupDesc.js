@@ -16,7 +16,7 @@ const SetupDesc = ({value, context}) => {
   const [containerWidth, setContainerWidth] = useState(0)
   const [containerHeight, setContainerHeight] = useState(0)
 
-  const containerRef = React.createRef()
+  const containerRef = React.useRef()
 
   const description = value.description
   const currContext = context.split('-')[0] || context

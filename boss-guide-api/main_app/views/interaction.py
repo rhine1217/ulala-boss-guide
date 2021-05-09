@@ -5,20 +5,27 @@ from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404
 from main_app.permissions import IsInteractionOwner
-from main_app.models import UserLikes, BossSetup, SaveToUser
-from main_app.serializers import UserLikesSerializer, UserFavouritesSerializer, BossSetupListWithInteractionsSerializer
+from main_app.models import UserLikes, BossSetup, SaveToUser, UserComments
+from main_app.serializers import UserLikesSerializer, UserFavouritesSerializer, UserCommentsCreateSerializer, BossSetupListWithInteractionsSerializer, BossSetupListWithInteractionsCommentsSerializer
 
 import urllib.parse
 from utils import getenv
 from hashids import Hashids
 hashids = Hashids(salt=getenv()["HASH_ID_SALT"], min_length=16)
 
-class UserLikesFavouritesCreateDestroy(viewsets.ViewSet):
+class UserLikesFavouritesCommentsCreateDestroy(viewsets.ViewSet):
 
     def get_object(self):
       slug = self.kwargs['slug']
       boss_setup_id = hashids.decode(slug)[0]
       obj = get_object_or_404(self.get_model_serializer()[0], boss_setup=boss_setup_id, user=self.request.user)
+      self.check_object_permissions(self.request, obj)
+      return obj
+    
+    def get_comment_obj(self):
+      slug = self.kwargs['slug']
+      comment_id = hashids.decode(slug)[0]
+      obj = get_object_or_404(self.get_model_serializer()[0], pk=comment_id)
       self.check_object_permissions(self.request, obj)
       return obj
     
@@ -33,10 +40,19 @@ class UserLikesFavouritesCreateDestroy(viewsets.ViewSet):
         return self.request.query_params.get('interaction')
       
     def get_model_serializer(self):
-        if self.get_interaction_type() == 'like':
-            return (UserLikes, UserLikesSerializer)
-        elif self.get_interaction_type() == 'favourite':
-            return (SaveToUser, UserFavouritesSerializer)
+        serializers = {
+          'like': (UserLikes, UserLikesSerializer),
+          'favourite': (SaveToUser, UserFavouritesSerializer),
+          'comment': (UserComments, UserCommentsCreateSerializer)
+        }
+        return serializers[self.get_interaction_type()]
+    
+    def get_output_serializer(self):
+        with_comments = self.request.query_params.get('withComments')
+        if with_comments:
+            return BossSetupListWithInteractionsCommentsSerializer
+        else:
+            return BossSetupListWithInteractionsSerializer
       
     def create(self, request):
         user_interaction_data = request.data
@@ -45,7 +61,7 @@ class UserLikesFavouritesCreateDestroy(viewsets.ViewSet):
         serializer = self.get_model_serializer()[1](data=user_interaction_data)
         if serializer.is_valid():
             serializer.save()
-            boss_serializer = BossSetupListWithInteractionsSerializer(BossSetup.objects.get(pk=boss_setup_id), context={'request': request})
+            boss_serializer = self.get_output_serializer()(BossSetup.objects.get(pk=boss_setup_id), context={'request': request})
             return Response(boss_serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -53,5 +69,5 @@ class UserLikesFavouritesCreateDestroy(viewsets.ViewSet):
         user_interaction_obj = self.get_object()
         boss_setup_obj = user_interaction_obj.boss_setup
         user_interaction_obj.delete()
-        boss_serializer = BossSetupListWithInteractionsSerializer(boss_setup_obj, context={'request': request})
+        boss_serializer = self.get_output_serializer()(boss_setup_obj, context={'request': request})
         return Response(boss_serializer.data, status=status.HTTP_200_OK)

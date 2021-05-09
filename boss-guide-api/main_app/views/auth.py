@@ -9,12 +9,11 @@ from utils import getenv
 
 auth_url_discord = getenv()["AUTH_URL_DISCORD"]
 
-# @login_required(login_url="/oauth2/login")
 def get_authenticated_user(request):
     user = request.user
     if user.is_authenticated:
       return JsonResponse({
-        "uid": user.id,
+        "id": user.id,
         "username": user.username + '#' + user.discriminator,
         "avatar": user.avatar
       })

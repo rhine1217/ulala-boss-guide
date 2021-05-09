@@ -39,10 +39,10 @@ const SetupResults = ({context}) => {
     const actionList = {
       onPublish: async () => Setup.Edit(id, {bossSetup: { id, status: 'P' }, playerSetups: null}),
       onDelete: async() => Setup.Destroy(id),
-      onLike: async() => Interaction.Like(interactionData),
-      onUnlike: async() => Interaction.Unlike(id),
-      onFavourite: async() => Interaction.Favourite(interactionData),
-      onUnfavourite: async() => Interaction.Unfavourite(id)
+      onLike: async() => Interaction.Like(interactionData, false),
+      onUnlike: async() => Interaction.Unlike(id, false),
+      onFavourite: async() => Interaction.Favourite(interactionData, false),
+      onUnfavourite: async() => Interaction.Unfavourite(id, false)
     }
     try {
       const response = await actionList[action]()

@@ -90,12 +90,13 @@ class PlayerSetup(models.Model):
     toy4 = models.ForeignKey(UlalaToy, on_delete=models.RESTRICT, related_name='+')
 
 class UserInteractions(models.Model):
-    boss_setup = models.ForeignKey(BossSetup, on_delete=models.CASCADE)
     user = models.ForeignKey(DiscordUser, on_delete=models.CASCADE)
+    boss_setup = models.ForeignKey(BossSetup, on_delete=models.CASCADE)
     class Meta:
         abstract = True
 
 class UserComments(UserInteractions):
+    boss_setup = models.ForeignKey(BossSetup, related_name='comments', on_delete=models.CASCADE)
     comment = models.TextField()
     posted_date = models.DateTimeField()
 

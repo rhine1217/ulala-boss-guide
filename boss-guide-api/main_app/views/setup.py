@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404
 from django.db.models import Q
 from main_app.permissions import IsSetupOwner
 from main_app.models import BossSetup, PlayerSetup
-from main_app.serializers import BossSetupListSerializer, BossSetupListWithInteractionsSerializer, BossSetupCreateUpdateSerializer, PlayerSetupCreateUpdateSerializer
+from main_app.serializers import BossSetupListSerializer, BossSetupListWithInteractionsSerializer, BossSetupListWithCommentsSerializer, BossSetupListWithInteractionsCommentsSerializer,BossSetupCreateUpdateSerializer, PlayerSetupCreateUpdateSerializer
 
 import urllib.parse
 from utils import getenv
@@ -43,9 +43,17 @@ class BossSetupDetail(generics.RetrieveAPIView):
         except obj.DoesNotExist:
           return Response(status=status.HTTP_404_NOT_FOUND)
     def get_serializer_class(self):
+        with_comments = self.request.query_params.get('withComments')
         if self.request.user:
-          return BossSetupListWithInteractionsSerializer
-        return BossSetupListSerializer
+            if with_comments:
+                return BossSetupListWithInteractionsCommentsSerializer
+            else:
+                return BossSetupListWithInteractionsSerializer
+        else:
+            if with_comments:
+                return BossSetupListWithCommentsSerializer
+            else:
+                return BossSetupListSerializer
       
 class BossPlayerSetupCreate(APIView):
     def post(self, request, format=None):

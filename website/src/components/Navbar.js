@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import styles from './Navbar.module.css'
 import logo from './logo-lg.png'
-import { Avatar, Menu, Dropdown } from 'antd'
-import BossInput from '../components/BossInput'
+import { Menu, Dropdown } from 'antd'
+import BossInput from './BossInput'
+import UserAvatar from './UserAvatar'
 import debounce from '../utils/debounce';
 
 const Navbar = ({currentUser}) => {
@@ -45,7 +46,7 @@ const Navbar = ({currentUser}) => {
             <>
               <Dropdown overlay={menu} trigger={['click']}>
               <div className={styles.dropdown}>
-                <Avatar src={`${currentUser.avatar ? `https://cdn.discordapp.com/avatars/${currentUser.uid}/${currentUser.avatar}.png` : 'https://cdn.discordapp.com/embed/avatars/0.png'}`} />
+                <UserAvatar user={currentUser} />
                 {width >= 576 ? <div>{currentUser.username}</div> : <></>}
               </div>
               </Dropdown>

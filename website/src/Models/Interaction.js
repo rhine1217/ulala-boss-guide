@@ -7,13 +7,15 @@ const instance = axios.create({
   xsrfCookieName: "csrftoken"
 })
 
-const reqParams = (interactionType) => ({params: { interaction: interactionType}})
+const reqParams = (interactionType, withComments) => ({params: { interaction: interactionType, withComments }})
 
 class Interaction {
-  static Like = (data) => instance.post(`interaction/`, data, reqParams('like'))
-  static Unlike = (setupId) => instance.delete(`interaction/${setupId}`, reqParams('like'))
-  static Favourite = (data) => instance.post(`interaction/`, data, reqParams('favourite'))
-  static Unfavourite = (setupId) => instance.delete(`interaction/${setupId}`, reqParams('favourite'))
+  static Like = (data, withComments) => instance.post(`interaction/`, data, reqParams('like', withComments))
+  static Unlike = (setupId, withComments) => instance.delete(`interaction/${setupId}`, reqParams('like', withComments))
+  static Favourite = (data, withComments) => instance.post(`interaction/`, data, reqParams('favourite', withComments))
+  static Unfavourite = (setupId, withComments) => instance.delete(`interaction/${setupId}`, reqParams('favourite', withComments))
+  static PostComment = (data) => instance.post(`interaction/`, data, reqParams('comment', true))
+  static DeleteComment = (setupId) => instance.delete(`interaction/${setupId}`, reqParams('comment', true))
 }
 
 export default Interaction

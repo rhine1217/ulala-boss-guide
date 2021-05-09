@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import { Card, Tag, Col, Row, Popover, Badge, Modal, Input, Button } from 'antd'
+import { Card, Col, Row, Popover, Badge, Modal, Input, Button } from 'antd'
 import { ShareAltOutlined, LikeOutlined, StarOutlined, LikeFilled, StarFilled, InfoCircleOutlined, EditOutlined, DeleteOutlined, CloudUploadOutlined, MessageOutlined } from '@ant-design/icons'
-import { classTagsColor } from '../utils/charClassUtils'
 import SkillIcon from './SkillIcon'
 import ToyIcon from './ToyIcon'
 import CardActionButton from './CardActionButton'
+import ClassTabs from './ClassTabs'
 
 const SetupResult = ({result, userActions}) => {
 
@@ -67,7 +67,7 @@ const SetupResult = ({result, userActions}) => {
         component={result.favourited_by_current_user ? <StarFilled /> : <StarOutlined />} 
         count={result.favourites} 
       />,
-      <a onClick={e => e.stopPropagation()} href='/'><MessageOutlined /><span style={{marginLeft: '6px'}}>{result.comments === 0 ? '' : result.comments }</span></a>
+      <a onClick={e => e.stopPropagation()} href='/'><MessageOutlined /><span style={{marginLeft: '6px'}}>{result.comments === 0 ? '' : result.comments_count }</span></a>
     ]
   }
 
@@ -90,15 +90,7 @@ const SetupResult = ({result, userActions}) => {
         </Col>
         <Col span={24}>
           <Row>
-          {result['player_classes'].map((playerClass, idx) => (
-            <Col span={6} key={idx}>
-            <Tag 
-            color={idx === activeClassIdx ? classTagsColor[playerClass] : "default"}
-            onClick={(e) => {e.stopPropagation(); changeActiveClass(idx)}}
-            style={{display: 'block', width: '100%', textAlign: 'center'}}
-            >{playerClass}</Tag>
-            </Col>
-            ))}
+          <ClassTabs result={result} activeClassIdx={activeClassIdx} changeActiveClass={changeActiveClass} />
           </Row>
         </Col>
         {activeSetup['skills'].map((skill, idx) => (

@@ -105,7 +105,7 @@ const AddEditSetup = (props) => {
   useEffect(() => {
     const retrieveSetup = async () => {
       try {
-        const bossSetup = await Setup.Retrieve(setupId)
+        const bossSetup = await Setup.Retrieve(setupId, false)
         setBossName(bossSetup.data.boss.name)
         setSelectedClasses(bossSetup.data['player_classes'])
         setClassForSetup(bossSetup.data['player_classes'][0])
