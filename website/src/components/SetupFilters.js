@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Collapse, Tag, Row, Col } from 'antd'
 const { Panel } = Collapse
 
-const SetupFilters = ({filters, charClassChoices, teamClassChoices, bossNameChoices}) => {
+const SetupFilters = ({filters, charClassChoices, teamClassChoices, bossNameChoices, toggleFilter}) => {
   const filterChoices = {
     user: ['Me', 'Others'],
     status: ['Published', 'Draft'],
@@ -26,7 +26,7 @@ const SetupFilters = ({filters, charClassChoices, teamClassChoices, bossNameChoi
           <Row gutter={[4, 12]}>
           {filterChoices[filter].map((choice, idx) => (
             <Col key={idx}>
-              <Tag>{choice}</Tag>
+              <Tag onClick={() => toggleFilter(filter, choice)}>{choice}</Tag>
             </Col>
           ))}
           </Row>
