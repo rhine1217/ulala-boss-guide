@@ -35,7 +35,8 @@ const SetupResults = ({context}) => {
 
   const userActions = async (e, id, action) => {
     e.stopPropagation()
-    const interactionData = {boss_setup: id, user: currentUser.uid}
+    console.log(currentUser)
+    const interactionData = {boss_setup: id, user: currentUser.id}
     const actionList = {
       onPublish: async () => Setup.Edit(id, {bossSetup: { id, status: 'P' }, playerSetups: null}),
       onDelete: async() => Setup.Destroy(id),

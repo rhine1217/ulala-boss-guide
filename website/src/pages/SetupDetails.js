@@ -62,7 +62,7 @@ const SetupDetails = (props) => {
 
   // const userActions = async (e, id, action, comment) => {
   //   e.stopPropagation()
-  //   const interactionData = { boss_setup: id, user: currentUser.uid }
+  //   const interactionData = { boss_setup: id, user: currentUser.id }
   //   const commentData = {}
   //   const actionList = {
   //     onLike: async() => Interaction.Like(interactionData, true),

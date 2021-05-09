@@ -63,7 +63,7 @@ const AddEditSetup = (props) => {
     const bossSetup = {}, playerSetups = []
     if (isSetupValid()) {
       if (action === 'Add') {
-        bossSetup['created_by'] = currentUser.uid
+        bossSetup['created_by'] = currentUser.id
         bossSetup['created_on'] = new Date()
       } else if (action === 'Edit') {
         bossSetup['id'] = setupId

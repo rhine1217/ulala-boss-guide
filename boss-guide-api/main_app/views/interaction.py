@@ -59,6 +59,7 @@ class UserLikesFavouritesCommentsCreateDestroy(viewsets.ViewSet):
         boss_setup_id = hashids.decode(user_interaction_data['boss_setup'])[0]
         user_interaction_data['boss_setup'] = boss_setup_id
         serializer = self.get_model_serializer()[1](data=user_interaction_data)
+        print('serializer', serializer)
         if serializer.is_valid():
             serializer.save()
             boss_serializer = self.get_output_serializer()(BossSetup.objects.get(pk=boss_setup_id), context={'request': request})
