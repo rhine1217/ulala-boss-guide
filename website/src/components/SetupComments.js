@@ -3,13 +3,13 @@ import UserAvatar from '../components/UserAvatar'
 import { Comment, Form, Button, List, Input, Tooltip } from 'antd'
 import moment from 'moment'
 
-const CommentList = ({comments}) => (
-  <List
-    dataSource={comments}
-    header={`${comments.length} ${comments.length > 1 ? 'comments' : 'comment'}`}
-    itemLayout="horizontal"
-    renderItem={comment => 
-      <Comment 
+const SetupComment = ({comment, currentUser, deleteComment}) => {
+  const isDeleteAvailable = currentUser.id === comment.user.id
+  const [isDeleteVisible, setIsDeleteVisible] = useState(false)
+  
+  return (
+    <div onMouseEnter={() => setIsDeleteVisible(true)} onMouseLeave={() => setIsDeleteVisible(false)}>
+        <Comment 
         avatar={<UserAvatar user={comment.user} />}
         author={<div>{comment.user.name}</div>} 
         content={<div>{comment.comment}</div>}
@@ -18,7 +18,19 @@ const CommentList = ({comments}) => (
             <span>{moment(comment['posted_date']).fromNow()}</span>
           </Tooltip>
         }
-      />}
+        actions={isDeleteAvailable && isDeleteVisible ? [<span key='delete' onClick={() => deleteComment(comment.id)}>Delete</span>] : []}
+      />
+    </div>
+  )
+
+}
+
+const CommentList = ({comments, currentUser, deleteComment}) => (
+  <List
+    dataSource={comments}
+    header={`${comments.length} ${comments.length > 1 ? 'comments' : 'comment'}`}
+    itemLayout="horizontal"
+    renderItem={comment => <SetupComment comment={comment} currentUser={currentUser} deleteComment={deleteComment}/>}
   />
 )
 
@@ -35,18 +47,15 @@ const Editor = ({ onChange, handleSubmit, submitting, value }) => (
   </>
 );
 
-const SetupComments = ({comments, currentUser, isAddCommentLoading, handleSubmit, handleChange, commentValue}) => {
-
-  return (
-    <>
-  {comments.length > 0 && <CommentList comments={comments} currentUser={currentUser} />}
-  <Comment 
-    avatar={<UserAvatar user={currentUser} />}
-    content={
-      <Editor onChange={handleChange} handleSubmit={handleSubmit} submitting={isAddCommentLoading} value={commentValue} />}
+const SetupComments = ({comments, currentUser, isAddCommentLoading, handleSubmit, handleChange, commentValue, deleteComment}) => (
+  <>
+    {comments.length > 0 && <CommentList comments={comments} currentUser={currentUser} deleteComment={deleteComment}/>}
+    <Comment 
+      avatar={<UserAvatar user={currentUser} />}
+      content={
+        <Editor onChange={handleChange} handleSubmit={handleSubmit} submitting={isAddCommentLoading} value={commentValue} />}
     />
-    </>
-  )
-}
+  </>
+)
 
 export default SetupComments

@@ -15,7 +15,7 @@ class Interaction {
   static Favourite = (data, withComments) => instance.post(`interaction/`, data, reqParams('favourite', withComments))
   static Unfavourite = (setupId, withComments) => instance.delete(`interaction/${setupId}`, reqParams('favourite', withComments))
   static PostComment = (data) => instance.post(`interaction/`, data, reqParams('comment', true))
-  static DeleteComment = (setupId) => instance.delete(`interaction/${setupId}`, reqParams('comment', true))
+  static DeleteComment = (commentId) => instance.delete(`interaction/${commentId}`, reqParams('comment', true))
 }
 
 export default Interaction

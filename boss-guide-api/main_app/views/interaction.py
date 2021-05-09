@@ -17,15 +17,12 @@ class UserLikesFavouritesCommentsCreateDestroy(viewsets.ViewSet):
 
     def get_object(self):
       slug = self.kwargs['slug']
-      boss_setup_id = hashids.decode(slug)[0]
-      obj = get_object_or_404(self.get_model_serializer()[0], boss_setup=boss_setup_id, user=self.request.user)
-      self.check_object_permissions(self.request, obj)
-      return obj
-    
-    def get_comment_obj(self):
-      slug = self.kwargs['slug']
-      comment_id = hashids.decode(slug)[0]
-      obj = get_object_or_404(self.get_model_serializer()[0], pk=comment_id)
+      lookup_id = hashids.decode(slug)[0]
+      lookup_model = self.get_model_serializer()[0]
+      if self.get_interaction_type() == 'comment':
+          obj = get_object_or_404(lookup_model, pk=lookup_id)
+      else:
+          obj = get_object_or_404(lookup_model, boss_setup=lookup_id, user=self.request.user)
       self.check_object_permissions(self.request, obj)
       return obj
     
@@ -59,7 +56,6 @@ class UserLikesFavouritesCommentsCreateDestroy(viewsets.ViewSet):
         boss_setup_id = hashids.decode(user_interaction_data['boss_setup'])[0]
         user_interaction_data['boss_setup'] = boss_setup_id
         serializer = self.get_model_serializer()[1](data=user_interaction_data)
-        print('serializer', serializer)
         if serializer.is_valid():
             serializer.save()
             boss_serializer = self.get_output_serializer()(BossSetup.objects.get(pk=boss_setup_id), context={'request': request})

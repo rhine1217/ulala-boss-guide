@@ -67,7 +67,7 @@ const SetupResult = ({result, userActions}) => {
         component={result.favourited_by_current_user ? <StarFilled /> : <StarOutlined />} 
         count={result.favourites} 
       />,
-      <a onClick={e => e.stopPropagation()} href='/'><MessageOutlined /><span style={{marginLeft: '6px'}}>{result.comments === 0 ? '' : result.comments_count }</span></a>
+      <a onClick={e => e.stopPropagation()} href={`/setup/${result.id}`}><MessageOutlined /><span style={{marginLeft: '6px'}}>{result.comments === 0 ? '' : result.comments_count }</span></a>
     ]
   }
 

@@ -31,7 +31,7 @@ class BossSetupFavouriteList(generics.ListAPIView):
     def get_queryset(self):
         user = self.request.user
         if user is not None:
-            return BossSetup.objects.filter(Q(created_by=user) | Q(saved__user=user))
+            return BossSetup.objects.filter(Q(created_by=user) | Q(saved__user=user)).distinct('id')
 
 class BossSetupDetail(generics.RetrieveAPIView):
     def get_object(self):

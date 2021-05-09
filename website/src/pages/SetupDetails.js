@@ -82,9 +82,7 @@ const SetupDetails = (props) => {
 
   const handleChange = (e) => setCommentValue(e.target.value)
 
-  const handleSubmit = async (e, value) => {
-    e.preventDefault()
-
+  const handleSubmit = async (value) => {
     setIsAddCommentLoading(true)
     const commentData = {
       boss_setup: bossSetup.id,
@@ -97,6 +95,16 @@ const SetupDetails = (props) => {
       setBossSetup(response.data)
       setIsAddCommentLoading(false)
       setCommentValue('')
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const deleteComment = async (commentId) => {
+
+    try {
+      const response = await Interaction.DeleteComment(commentId)
+      setBossSetup(response.data)
     } catch (error) {
       console.log(error)
     }
@@ -167,6 +175,7 @@ const SetupDetails = (props) => {
           handleChange={handleChange}
           handleSubmit={handleSubmit}
           commentValue={commentValue}
+          deleteComment={deleteComment}
         />
       </div>
     </>
