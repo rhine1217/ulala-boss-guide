@@ -13,6 +13,7 @@ import 'react-multi-carousel/lib/styles.css'
 import { userState } from '../states/atoms'
 import { useRecoilValue } from 'recoil'
 import Interaction from '../Models/Interaction'
+import styles from './SetupDetails.module.css'
 
 const SetupDetails = (props) => {
 
@@ -60,25 +61,24 @@ const SetupDetails = (props) => {
     }
   }
 
-  // const userActions = async (e, id, action, comment) => {
-  //   e.stopPropagation()
-  //   const interactionData = { boss_setup: id, user: currentUser.id }
-  //   const commentData = {}
-  //   const actionList = {
-  //     onLike: async() => Interaction.Like(interactionData, true),
-  //     onUnlike: async() => Interaction.Unlike(id, true),
-  //     onFavourite: async() => Interaction.Favourite(interactionData, true),
-  //     onUnfavourite: async() => Interaction.Unfavourite(id, true),
-  //     postComment: async() => Interaction.PostComment(id, true),
-  //     deleteComment: async() => Interaction.DeleteComment(id, true)
-  //   }
-  //   try {
-  //     const response = await actionList[action]()
-  //     setBossSetup(response.data)
-  //   } catch (error) {
-  //     console.log(error)
-  //   }
-  // }
+  const userActions = async (id, action, comment) => {
+    const interactionData = { boss_setup: id, user: currentUser.id }
+    // const commentData = {}
+    const actionList = {
+      onLike: async() => Interaction.Like(interactionData, true),
+      onUnlike: async() => Interaction.Unlike(id, true),
+      onFavourite: async() => Interaction.Favourite(interactionData, true),
+      onUnfavourite: async() => Interaction.Unfavourite(id, true),
+      // postComment: async() => Interaction.PostComment(id, true),
+      // deleteComment: async() => Interaction.DeleteComment(id, true)
+    }
+    try {
+      const response = await actionList[action]()
+      setBossSetup(response.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   const handleChange = (e) => setCommentValue(e.target.value)
 
@@ -122,8 +122,22 @@ const SetupDetails = (props) => {
         title={bossSetup.boss.name}
         subTitle={`Submitted by ${bossSetup['created_by']}`}
         extra={[
-          <LikeOutlined key='like' />,
-          <StarOutlined key='star' />,
+          <span 
+            key='like' 
+            className={styles['action-btn']} 
+            onClick={() => userActions(setupId, `${bossSetup['liked_by_current_user'] ? 'onUnlike' : 'onLike'}`)}
+          >
+            {bossSetup['liked_by_current_user'] ? <LikeFilled /> : <LikeOutlined />}
+            <span style={{marginLeft: '6px'}}>{bossSetup.likes}</span>
+          </span>,
+          <span 
+            key='star' 
+            className={styles['action-btn']}
+            onClick={() => userActions(setupId, `${bossSetup['favourited_by_current_user'] ? 'onUnfavourite' : 'onFavourite'}`)} 
+          >
+            {bossSetup['favourited_by_current_user'] ? <StarFilled /> : <StarOutlined />}
+            <span style={{marginLeft: '6px'}}>{bossSetup.favourites}</span>
+          </span>,
         ]} />
       <div style={{padding: '0px 24px 24px'}}>
         <Row gutter={[16,16]}>
