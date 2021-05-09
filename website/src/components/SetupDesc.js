@@ -6,7 +6,7 @@ import { classForSetupState, isSkillDetailModalVisibleState, isToyDetailModalVis
 import ToyDesc from './ToyDesc'
 import styles from './SetupDesc.module.css'
 
-const SetupDesc = ({value, context}) => {
+const SetupDesc = ({value, context, activeClass}) => {
   
   const classForSetup = useRecoilValue(classForSetupState)
   const setSkillForDetails = useSetRecoilState(skillForDetailsState)
@@ -56,7 +56,7 @@ const SetupDesc = ({value, context}) => {
     <>
     <div ref={containerRef} style={{paddingLeft: '16px', width: '100%'}}>
       <button className={styles['setup-desc-button']} style={{width: containerWidth, height: containerHeight, cursor: currContext === 'choiceModal' ? 'default' : 'pointer'}} onClick={onClickDesc} />
-      <Tag color={classTagsColor[classForSetup]}>{value.name}</Tag>
+      <Tag color={classTagsColor[classForSetup || activeClass]}>{value.name}</Tag>
       <div className={context === 'choiceModal' ? '' : "text-overflow"} style={{fontSize: '12px', paddingTop: '8px', minHeight: '4em'}}>
         {typeof description === 'string' ? description : 
         <ToyDesc description={description} />

@@ -131,7 +131,7 @@ const SetupDetails = (props) => {
             <Col span={24} key={idx}>
               <div style={{display: 'flex', alignItems: 'start'}}>
                 <SkillIcon skill={skill} context={context} activeClass={activeSetup['player_class']} />
-                <SetupDesc value={skill} context={'skill'} />
+                <SetupDesc value={skill} context={'skill'} activeClass={activeSetup['player_class']} />
               </div>
             </Col>
             ))}
@@ -144,7 +144,7 @@ const SetupDetails = (props) => {
               <Col span={24} key={idx}>
                 <div style={{display: 'flex', alignItems: 'start'}}>
                   <ToyIcon toy={toy} context={context} />
-                  <SetupDesc value={toy} context={'toy'} />
+                  <SetupDesc value={toy} context={'toy'} activeClass={activeSetup['player_class']} />
                 </div>
               </Col>
             ))}
