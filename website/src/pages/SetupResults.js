@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import SetupResult from '../components/SetupResult'
-import { Select, Row, Col, Spin } from 'antd'
-import { LoadingOutlined } from '@ant-design/icons'
+import { PageHeader, Select, Row, Col, Spin, Drawer } from 'antd'
+import { LoadingOutlined, MenuOutlined } from '@ant-design/icons'
 import Setup from '../Models/Setup'
 import Interaction from '../Models/Interaction'
 import { userState } from '../states/atoms'
 import { useRecoilValue } from 'recoil'
 import ClassSelection from '../components/ClassSelection'
+import SetupFilters from '../components/SetupFilters'
 
 const SetupResults = ({context}) => {
 
@@ -17,8 +18,22 @@ const SetupResults = ({context}) => {
 
   const currentUser = useRecoilValue(userState)
   const [results, setResults] = useState([])
+  const [filteredResults, setFilteredResults] = useState([])
   const [isLoading, setIsLoading] = useState(true)
+  const [isDrawerVisible, setIsDrawerVisible] = useState(false)
   const bossName = new URLSearchParams(useLocation().search).get("name") || ""
+  const pageHeader = {
+    favourites: 'Favourite Setups',
+    searchName: bossName,
+  }
+  const setupFilters = {
+    favourites: ['user', 'status', 'bossName', 'charClass', 'teamClass'],
+    searchName: ['user', 'charClass', 'teamClass']
+  }
+
+  const getCharClassChoices = (results) => [...new Set(results.map(result => result['player_classes']).flat())]
+  const getTeamClassChoices = (results) => [... new Set(results.map(result => result['player_classes']))]
+  const getBossNameChoices = (results) => [...new Set(results.map(result => result['boss']['name']).flat())]
 
   const updateResults = (id, response) => {
     const status = response.status
@@ -35,7 +50,6 @@ const SetupResults = ({context}) => {
 
   const userActions = async (e, id, action) => {
     e.stopPropagation()
-    console.log(currentUser)
     const interactionData = {boss_setup: id, user: currentUser.id}
     const actionList = {
       onPublish: async () => Setup.Edit(id, {bossSetup: { id, status: 'P' }, playerSetups: null}),
@@ -61,6 +75,7 @@ const SetupResults = ({context}) => {
     try {
       const response = await queryList[context]()
       setResults(response.data)
+      setFilteredResults(response.data)
       setIsLoading(false)
     } catch (error) {
       console.log(error)
@@ -75,19 +90,20 @@ const SetupResults = ({context}) => {
       <>
       {isLoading ? <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} /> :
       <>
-      {context === 'searchName' ? <div style={{padding: '16px 24px 0px'}}><ClassSelection context="search" /></div> : <></>}
-      <div style={{padding: '0px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
-        <div>
-          {results.length} Result{results.length > 1 ? 's' : ''}
-          {context === 'searchName' ? <span> for {bossName}</span> : <></>}
-        </div>
-        <div>Sort by: 
+      <PageHeader 
+        title={pageHeader[context]} 
+        subTitle={`${results.length} Result${results.length > 1 ? 's' : ''}`}
+        backIcon={<MenuOutlined />}
+        onBack={() => setIsDrawerVisible(true)}
+        extra={[
+          <div key="1">Sort by: 
           <Select defaultValue="top-rated" style={{width: 120, fontSize: '1em'}} onChange={handleSortChange} bordered={false}>
               <Select.Option value="top-rated">Top Rated</Select.Option>
               <Select.Option value="most-recent">Most Recent</Select.Option>
           </Select>
-        </div>
-      </div>
+          </div>
+        ]} />
+      {context === 'searchName' ? <div style={{padding: '16px 24px 0px'}}><ClassSelection context="search" /></div> : <></>}
       <div style={{padding: '16px 24px'}}>
         <Row gutter={[16, 16]}>
             {results.map(result => (
@@ -97,6 +113,24 @@ const SetupResults = ({context}) => {
             ))}
         </Row>
       </div>
+      <Drawer
+        title="Filter by"
+        placement="right"
+        closable={false}
+        onClose={() => setIsDrawerVisible(false)}
+        visible={isDrawerVisible}
+        width={300}
+      >
+        <SetupFilters 
+          filters={setupFilters[context]}
+          charClassChoices={results ? getCharClassChoices(results) : []}
+          teamClassChoices={results ? getTeamClassChoices(results) : []}
+          bossNameChoices={context === 'favourites' && results ? getBossNameChoices(results) : []}
+        />
+        <div style={{padding: '12px 16px'}}>
+          Reset all filters
+        </div>
+      </Drawer>
       </>
       }
       </>

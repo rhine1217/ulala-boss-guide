@@ -26,7 +26,7 @@ const SetupResult = ({result, userActions}) => {
 
   const showLinkToShare = () => setisSharingModalVisible(true)
 
-  const goToSetupDetail = () => history.push(`/setup/${result.id}`)
+  const goToSetupDetail = () => history.push(`/setup/${result.status === 'Draft'? 'edit/' : ''}${result.id}`)
 
   const handleModalCancel = () => {
     setisSharingModalVisible(false)
