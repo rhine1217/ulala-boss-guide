@@ -1,19 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { withRouter } from 'react-router-dom'
-import { PageHeader, Row, Col, Card } from 'antd'
-import { LikeOutlined, StarOutlined, LikeFilled, StarFilled } from '@ant-design/icons'
+import { Row } from 'antd'
 import Setup from '../Models/Setup'
+import Interaction from '../Models/Interaction'
 import ClassTabs from '../components/ClassTabs'
-import SkillIcon from '../components/SkillIcon'
-import ToyIcon from '../components/ToyIcon'
-import SetupDesc from '../components/SetupDesc'
 import SetupComments from '../components/SetupComments'
-import Carousel from 'react-multi-carousel'
-import 'react-multi-carousel/lib/styles.css'
+import SetupDetailPageHeader from '../components/SetupDetailPageHeader'
+import SetupDetailCarousel from '../components/SetupDetailCarousel'
+import SetupDetailNote from '../components/SetupDetailNote'
 import { userState } from '../states/atoms'
 import { useRecoilValue } from 'recoil'
-import Interaction from '../Models/Interaction'
-import styles from './SetupDetails.module.css'
 
 const SetupDetails = (props) => {
 
@@ -32,24 +28,6 @@ const SetupDetails = (props) => {
     setActiveSetup(bossSetup['player_setup'][idx])
   }
 
-  const responsive = {
-    desktop: {
-      breakpoint: { max: 3000, min: 1024 },
-      items: 1,
-      partialVisibilityGutter: 90
-    },
-    tablet: {
-      breakpoint: { max: 1024, min: 464 },
-      items: 1,
-      partialVisibilityGutter: 60 
-    },
-    mobile: {
-      breakpoint: { max: 464, min: 0 },
-      items: 1,
-      partialVisibilityGutter: 60 
-    }
-  }
-
   const getDetails = async () => {
     try {
       const response = await Setup.Retrieve(setupId, true)
@@ -61,16 +39,13 @@ const SetupDetails = (props) => {
     }
   }
 
-  const userActions = async (id, action, comment) => {
+  const userActions = async (id, action) => {
     const interactionData = { boss_setup: id, user: currentUser.id }
-    // const commentData = {}
     const actionList = {
       onLike: async() => Interaction.Like(interactionData, true),
-      onUnlike: async() => Interaction.Unlike(id, true),
+      onUnlike: async() => Interaction.Unlike(id, true), // setup id
       onFavourite: async() => Interaction.Favourite(interactionData, true),
-      onUnfavourite: async() => Interaction.Unfavourite(id, true),
-      // postComment: async() => Interaction.PostComment(id, true),
-      // deleteComment: async() => Interaction.DeleteComment(id, true)
+      onUnfavourite: async() => Interaction.Unfavourite(id, true), // setup id
     }
     try {
       const response = await actionList[action]()
@@ -82,7 +57,8 @@ const SetupDetails = (props) => {
 
   const handleChange = (e) => setCommentValue(e.target.value)
 
-  const handleSubmit = async (value) => {
+  const handleSubmit = async (e, value) => {
+    e.preventDefault()
     setIsAddCommentLoading(true)
     const commentData = {
       boss_setup: bossSetup.id,
@@ -101,7 +77,6 @@ const SetupDetails = (props) => {
   }
 
   const deleteComment = async (commentId) => {
-
     try {
       const response = await Interaction.DeleteComment(commentId)
       setBossSetup(response.data)
@@ -118,68 +93,17 @@ const SetupDetails = (props) => {
     <>
     { isLoading ? <div>Loading</div> : 
     <>
-      <PageHeader 
-        title={bossSetup.boss.name}
-        subTitle={`Submitted by ${bossSetup['created_by']}`}
-        extra={[
-          <span 
-            key='like' 
-            className={styles['action-btn']} 
-            onClick={() => userActions(setupId, `${bossSetup['liked_by_current_user'] ? 'onUnlike' : 'onLike'}`)}
-          >
-            {bossSetup['liked_by_current_user'] ? <LikeFilled /> : <LikeOutlined />}
-            <span style={{marginLeft: '6px'}}>{bossSetup.likes}</span>
-          </span>,
-          <span 
-            key='star' 
-            className={styles['action-btn']}
-            onClick={() => userActions(setupId, `${bossSetup['favourited_by_current_user'] ? 'onUnfavourite' : 'onFavourite'}`)} 
-          >
-            {bossSetup['favourited_by_current_user'] ? <StarFilled /> : <StarOutlined />}
-            <span style={{marginLeft: '6px'}}>{bossSetup.favourites}</span>
-          </span>,
-        ]} />
+      <SetupDetailPageHeader bossSetup={bossSetup} userActions={userActions} />
       <div style={{padding: '0px 24px 24px'}}>
         <Row gutter={[16,16]}>
           <ClassTabs result={bossSetup} activeClassIdx={activeClassIdx} changeActiveClass={changeActiveClass}/>
         </Row>
       </div>
       <div style={{padding: '0px 24px 24px'}}>
-      <Carousel responsive={responsive} arrows={false} partialVisible={true}>
-        <div style={{marginRight: '16px'}}>
-        <Card>
-          <Row gutter={[16,16]}>
-            {activeSetup['skills'].map((skill, idx) => (
-            <Col span={24} key={idx}>
-              <div style={{display: 'flex', alignItems: 'start'}}>
-                <SkillIcon skill={skill} context={context} activeClass={activeSetup['player_class']} />
-                <SetupDesc value={skill} context={'skill'} activeClass={activeSetup['player_class']} />
-              </div>
-            </Col>
-            ))}
-          </Row>
-        </Card>        
-        </div>
-        <Card>
-          <Row gutter={[16,16]}>
-            {activeSetup['toys'].map((toy, idx) => (
-              <Col span={24} key={idx}>
-                <div style={{display: 'flex', alignItems: 'start'}}>
-                  <ToyIcon toy={toy} context={context} />
-                  <SetupDesc value={toy} context={'toy'} activeClass={activeSetup['player_class']} />
-                </div>
-              </Col>
-            ))}
-          </Row>
-        </Card>    
-      </Carousel>
+        <SetupDetailCarousel activeSetup={activeSetup} context={context} />
       </div>
       <div style={{padding: '0px 24px 8px'}}>
-      <Card>
-        {bossSetup.note ? 
-        <div>{bossSetup.note}</div> :
-        <i style={{color: 'grey'}}>This user is lazy and didn't leave anything behind.</i>}
-      </Card>
+        <SetupDetailNote bossSetup={bossSetup} />
       </div>
       <div style={{padding: '0px 24px 24px'}}>
         <SetupComments 
