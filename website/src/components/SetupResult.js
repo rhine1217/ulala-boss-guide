@@ -6,6 +6,7 @@ import SkillIcon from './SkillIcon'
 import ToyIcon from './ToyIcon'
 import CardActionButton from './CardActionButton'
 import ClassTabs from './ClassTabs'
+import moment from 'moment'
 
 const SetupResult = ({result, userActions}) => {
 
@@ -103,7 +104,10 @@ const SetupResult = ({result, userActions}) => {
           </Col>
         ))}
         <Col span={24} style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
-        <div>Submitted by {result['created_by']}</div>
+        <div>
+          <span>{result.status === 'Published' ? 'Submitted' : 'Drafted'} by {result['created_by']} </span>
+          {result.status === 'Published' ? <span style={{fontSize: '12px', color: 'rgba(0,0,0,0.45)'}}>{moment(result['published_on']).fromNow()}</span> : <></>}
+        </div>
           <a onClick={(e) => {e.stopPropagation(); showLinkToShare()}}><ShareAltOutlined /></a>
         </Col>
         </Row>

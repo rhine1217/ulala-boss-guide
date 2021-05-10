@@ -36,7 +36,7 @@ const SetupResults = ({context}) => {
     searchName: ['user', 'charClass', 'teamClass']
   }
 
-  const filterResults = (filterValues) => {
+  const filterResults = (results, filterValues) => {
     const newResults = [...results]
     for (const [key, value] of Object.entries(filterValues)) {
       if (value.length > 0) {
@@ -71,7 +71,7 @@ const SetupResults = ({context}) => {
     if (Object.values(newFilterValues).every(item => item.length === 0)) {
       setFilteredResults(results)
     } else {
-      filterResults(newFilterValues)
+      filterResults(results, newFilterValues)
     }
   }
 
@@ -91,13 +91,18 @@ const SetupResults = ({context}) => {
       newResults.splice(idxToUpdate, 1)
     }
     setResults(newResults)
+    if (Object.values(filterValues).every(item => item.length === 0)) {
+      setFilteredResults(newResults)
+    } else {
+      filterResults(newResults, filterValues)
+    }
   }
 
   const userActions = async (e, id, action) => {
     e.stopPropagation()
     const interactionData = {boss_setup: id, user: currentUser.id}
     const actionList = {
-      onPublish: async () => Setup.Edit(id, {bossSetup: { id, status: 'P' }, playerSetups: null}),
+      onPublish: async () => Setup.Edit(id, {bossSetup: { id, status: 'P', published_on: new Date() }, playerSetups: null}),
       onDelete: async() => Setup.Destroy(id),
       onLike: async() => Interaction.Like(interactionData, false),
       onUnlike: async() => Interaction.Unlike(id, false),
