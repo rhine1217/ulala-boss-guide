@@ -90,6 +90,7 @@ const SetupDetailPageHeader = ({bossSetup, userActions, currentUser}) => {
   return (
     <PageHeader 
     title={bossSetup.boss.name}
+    onBack={() => window.history.back()}
     subTitle={`Submitted by ${bossSetup['created_by']}`}
     extra={renderHeaderActions(currentUser)} />
   )
