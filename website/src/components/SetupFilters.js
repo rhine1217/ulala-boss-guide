@@ -2,22 +2,23 @@ import React, { useState } from 'react'
 import { Collapse, Tag, Row, Col } from 'antd'
 const { Panel } = Collapse
 
-const SetupFilters = ({filters, charClassChoices, teamClassChoices, bossNameChoices, toggleFilter}) => {
+const SetupFilters = ({filters, charClassChoices, teamClassChoices, bossNameChoices, toggleFilter, filterValues}) => {
   const filterChoices = {
     user: ['Me', 'Others'],
     status: ['Published', 'Draft'],
-    bossName: bossNameChoices.sort(),
+    bossNames: bossNameChoices.sort(),
     charClass: charClassChoices,
-    teamClass: teamClassChoices.map(choice => choice.join(', ')).sort(),
+    teamClass: teamClassChoices.sort(),
   }
 
   const filterNames = {
     user: 'Created by',
     status: 'Status',
-    bossName: 'Boss Name',
+    bossNames: 'Boss Name',
     charClass: 'Character Class',
     teamClass: 'Team Classes'
   }
+  console.log(filterValues)
 
   return (
     <Collapse ghost expandIconPosition='left'>
@@ -26,7 +27,12 @@ const SetupFilters = ({filters, charClassChoices, teamClassChoices, bossNameChoi
           <Row gutter={[4, 12]}>
           {filterChoices[filter].map((choice, idx) => (
             <Col key={idx}>
-              <Tag onClick={() => toggleFilter(filter, choice)}>{choice}</Tag>
+              <Tag 
+                color={filterValues[filter].includes(choice) ? '#1890ff' : 'default'}
+                onClick={() => toggleFilter(filter, choice)}
+              >
+                {choice}
+              </Tag>
             </Col>
           ))}
           </Row>

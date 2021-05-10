@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation, useHistory } from 'react-router-dom'
 import SetupResult from '../components/SetupResult'
-import { PageHeader, Select, Row, Col, Spin, Drawer } from 'antd'
+import { PageHeader, Select, Row, Col, Spin, Drawer, Button } from 'antd'
 import { LoadingOutlined, MenuOutlined } from '@ant-design/icons'
 import Setup from '../Models/Setup'
 import Interaction from '../Models/Interaction'
@@ -15,9 +15,19 @@ const SetupResults = ({context}) => {
   function handleSortChange(e) {
       console.log(e)
   }
+  const getFilterValues = (searchParams) => {
+    return ({
+      user: searchParams.get("user") ? searchParams.get("user").split(';') : [],
+      status: searchParams.get("status") ? searchParams.get("status").split(';') : [],
+      bossNames: searchParams.get("bossNames") ? searchParams.get("bossNames").split(';') : [],
+      charClass: searchParams.get("charClass") ? searchParams.get("charClass").split(';') : [],
+      teamClass: searchParams.get("teamClass") ? searchParams.get("teamClass").split(';') : [],
+    })
+  }
 
   let history = useHistory(), location = useLocation()
-  const searchParams = new URLSearchParams(location.search)
+  const [searchParams, setSearchParams] = useState(new URLSearchParams(location.search))
+  const [filterValues, setFilterValues] = useState(getFilterValues(searchParams))
 
   const currentUser = useRecoilValue(userState)
   const [results, setResults] = useState([])
@@ -25,29 +35,23 @@ const SetupResults = ({context}) => {
   const [isLoading, setIsLoading] = useState(true)
   const [isDrawerVisible, setIsDrawerVisible] = useState(false)
   const bossName = searchParams.get("name") || ""
-  const filterValues = {
-    user: searchParams.get("createdBy") ? searchParams.get("createdBy").split(';') : [],
-    status: searchParams.get("status") ? searchParams.get("status").split(';') : [],
-    bossNames: searchParams.get("bossNames") ? searchParams.get("bossNames").split(';') : [],
-    charClass: searchParams.get("charClass") ? searchParams.get("charClass").split(';') : [],
-    teamClass: searchParams.get("teamClass") ? searchParams.get("teamClass").split(';') : [],
-  }
 
   const filterMethods = {
     user: (results, filterValues) => {
-      switch(filterValues) {
-        case ['Me']:
+      if (filterValues.length !== 1) {
+        return results
+      } else {
+        if (filterValues.includes('Me')) {
           return results.filter(result => result['created_by'] === currentUser.username)
-        case ['Others']:
+        } else if (filterValues.includes('Others')) {
           return results.filter(result => result['created_by'] !== currentUser.username)
-        default:
-          return results
+        }
       }
     },
     status: (results, filterValues) => results.filter(result => filterValues.includes(result.status)),
     bossNames: (results, filterValues) => results.filter(result => filterValues.includes(result.boss.name)),
-    charClass: (results, filterValues) => results.filter(result => result['player_classes'].some(playerClass => filterValues.includes(playerClass))),
-    teamClass: (results, filterValues) => results.filter(result => filterValues.includes(result['player_classes'].join(', ').sort()))
+    charClass: (results, filterValues) => results.filter(result => filterValues.every(value => result['player_classes'].includes(value))),
+    teamClass: (results, filterValues) => results.filter(result => filterValues.includes(result['player_classes'].join(', '))).sort()
   }
 
   const pageHeader = {
@@ -55,11 +59,11 @@ const SetupResults = ({context}) => {
     searchName: bossName,
   }
   const setupFilters = {
-    favourites: ['user', 'status', 'bossName', 'charClass', 'teamClass'],
+    favourites: ['user', 'status', 'bossNames', 'charClass', 'teamClass'],
     searchName: ['user', 'charClass', 'teamClass']
   }
 
-  const filterResults = () => {
+  const filterResults = (filterValues) => {
     const newResults = [...results]
     for (const [key, value] of Object.entries(filterValues)) {
       if (value.length > 0) {
@@ -88,10 +92,25 @@ const SetupResults = ({context}) => {
       pathname: location.pathname,
       search: "?" + searchParams.toString()
     })
+    setSearchParams(searchParams)
+    const newFilterValues = getFilterValues(searchParams)
+    setFilterValues(newFilterValues)
+    if (Object.values(newFilterValues).every(item => item.length === 0)) {
+      setFilteredResults(results)
+    } else {
+      filterResults(newFilterValues)
+    }
+  }
+
+  const resetFilters = () => {
+    history.push({
+      pathname: location.pathname,
+    })
+    window.location.reload()
   }
 
   const getCharClassChoices = (results) => [...new Set(results.map(result => result['player_classes']).flat())]
-  const getTeamClassChoices = (results) => [...new Set(results.map(result => result['player_classes']))]
+  const getTeamClassChoices = (results) => [...new Set(results.map(result => result['player_classes'].join(', ')))]
   const getBossNameChoices = (results) => [...new Set(results.map(result => result['boss']['name']))]
 
   const updateResults = (id, response) => {
@@ -151,7 +170,7 @@ const SetupResults = ({context}) => {
       <>
       <PageHeader 
         title={pageHeader[context]} 
-        subTitle={`${results.length} Result${results.length > 1 ? 's' : ''}`}
+        subTitle={`${filteredResults.length} Result${filteredResults.length > 1 ? 's' : ''}`}
         backIcon={<MenuOutlined />}
         onBack={() => setIsDrawerVisible(true)}
         extra={[
@@ -162,10 +181,9 @@ const SetupResults = ({context}) => {
           </Select>
           </div>
         ]} />
-      {context === 'searchName' ? <div style={{padding: '16px 24px 0px'}}><ClassSelection context="search" /></div> : <></>}
       <div style={{padding: '16px 24px'}}>
         <Row gutter={[16, 16]}>
-            {results.map(result => (
+            {filteredResults.map(result => (
               <Col xs={24} sm={12} lg={8} key={result.id} >
                 <SetupResult result={result} userActions={userActions} />
               </Col>
@@ -182,13 +200,14 @@ const SetupResults = ({context}) => {
       >
         <SetupFilters 
           filters={setupFilters[context]}
-          charClassChoices={results ? getCharClassChoices(results) : []}
-          teamClassChoices={results ? getTeamClassChoices(results) : []}
-          bossNameChoices={context === 'favourites' && results ? getBossNameChoices(results) : []}
+          charClassChoices={results ? getCharClassChoices(filteredResults) : []}
+          teamClassChoices={results ? getTeamClassChoices(filteredResults) : []}
+          bossNameChoices={context === 'favourites' && filteredResults ? getBossNameChoices(filteredResults) : []}
           toggleFilter={toggleFilter}
+          filterValues={filterValues}
         />
         <div style={{padding: '12px 16px'}}>
-          Reset all filters
+          <Button onClick={resetFilters} type="default">Reset all filters</Button>
         </div>
       </Drawer>
       </>
