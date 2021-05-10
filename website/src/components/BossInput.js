@@ -49,8 +49,8 @@ const BossInput = ({context, bossName, onBossInput}) => {
         option.value.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1
     }>
       {context === 'search' ? 
-        <Input.Search size="large" placeholder="Type in Boss name to search for setup" /> :
-        <Input onChange={(e) => onBossInput(e.target.value)} placeholder="Type in Boss name and select from dropdown" />
+        <Input.Search allowClear size="large" placeholder="Type in Boss name to search for setup" /> :
+        <Input allowClear onChange={(e) => onBossInput(e.target.value)} placeholder="Type in Boss name and select from dropdown" />
       }
     </AutoComplete>
   

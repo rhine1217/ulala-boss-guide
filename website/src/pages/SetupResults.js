@@ -165,7 +165,7 @@ const SetupResults = ({context}) => {
         <Row gutter={[16, 16]}>
             {filteredResults.map(result => (
               <Col xs={24} sm={12} lg={8} key={result.id} >
-                <SetupResult result={result} userActions={userActions} />
+                <SetupResult result={result} userActions={userActions} currentUser={currentUser}/>
               </Col>
             ))}
         </Row>

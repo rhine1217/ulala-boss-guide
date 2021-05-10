@@ -4,11 +4,12 @@ import { Card, Col, Row, Popover, Badge, Modal, Input, Button } from 'antd'
 import { ShareAltOutlined, LikeOutlined, StarOutlined, LikeFilled, StarFilled, InfoCircleOutlined, EditOutlined, DeleteOutlined, CloudUploadOutlined, MessageOutlined } from '@ant-design/icons'
 import SkillIcon from './SkillIcon'
 import ToyIcon from './ToyIcon'
-import CardActionButton from './CardActionButton'
+// import CardActionButton from './CardActionButton'
+import { renderCardActions } from './SetupResultCardActions'
 import ClassTabs from './ClassTabs'
 import moment from 'moment'
 
-const SetupResult = ({result, userActions}) => {
+const SetupResult = ({result, userActions, currentUser}) => {
 
   const [activeClassIdx, setActiveClassIdx] = useState(0)
   const [activeSetup, setActiveSetup] = useState(result['player_setup'][0])
@@ -47,36 +48,12 @@ const SetupResult = ({result, userActions}) => {
       <div>"{result.note}"</div>
     </>)
 
-  const cardActions = {
-    Draft: [
-      <CardActionButton 
-        btnAction={(e) => {userActions(e, result.id, 'onPublish')}} 
-        component={<CloudUploadOutlined />} 
-      />,
-      <a onClick={e => e.stopPropagation()} href={`/setup/edit/${result.id}`}><EditOutlined /></a>,
-      <CardActionButton 
-        btnAction={(e) => {userActions(e, result.id, 'onDelete')}} 
-        component={<DeleteOutlined />} />,
-    ],
-    Published: [
-      <CardActionButton 
-        btnAction={(e) => {userActions(e, result.id, `${result.liked_by_current_user ? 'onUnlike' : 'onLike'}`)}} component={result.liked_by_current_user ? <LikeFilled /> : <LikeOutlined />} 
-        count={result.likes} 
-      />,
-      <CardActionButton 
-        btnAction={(e) => {userActions(e, result.id, `${result.favourited_by_current_user ? 'onUnfavourite' : 'onFavourite'}`)}} 
-        component={result.favourited_by_current_user ? <StarFilled /> : <StarOutlined />} 
-        count={result.favourites} 
-      />,
-      <a onClick={e => e.stopPropagation()} href={`/setup/${result.id}`}><MessageOutlined /><span style={{marginLeft: '6px'}}>{result.comments === 0 ? '' : result.comments_count }</span></a>
-    ]
-  }
 
   return (
   <Badge.Ribbon text={result.status} color={result.status === 'Published' ? 'blue' : 'gold'}>
       <Card hoverable
       onClick={goToSetupDetail}
-      actions={cardActions[result.status]}>
+      actions={renderCardActions(result, userActions, currentUser)}>
       <Row gutter={[16,16]}>
         <Col span={24}>
           <div style={{display: 'flex', alignItems: 'center'}}>

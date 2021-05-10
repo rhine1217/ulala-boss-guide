@@ -12,4 +12,3 @@ const SetupPageHeader = ({action, onSave, onPublish}) => (
 )
 
 export default SetupPageHeader
-

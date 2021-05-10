@@ -26,15 +26,59 @@ const SetupDetailPageHeader = ({bossSetup, userActions, currentUser}) => {
     }
   }
 
-  const menu = (
-    <Menu onClick={handleMenuClick}>
-      {
-        bossSetup.created_by === currentUser.username ? 
-        <Menu.Item key="delete"><span style={{color: '#f5222d'}}>Delete</span></Menu.Item> :
-        <Menu.Item key="duplicate"><span>Duplicate</span></Menu.Item>
-      }
-    </Menu>
-  )
+  const renderHeaderActions = (currentUser) => {
+    if (currentUser) {
+      const menu = (
+        <Menu onClick={handleMenuClick}>
+          {bossSetup.created_by === currentUser.username ? 
+            <Menu.Item key="delete"><span style={{color: '#f5222d'}}>Delete</span></Menu.Item> :
+            <Menu.Item key="duplicate"><span>Duplicate</span></Menu.Item>}
+        </Menu>
+      )
+      return ([
+        <span 
+          key='like' 
+          className={styles['action-btn']} 
+          onClick={() => userActions(bossSetup.id, `${bossSetup['liked_by_current_user'] ? 'onUnlike' : 'onLike'}`)}
+        >
+          {bossSetup['liked_by_current_user'] ? <LikeFilled /> : <LikeOutlined />}
+          <span style={{marginLeft: '6px'}}>{bossSetup.likes}</span>
+        </span>,
+        <span 
+          key='star' 
+          className={styles['action-btn']}
+          onClick={() => userActions(bossSetup.id, `${bossSetup['favourited_by_current_user'] ? 'onUnfavourite' : 'onFavourite'}`)} 
+        >
+          {bossSetup['favourited_by_current_user'] ? <StarFilled /> : <StarOutlined />}
+          <span style={{marginLeft: '6px'}}>{bossSetup.favourites}</span>
+        </span>,
+        <Dropdown key='more' overlay={menu} placement="bottomRight" trigger={['click', 'contextMenu']}>
+          <span className={styles['action-btn']}><MoreOutlined /></span>
+        </Dropdown>
+    
+      ])
+    } else {
+      return ([
+        <span 
+          key='like' 
+          className={styles['action-btn']} 
+          onClick={() => window.location.href = `${process.env.REACT_APP_BACKEND_URL}/oauth2/login`}
+        >
+          <LikeOutlined />
+          <span style={{marginLeft: '6px'}}>{bossSetup.likes}</span>
+        </span>,
+        <span 
+          key='star' 
+          className={styles['action-btn']}
+          onClick={() => window.location.href = `${process.env.REACT_APP_BACKEND_URL}/oauth2/login`}
+        >
+          <StarOutlined />
+          <span style={{marginLeft: '6px'}}>{bossSetup.favourites}</span>
+        </span>,
+      ])
+    }
+  }
+
   if (redirect) {
     return (
     <Redirect push to={{
@@ -42,32 +86,13 @@ const SetupDetailPageHeader = ({bossSetup, userActions, currentUser}) => {
       state: redirectProps
     }} /> )
   }
+
   return (
-  <PageHeader 
-  title={bossSetup.boss.name}
-  subTitle={`Submitted by ${bossSetup['created_by']}`}
-  extra={[
-    <span 
-      key='like' 
-      className={styles['action-btn']} 
-      onClick={() => userActions(bossSetup.id, `${bossSetup['liked_by_current_user'] ? 'onUnlike' : 'onLike'}`)}
-    >
-      {bossSetup['liked_by_current_user'] ? <LikeFilled /> : <LikeOutlined />}
-      <span style={{marginLeft: '6px'}}>{bossSetup.likes}</span>
-    </span>,
-    <span 
-      key='star' 
-      className={styles['action-btn']}
-      onClick={() => userActions(bossSetup.id, `${bossSetup['favourited_by_current_user'] ? 'onUnfavourite' : 'onFavourite'}`)} 
-    >
-      {bossSetup['favourited_by_current_user'] ? <StarFilled /> : <StarOutlined />}
-      <span style={{marginLeft: '6px'}}>{bossSetup.favourites}</span>
-    </span>,
-    <Dropdown key='more' overlay={menu} placement="bottomRight" trigger={['click', 'contextMenu']}>
-      <span className={styles['action-btn']}><MoreOutlined /></span>
-    </Dropdown>
-  ]} />
-)
+    <PageHeader 
+    title={bossSetup.boss.name}
+    subTitle={`Submitted by ${bossSetup['created_by']}`}
+    extra={renderHeaderActions(currentUser)} />
+  )
 }
 
 export default SetupDetailPageHeader

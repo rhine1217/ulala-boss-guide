@@ -1,6 +1,6 @@
 import './App.css';
 import React, { useEffect } from 'react'
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch, Redirect } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import LandingPage from './pages/LandingPage'
 import AddEditSetup from './pages/AddEditSetup'
@@ -33,11 +33,16 @@ function App() {
       <div className="container">
         <Switch>
           <Route exact path='/' render={() => <LandingPage />}/>
-          <Route exact path='/setup/add' render={() => <AddEditSetup action='Add' />} />
-          <Route exact path='/setup/edit/:id' render={() => <AddEditSetup action='Edit' />} />
+          <Route exact path='/setup/add'>
+            {currentUser ? <AddEditSetup action='Add' /> : <Redirect to="/" />}
+          </Route> 
+          <Route exact path='/setup/edit/:id'>
+            {currentUser ? <AddEditSetup action='Edit' /> : <Redirect to="/" />}
+          </Route> 
           <Route exact path='/setup/:id' render={() => <SetupDetails />} />
           <Route path='/boss' render={() => <SetupResults context="searchName" />} />
-          <Route path='/favourite' render={() => <SetupResults context="favourites" />} />
+          <Route path='/favourite' render={() => {currentUser ? <SetupResults context="favourites" /> : window.location.href = `${process.env.REACT_APP_BACKEND_URL}/oauth2/login`}}>
+          </Route>
           <Route path="*"><NotFound /></Route>
         </Switch>
       </div>

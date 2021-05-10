@@ -50,11 +50,12 @@ const Editor = ({ onChange, handleSubmit, submitting, value }) => (
 const SetupComments = ({comments, currentUser, isAddCommentLoading, handleSubmit, handleChange, commentValue, deleteComment}) => (
   <>
     {comments.length > 0 && <CommentList comments={comments} currentUser={currentUser} deleteComment={deleteComment}/>}
+    {currentUser ?
     <Comment 
       avatar={<UserAvatar user={currentUser} />}
       content={
         <Editor onChange={handleChange} handleSubmit={handleSubmit} submitting={isAddCommentLoading} value={commentValue} />}
-    />
+    /> : <></>}
   </>
 )
 
