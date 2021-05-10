@@ -6,6 +6,7 @@ import LandingPage from './pages/LandingPage'
 import AddEditSetup from './pages/AddEditSetup'
 import SetupResults from './pages/SetupResults'
 import SetupDetails from './pages/SetupDetails'
+import NotFound from './pages/NotFound'
 import Auth from './Models/Auth'
 import { useRecoilState } from 'recoil'
 import { userState } from './states/atoms' 
@@ -37,6 +38,7 @@ function App() {
           <Route exact path='/setup/:id' render={() => <SetupDetails />} />
           <Route path='/boss' render={() => <SetupResults context="searchName" />} />
           <Route path='/favourite' render={() => <SetupResults context="favourites" />} />
+          <Route path="*"><NotFound /></Route>
         </Switch>
       </div>
     </div>
