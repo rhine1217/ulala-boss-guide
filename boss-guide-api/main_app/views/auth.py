@@ -28,7 +28,7 @@ def discord_login_redirect(request):
     user = exchange_code(code)
     discord_user = authenticate(request, user=user)
     login(request, discord_user)
-    return redirect('http://127.0.0.1:3000')
+    return redirect('http://127.0.0.1:3000/login/success')
   
 def exchange_code(code):
     data = {

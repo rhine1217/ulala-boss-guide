@@ -9,13 +9,13 @@ import SetupDesc from '../components/SetupDesc'
 const responsive = {
   desktop: {
     breakpoint: { max: 3000, min: 1024 },
-    items: 1,
-    partialVisibilityGutter: 90
+    items: 2,
+    partialVisibilityGutter: 0
   },
   tablet: {
     breakpoint: { max: 1024, min: 464 },
     items: 1,
-    partialVisibilityGutter: 60 
+    partialVisibilityGutter: 60
   },
   mobile: {
     breakpoint: { max: 464, min: 0 },

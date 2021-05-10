@@ -15,6 +15,7 @@ function App() {
 
   const [currentUser, setCurrentUser] = useRecoilState(userState)
   const [isLoading, setIsLoading] = useState(true)
+  let lastOnPage = localStorage.getItem('lastOnPage')
 
   useEffect(() => {
     const authenticateUser = async () => {
@@ -23,6 +24,9 @@ function App() {
         setCurrentUser(user.data)
       } catch (error) {
         console.log(error)
+      }
+      if (currentUser) {
+        localStorage.removeItem('lastOnPage')
       }
       setIsLoading(false)
     }
@@ -35,8 +39,18 @@ function App() {
       <div className="container">
         {isLoading ? <></> :
         <Switch>
-          <Route exact path='/' render={() => <LandingPage />}/>
-          <Route exact path='/login' component={() => {window.location.href = `${process.env.REACT_APP_BACKEND_URL}/oauth2/login`; return null;}} />
+          <Route exact path='/' render={() => <LandingPage currentUser={currentUser} />} />
+          <Route exact path='/login' component={() => {
+            window.location.href = `${process.env.REACT_APP_BACKEND_URL}/oauth2/login`; 
+            return null;}} />
+          <Route exact path="/login/success" render={() => {
+            if (lastOnPage) {
+              localStorage.removeItem('lastOnPage');
+              return (<Redirect to={lastOnPage} />)
+            } else {
+              return (<SetupResults context="favourites" />)
+            }
+          }} />
           <Route exact path='/setup/add'>
             {currentUser ? <AddEditSetup action='Add' /> : <Redirect to="/" />}
           </Route> 

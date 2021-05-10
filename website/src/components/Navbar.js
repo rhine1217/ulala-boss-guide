@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 import styles from './Navbar.module.css'
 import logo from './logo-lg.png'
-import { Menu, Dropdown } from 'antd'
+import { Menu, Dropdown, Button } from 'antd'
 import BossInput from './BossInput'
 import UserAvatar from './UserAvatar'
 import debounce from '../utils/debounce';
@@ -9,6 +10,7 @@ import debounce from '../utils/debounce';
 const Navbar = ({currentUser}) => {
 
   const [width, setWidth] = useState(window.innerWidth)
+  let location = useLocation()
 
   useEffect(() => {
     const debouncedHandleResize = debounce(() => {
@@ -51,7 +53,7 @@ const Navbar = ({currentUser}) => {
               </div>
               </Dropdown>
             </> : 
-            <a href={`${process.env.REACT_APP_BACKEND_URL}/oauth2/login`}>Log in</a>}
+            <Button onClick={() => {localStorage.setItem('lastOnPage', location.pathname + location.search); window.location.href="/login"}} type="link">Log in</Button>}
       </div>
     </div>
     </div>
