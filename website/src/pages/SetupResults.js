@@ -7,28 +7,18 @@ import Setup from '../Models/Setup'
 import Interaction from '../Models/Interaction'
 import { userState } from '../states/atoms'
 import { useRecoilValue } from 'recoil'
-import ClassSelection from '../components/ClassSelection'
 import SetupFilters from '../components/SetupFilters'
+import { getFilterValues, filterMethods, filterNames, getFilterChoices } from '../utils/setupFilters'
 
 const SetupResults = ({context}) => {
 
   function handleSortChange(e) {
       console.log(e)
   }
-  const getFilterValues = (searchParams) => {
-    return ({
-      user: searchParams.get("user") ? searchParams.get("user").split(';') : [],
-      status: searchParams.get("status") ? searchParams.get("status").split(';') : [],
-      bossNames: searchParams.get("bossNames") ? searchParams.get("bossNames").split(';') : [],
-      charClass: searchParams.get("charClass") ? searchParams.get("charClass").split(';') : [],
-      teamClass: searchParams.get("teamClass") ? searchParams.get("teamClass").split(';') : [],
-    })
-  }
 
   let history = useHistory(), location = useLocation()
   const [searchParams, setSearchParams] = useState(new URLSearchParams(location.search))
   const [filterValues, setFilterValues] = useState(getFilterValues(searchParams))
-
   const currentUser = useRecoilValue(userState)
   const [results, setResults] = useState([])
   const [filteredResults, setFilteredResults] = useState([])
@@ -36,28 +26,11 @@ const SetupResults = ({context}) => {
   const [isDrawerVisible, setIsDrawerVisible] = useState(false)
   const bossName = searchParams.get("name") || ""
 
-  const filterMethods = {
-    user: (results, filterValues) => {
-      if (filterValues.length !== 1) {
-        return results
-      } else {
-        if (filterValues.includes('Me')) {
-          return results.filter(result => result['created_by'] === currentUser.username)
-        } else if (filterValues.includes('Others')) {
-          return results.filter(result => result['created_by'] !== currentUser.username)
-        }
-      }
-    },
-    status: (results, filterValues) => results.filter(result => filterValues.includes(result.status)),
-    bossNames: (results, filterValues) => results.filter(result => filterValues.includes(result.boss.name)),
-    charClass: (results, filterValues) => results.filter(result => filterValues.every(value => result['player_classes'].includes(value))),
-    teamClass: (results, filterValues) => results.filter(result => filterValues.includes(result['player_classes'].join(', '))).sort()
-  }
-
   const pageHeader = {
     favourites: 'Favourite Setups',
     searchName: bossName,
   }
+
   const setupFilters = {
     favourites: ['user', 'status', 'bossNames', 'charClass', 'teamClass'],
     searchName: ['user', 'charClass', 'teamClass']
@@ -67,7 +40,7 @@ const SetupResults = ({context}) => {
     const newResults = [...results]
     for (const [key, value] of Object.entries(filterValues)) {
       if (value.length > 0) {
-        setFilteredResults(filterMethods[key](newResults, value))
+        setFilteredResults(filterMethods[key](newResults, value, currentUser))
       }
     }
   }
@@ -103,15 +76,9 @@ const SetupResults = ({context}) => {
   }
 
   const resetFilters = () => {
-    history.push({
-      pathname: location.pathname,
-    })
+    history.push({pathname: location.pathname})
     window.location.reload()
   }
-
-  const getCharClassChoices = (results) => [...new Set(results.map(result => result['player_classes']).flat())]
-  const getTeamClassChoices = (results) => [...new Set(results.map(result => result['player_classes'].join(', ')))]
-  const getBossNameChoices = (results) => [...new Set(results.map(result => result['boss']['name']))]
 
   const updateResults = (id, response) => {
     const status = response.status
@@ -200,9 +167,10 @@ const SetupResults = ({context}) => {
       >
         <SetupFilters 
           filters={setupFilters[context]}
-          charClassChoices={results ? getCharClassChoices(filteredResults) : []}
-          teamClassChoices={results ? getTeamClassChoices(filteredResults) : []}
-          bossNameChoices={context === 'favourites' && filteredResults ? getBossNameChoices(filteredResults) : []}
+          filterNames={filterNames}
+          charClassChoices={results ? getFilterChoices['charClass'](filteredResults) : []}
+          teamClassChoices={results ? getFilterChoices['teamClass'](filteredResults) : []}
+          bossNamesChoices={context === 'favourites' && filteredResults ? getFilterChoices['bossNames'](filteredResults) : []}
           toggleFilter={toggleFilter}
           filterValues={filterValues}
         />

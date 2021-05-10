@@ -1,24 +1,16 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Collapse, Tag, Row, Col } from 'antd'
 const { Panel } = Collapse
 
-const SetupFilters = ({filters, charClassChoices, teamClassChoices, bossNameChoices, toggleFilter, filterValues}) => {
+const SetupFilters = ({filters, bossNamesChoices, charClassChoices, teamClassChoices, filterNames, toggleFilter, filterValues}) => {
+
   const filterChoices = {
     user: ['Me', 'Others'],
     status: ['Published', 'Draft'],
-    bossNames: bossNameChoices.sort(),
+    bossNames: bossNamesChoices.sort(),
     charClass: charClassChoices,
     teamClass: teamClassChoices.sort(),
   }
-
-  const filterNames = {
-    user: 'Created by',
-    status: 'Status',
-    bossNames: 'Boss Name',
-    charClass: 'Character Class',
-    teamClass: 'Team Classes'
-  }
-  console.log(filterValues)
 
   return (
     <Collapse ghost expandIconPosition='left'>
