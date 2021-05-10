@@ -21,10 +21,10 @@ function App() {
       try {
         const user = await Auth.login()
         setCurrentUser(user.data)
-        setIsLoading(false)
       } catch (error) {
         console.log(error)
       }
+      setIsLoading(false)
     }
     authenticateUser()
   }, [])
@@ -38,7 +38,7 @@ function App() {
           <Route exact path='/' render={() => <LandingPage />}/>
           <Route exact path='/login' component={() => {window.location.href = `${process.env.REACT_APP_BACKEND_URL}/oauth2/login`; return null;}} />
           <Route exact path='/setup/add'>
-            {currentUser.username ? <AddEditSetup action='Add' /> : <Redirect to="/" />}
+            {currentUser ? <AddEditSetup action='Add' /> : <Redirect to="/" />}
           </Route> 
           <Route exact path='/setup/edit/:id'>
             {currentUser ? <AddEditSetup action='Edit' /> : <Redirect to="/" />}
