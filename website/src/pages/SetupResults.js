@@ -53,6 +53,14 @@ const SetupResults = ({context}) => {
     sortResults(filteredResults, value)
   }
 
+  const refreshResultsState = (results, filterValues) => {
+    if (Object.values(filterValues).every(item => item.length === 0)) {
+      sortResults(results, sortValue)
+    } else {
+      filterResults(results, filterValues)
+    }
+  }
+
   const toggleFilter = (filter, choice) => {
     let oldParamsStr = searchParams.get(filter) || ''
     let oldParams = [], newParams = []
@@ -76,11 +84,7 @@ const SetupResults = ({context}) => {
     setSearchParams(searchParams)
     const newFilterValues = getFilterValues(searchParams)
     setFilterValues(newFilterValues)
-    if (Object.values(newFilterValues).every(item => item.length === 0)) {
-      sortResults(results, sortValue)
-    } else {
-      filterResults(results, newFilterValues)
-    }
+    refreshResultsState(results, newFilterValues)
   }
 
   const resetFilters = () => {
@@ -99,11 +103,7 @@ const SetupResults = ({context}) => {
       newResults.splice(idxToUpdate, 1)
     }
     setResults(newResults)
-    if (Object.values(filterValues).every(item => item.length === 0)) {
-      setFilteredResults(sortMethods[sortValue](newResults))
-    } else {
-      filterResults(newResults, filterValues)
-    }
+    refreshResultsState(newResults, filterValues)
   }
 
   const userActions = async (e, id, action) => {
@@ -133,7 +133,7 @@ const SetupResults = ({context}) => {
     try {
       const response = await queryList[context]()
       setResults(response.data)
-      filterResults(response.data, filterValues)
+      refreshResultsState(response.data, filterValues)
       setIsLoading(false)
     } catch (error) {
       console.log(error)
