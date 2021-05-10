@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { withRouter } from 'react-router-dom'
-import { Row } from 'antd'
+import { Row, Skeleton } from 'antd'
 import Setup from '../Models/Setup'
 import Interaction from '../Models/Interaction'
 import ClassTabs from '../components/ClassTabs'
@@ -91,7 +91,7 @@ const SetupDetails = (props) => {
 
   return (
     <>
-    { isLoading ? <div>Loading</div> : 
+    { isLoading ? <div style={{paddingTop: '20%'}}><Skeleton active /></div> : 
     <>
       <SetupDetailPageHeader bossSetup={bossSetup} userActions={userActions} currentUser={currentUser} />
       <div style={{padding: '0px 24px 24px'}}>

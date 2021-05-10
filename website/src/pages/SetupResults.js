@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation, useHistory } from 'react-router-dom'
 import SetupResult from '../components/SetupResult'
-import { PageHeader, Select, Row, Col, Spin, Drawer, Button } from 'antd'
+import { PageHeader, Select, Row, Col, Card, Spin, Drawer, Button } from 'antd'
 import { LoadingOutlined, MenuOutlined } from '@ant-design/icons'
 import Setup from '../Models/Setup'
 import Interaction from '../Models/Interaction'
@@ -146,11 +146,9 @@ const SetupResults = ({context}) => {
 
   return (
       <>
-      {isLoading ? <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} /> :
-      <>
       <PageHeader 
         title={pageHeader[context]} 
-        subTitle={`${filteredResults.length} Result${filteredResults.length > 1 ? 's' : ''}`}
+        subTitle={isLoading ? <Spin indicator={<LoadingOutlined spin />} /> : `${filteredResults.length} Result${filteredResults.length > 1 ? 's' : ''}` }
         backIcon={<MenuOutlined />}
         onBack={() => setIsDrawerVisible(true)}
         extra={[
@@ -163,11 +161,18 @@ const SetupResults = ({context}) => {
         ]} />
       <div style={{padding: '16px 24px'}}>
         <Row gutter={[16, 16]}>
+          {isLoading ? 
+          <>
+          {new Array(8).fill('').map((item, idx) => (
+            <Col xs={24} sm={12} lg={8} key={idx}>
+              <Card loading={true} />
+            </Col>
+          ))}</> : <>
             {filteredResults.map(result => (
               <Col xs={24} sm={12} lg={8} key={result.id} >
                 <SetupResult context={context} result={result} userActions={userActions} currentUser={currentUser}/>
               </Col>
-            ))}
+            ))}</>}
         </Row>
       </div>
       <Drawer
@@ -192,10 +197,7 @@ const SetupResults = ({context}) => {
         </div>
       </Drawer>
       </>
-      }
-      </>
   )
-
 }
 
 export default SetupResults

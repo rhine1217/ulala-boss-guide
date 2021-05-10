@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { message } from 'antd'
+import { message, Skeleton } from 'antd'
 import SetupSelection from '../components/SetupSelection'
 import { useRecoilValue, useRecoilState, useSetRecoilState } from 'recoil'
 import { userState, classTagState, classForSetupState, skillListState, toyListState, allSelectionsIdxState } from '../states/atoms'
@@ -145,7 +145,7 @@ const AddEditSetup = (props) => {
 
   return (
     <>
-    {isSetupLoading || areSkillsToysLoading ? <div>Loading</div> :
+    {isSetupLoading || areSkillsToysLoading ? <div style={{paddingTop: '20%'}}><Skeleton active /></div>  :
       <>
       <SetupPageHeader action={action} onSave={onSave} onPublish={onPublish} />
       <SetupPageMeta context={action} bossName={bossName} onBossInput={onBossInput} />

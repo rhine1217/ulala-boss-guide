@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Redirect } from 'react-router-dom'
-import { PageHeader, Dropdown, Menu } from 'antd'
-import { LikeOutlined, StarOutlined, LikeFilled, StarFilled, MoreOutlined } from '@ant-design/icons'
+import { PageHeader, Dropdown, Menu, Modal } from 'antd'
+import { LikeOutlined, StarOutlined, LikeFilled, StarFilled, MoreOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
 import styles from './SetupDetailPageHeader.module.css'
 import Setup from '../Models/Setup'
 
@@ -15,14 +15,29 @@ const SetupDetailPageHeader = ({bossSetup, userActions, currentUser}) => {
       setRedirect('/setup/add')
       setRedirectProps(bossSetup)
     } else if (e.key === 'delete') {
-      try {
-        const response = await Setup.Destroy(bossSetup.id)
-        if (response.status === 204) {
-          setRedirect('/favourite')
+      Modal.confirm({
+        title: 'Are you sure you want to delete this setup?',
+        okButtonProps: {
+          danger: true
+        },
+        okText: 'Yes, Delete',
+        cancelButtonProps: {
+          type: 'default'
+        },
+        cancelText: 'No, Cancel',
+        icon: <ExclamationCircleOutlined style={{color: '#ff4d4f'}} />,
+        maskClosable: true,
+        onOk: async () => {
+          try {
+            const response = await Setup.Destroy(bossSetup.id)
+            if (response.status === 204) {
+              setRedirect('/favourite')
+            }
+          } catch (errors) {
+            console.log(errors)
+          }
         }
-      } catch (errors) {
-        console.log(errors)
-      }
+      })
     }
   }
 
@@ -31,7 +46,7 @@ const SetupDetailPageHeader = ({bossSetup, userActions, currentUser}) => {
       const menu = (
         <Menu onClick={handleMenuClick}>
           {bossSetup.created_by === currentUser.username ? 
-            <Menu.Item key="delete"><span style={{color: '#f5222d'}}>Delete</span></Menu.Item> :
+            <Menu.Item key="delete"><span style={{color: '#ff4d4f'}}>Delete</span></Menu.Item> :
             <Menu.Item key="duplicate"><span>Duplicate</span></Menu.Item>}
         </Menu>
       )

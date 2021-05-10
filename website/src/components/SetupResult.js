@@ -52,10 +52,11 @@ const SetupResult = ({context, result, userActions, currentUser}) => {
 
   return (
     <>
-      {context === 'favourites' ? 
-      <Badge.Ribbon text={result.status} color={result.status === 'Published' ? 'blue' : 'gold'}>
-        {SetupResultCard}
-      </Badge.Ribbon> : SetupResultCard
+      {context === 'searchName' || result['created_by'] !== currentUser.username ? 
+        SetupResultCard : 
+        <Badge.Ribbon text={result.status} color={result.status === 'Published' ? 'blue' : 'gold'}>
+          {SetupResultCard}
+        </Badge.Ribbon>
       }
     <SetupResultSharing 
       setupLink={setupLink}
