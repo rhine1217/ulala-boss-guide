@@ -8,13 +8,9 @@ import Interaction from '../Models/Interaction'
 import { userState } from '../states/atoms'
 import { useRecoilValue } from 'recoil'
 import SetupFilters from '../components/SetupFilters'
-import { getFilterValues, filterMethods, filterNames, getFilterChoices } from '../utils/setupFilters'
+import { getFilterValues, filterMethods, filterNames, getFilterChoices, sortMethods } from '../utils/setupFilterSort'
 
 const SetupResults = ({context}) => {
-
-  function handleSortChange(e) {
-      console.log(e)
-  }
 
   let history = useHistory(), location = useLocation()
   const [searchParams, setSearchParams] = useState(new URLSearchParams(location.search))
@@ -25,6 +21,7 @@ const SetupResults = ({context}) => {
   const [isLoading, setIsLoading] = useState(true)
   const [isDrawerVisible, setIsDrawerVisible] = useState(false)
   const bossName = searchParams.get("name") || ""
+  const [sortValue, setSortValue] = useState('most-recent')
 
   const pageHeader = {
     favourites: 'Favourite Setups',
@@ -40,9 +37,20 @@ const SetupResults = ({context}) => {
     const newResults = [...results]
     for (const [key, value] of Object.entries(filterValues)) {
       if (value.length > 0) {
-        setFilteredResults(filterMethods[key](newResults, value, currentUser))
+        setFilteredResults(sortMethods[sortValue](filterMethods[key](newResults, value, currentUser)))
       }
     }
+  }
+
+  const sortResults = (results, sortValue) => {
+    const newResults = [...results]
+    sortMethods[sortValue](newResults)
+    setFilteredResults(newResults)
+  }
+
+  const handleSortChange = (value) => {
+    setSortValue(value)
+    sortResults(filteredResults, value)
   }
 
   const toggleFilter = (filter, choice) => {
@@ -69,7 +77,7 @@ const SetupResults = ({context}) => {
     const newFilterValues = getFilterValues(searchParams)
     setFilterValues(newFilterValues)
     if (Object.values(newFilterValues).every(item => item.length === 0)) {
-      setFilteredResults(results)
+      sortResults(results, sortValue)
     } else {
       filterResults(results, newFilterValues)
     }
@@ -92,7 +100,7 @@ const SetupResults = ({context}) => {
     }
     setResults(newResults)
     if (Object.values(filterValues).every(item => item.length === 0)) {
-      setFilteredResults(newResults)
+      setFilteredResults(sortMethods[sortValue](newResults))
     } else {
       filterResults(newResults, filterValues)
     }
@@ -125,7 +133,7 @@ const SetupResults = ({context}) => {
     try {
       const response = await queryList[context]()
       setResults(response.data)
-      setFilteredResults(response.data)
+      filterResults(response.data, filterValues)
       setIsLoading(false)
     } catch (error) {
       console.log(error)
@@ -147,9 +155,9 @@ const SetupResults = ({context}) => {
         onBack={() => setIsDrawerVisible(true)}
         extra={[
           <div key="1">Sort by: 
-          <Select defaultValue="top-rated" style={{width: 120, fontSize: '1em'}} onChange={handleSortChange} bordered={false}>
-              <Select.Option value="top-rated">Top Rated</Select.Option>
+          <Select value={sortValue} style={{width: 120, fontSize: '1em'}} onChange={handleSortChange} bordered={false}>
               <Select.Option value="most-recent">Most Recent</Select.Option>
+              <Select.Option value="most-popular">Most Popular</Select.Option>
           </Select>
           </div>
         ]} />

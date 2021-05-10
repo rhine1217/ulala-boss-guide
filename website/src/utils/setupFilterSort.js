@@ -39,3 +39,8 @@ export const filterNames = {
   charClass: 'Character Class',
   teamClass: 'Team Classes'
 }
+
+export const sortMethods = {
+  'most-popular': (results) => results.sort((a,b) => (a['likes'] + a['favourites']) <= (b['likes'] + b['favourites']) ? 1 : -1),
+  'most-recent': (results) => results.sort((a,b) => Math.max(a['created_on'], a['published_on']) > Math.max(b['created_on'], b['published_on']) ? 1 : -1),
+}

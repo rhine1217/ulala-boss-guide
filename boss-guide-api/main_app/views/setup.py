@@ -15,7 +15,7 @@ hashids = Hashids(salt=getenv()["HASH_ID_SALT"], min_length=16)
 
 class BossSetupList(generics.ListAPIView):
     def get_queryset(self):
-        queryset = BossSetup.objects.all()
+        queryset = BossSetup.objects.filter(status='P')
         bossname_encoded = self.request.query_params.get('name')
         if bossname_encoded is not None:
           bossname = urllib.parse.unquote(bossname_encoded)

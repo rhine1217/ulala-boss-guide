@@ -105,7 +105,7 @@ const SetupResult = ({result, userActions}) => {
         ))}
         <Col span={24} style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
         <div>
-          <span>{result.status === 'Published' ? 'Submitted' : 'Drafted'} by {result['created_by']} </span>
+          <span>{result.status === 'Published' ? 'Submitted' : 'Created'} by {result['created_by']} </span>
           {result.status === 'Published' ? <span style={{fontSize: '12px', color: 'rgba(0,0,0,0.45)'}}>{moment(result['published_on']).fromNow()}</span> : <></>}
         </div>
           <a onClick={(e) => {e.stopPropagation(); showLinkToShare()}}><ShareAltOutlined /></a>
