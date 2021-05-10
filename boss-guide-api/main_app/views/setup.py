@@ -4,6 +4,7 @@ from rest_framework.views import APIView
 # from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
+from django.http import Http404
 from main_app.permissions import IsSetupOwner
 from main_app.models import BossSetup, PlayerSetup
 from main_app.serializers import BossSetupListSerializer, BossSetupListWithInteractionsSerializer, BossSetupListWithCommentsSerializer, BossSetupListWithInteractionsCommentsSerializer,BossSetupCreateUpdateSerializer, PlayerSetupCreateUpdateSerializer
@@ -37,11 +38,12 @@ class BossSetupDetail(generics.RetrieveAPIView):
     def get_object(self):
         slug = self.kwargs['slug']
         boss_setup_id = hashids.decode(slug)[0]
-        obj = BossSetup.objects.get(id=boss_setup_id)
         try:
-          return obj
-        except obj.DoesNotExist:
-          return Response(status=status.HTTP_404_NOT_FOUND)
+          obj = BossSetup.objects.get(id=boss_setup_id)
+        except BossSetup.DoesNotExist:
+          raise Http404
+        return obj
+      
     def get_serializer_class(self):
         with_comments = self.request.query_params.get('withComments')
         if self.request.user:

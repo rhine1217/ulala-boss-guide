@@ -8,6 +8,7 @@ import SetupComments from '../components/SetupComments'
 import SetupDetailPageHeader from '../components/SetupDetailPageHeader'
 import SetupDetailCarousel from '../components/SetupDetailCarousel'
 import SetupDetailNote from '../components/SetupDetailNote'
+import NotFound from './NotFound'
 import { userState } from '../states/atoms'
 import { useRecoilValue } from 'recoil'
 
@@ -17,6 +18,7 @@ const SetupDetails = (props) => {
   const context = 'result'
   const [bossSetup, setBossSetup] = useState({})
   const [isLoading, setIsLoading] = useState(true)
+  const [isNotFound, setIsNotFound] = useState(false)
   const [activeClassIdx, setActiveClassIdx] = useState(0)
   const [activeSetup, setActiveSetup] = useState(null)
   const currentUser = useRecoilValue(userState)
@@ -33,10 +35,13 @@ const SetupDetails = (props) => {
       const response = await Setup.Retrieve(setupId, true)
       setBossSetup(response.data)
       setActiveSetup(response.data['player_setup'][0])
-      setIsLoading(false)
     } catch (error) {
       console.log(error)
+      if (error.response.status === 404) {
+        setIsNotFound(true)
+      }
     }
+    setIsLoading(false)
   }
 
   const userActions = async (id, action) => {
@@ -91,36 +96,39 @@ const SetupDetails = (props) => {
 
   return (
     <>
-    { isLoading ? <div style={{paddingTop: '20%'}}><Skeleton active /></div> : 
-    <>
-      <SetupDetailPageHeader bossSetup={bossSetup} userActions={userActions} currentUser={currentUser} />
-      <div style={{padding: '0px 24px 24px'}}>
-        <Row gutter={[16,16]}>
-          <ClassTabs result={bossSetup} activeClassIdx={activeClassIdx} changeActiveClass={changeActiveClass}/>
-        </Row>
-      </div>
-      <div style={{padding: '0px 24px 24px'}}>
-        <SetupDetailCarousel activeSetup={activeSetup} context={context} />
-      </div>
-      <div style={{padding: '0px 24px 8px'}}>
-        <SetupDetailNote bossSetup={bossSetup} />
-      </div>
-      <div style={{padding: '0px 24px 24px'}}>
-        <SetupComments 
-          comments={bossSetup.comments} 
-          currentUser={currentUser} 
-          isAddCommentLoading={isAddCommentLoading}
-          handleChange={handleChange}
-          handleSubmit={handleSubmit}
-          commentValue={commentValue}
-          deleteComment={deleteComment}
-        />
-      </div>
-    </>
-    }
+      { isLoading ? <div style={{paddingTop: '20%'}}><Skeleton active /></div> : 
+      <> 
+      { isNotFound ? <NotFound /> :
+        <>
+          <SetupDetailPageHeader bossSetup={bossSetup} userActions={userActions} currentUser={currentUser} />
+          <div style={{padding: '0px 24px 24px'}}>
+            <Row gutter={[16,16]}>
+              <ClassTabs result={bossSetup} activeClassIdx={activeClassIdx} changeActiveClass={changeActiveClass}/>
+            </Row>
+          </div>
+          <div style={{padding: '0px 24px 24px'}}>
+            <SetupDetailCarousel activeSetup={activeSetup} context={context} />
+          </div>
+          <div style={{padding: '0px 24px 8px'}}>
+            <SetupDetailNote bossSetup={bossSetup} />
+          </div>
+          <div style={{padding: '0px 24px 24px'}}>
+            <SetupComments 
+              comments={bossSetup.comments} 
+              currentUser={currentUser} 
+              isAddCommentLoading={isAddCommentLoading}
+              handleChange={handleChange}
+              handleSubmit={handleSubmit}
+              commentValue={commentValue}
+              deleteComment={deleteComment}
+            />
+          </div>
+        </>
+      }
+      </>
+      }
     </>
   )
-
 }
 
 export default withRouter(SetupDetails)
