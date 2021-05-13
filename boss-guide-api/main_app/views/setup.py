@@ -3,12 +3,13 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 # from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404
-from django.db.models import Q
+from django.db.models import Q, Sum, Case, IntegerField, When
 from django.http import Http404
 from main_app.permissions import IsSetupOwner
-from main_app.models import BossSetup, PlayerSetup
-from main_app.serializers import BossSetupListSerializer, BossSetupListWithInteractionsSerializer, BossSetupListWithCommentsSerializer, BossSetupListWithInteractionsCommentsSerializer,BossSetupCreateUpdateSerializer, PlayerSetupCreateUpdateSerializer
+from main_app.models import BossSetup, PlayerSetup, UlalaBoss
+from main_app.serializers import BossSetupListSerializer, BossSetupListWithInteractionsSerializer, BossSetupListWithCommentsSerializer, BossSetupListWithInteractionsCommentsSerializer,BossSetupCreateUpdateSerializer, PlayerSetupCreateUpdateSerializer, UlalaBossSetupCountSerializer
 
+import random
 import urllib.parse
 from hashids import Hashids
 from decouple import config
@@ -27,6 +28,23 @@ class BossSetupList(generics.ListAPIView):
             return BossSetupListWithInteractionsSerializer
         return BossSetupListSerializer
 
+class BossSetupListRandom(generics.ListAPIView):
+    serializer_class = BossSetupListSerializer
+    def get_queryset(self): 
+        num_random_objects = int(self.request.query_params.get('size'))
+        queryset = list(BossSetup.objects.filter(status='P'))
+        return random.sample(queryset, num_random_objects)
+
+class BossSetupCount(generics.ListAPIView):
+    serializer_class = UlalaBossSetupCountSerializer
+    def get_queryset(self):
+        queryset = UlalaBoss.objects.annotate(
+          num_setup=Sum(
+            Case(
+              When(boss_setup__status='P', then=1), output_field=IntegerField()
+              ))).filter(num_setup__gt=0)
+        return queryset
+      
 class BossSetupFavouriteList(generics.ListAPIView):
     serializer_class=BossSetupListWithInteractionsSerializer
     def get_queryset(self):

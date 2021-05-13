@@ -15,6 +15,14 @@ class UlalaBossSerializer(serializers.ModelSerializer):
         model = UlalaBoss
         fields = '__all__'
 
+class UlalaBossSetupCountSerializer(serializers.ModelSerializer):
+    boss_setup_count = serializers.SerializerMethodField('get_count')
+    def get_count(self, obj):
+        return BossSetup.objects.filter(status='P', boss=obj.id).count()
+    class Meta:
+        model = UlalaBoss
+        fields = ['name', 'boss_setup_count']
+
 class UlalaSkillSerializer(serializers.ModelSerializer):
     related_class = serializers.StringRelatedField()
     class Meta:

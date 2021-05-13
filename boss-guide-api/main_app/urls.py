@@ -13,6 +13,8 @@ urlpatterns = [
     path('skill/', UlalaRefViews.UlalaSkillList.as_view()),
     path('toy/', UlalaRefViews.UlalaToyByClassList.as_view()),
     path('bosssetup/', SetupViews.BossSetupList.as_view()),
+    path('bosssetup/count', SetupViews.BossSetupCount.as_view()),
+    path('bosssetup/random/', SetupViews.BossSetupListRandom.as_view()),
     path('bosssetup/<slug:slug>', SetupViews.BossSetupDetail.as_view()),
     path('bosssetup/favourite/', SetupViews.BossSetupFavouriteList.as_view()),
     path('addsetup/', SetupViews.BossPlayerSetupCreate.as_view()),

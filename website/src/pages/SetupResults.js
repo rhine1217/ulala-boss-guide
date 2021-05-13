@@ -26,11 +26,13 @@ const SetupResults = ({context}) => {
   const pageHeader = {
     favourites: 'Favourite Setups',
     searchName: bossName,
+    allSetups: 'All Setups'
   }
 
   const setupFilters = {
     favourites: ['user', 'status', 'bossNames', 'charClass', 'teamClass'],
-    searchName: ['user', 'charClass', 'teamClass']
+    searchName: ['user', 'charClass', 'teamClass'],
+    allSetups: ['user', 'bossNames', 'charClass', 'teamClass'],
   }
 
   const filterResults = (results, filterValues) => {
@@ -128,7 +130,8 @@ const SetupResults = ({context}) => {
   const getSetups = async (context) => {
     const queryList = {
       favourites: async() => Setup.Favourite(),
-      searchName: async() => Setup.List(bossName)
+      searchName: async() => Setup.ListByName(bossName),
+      allSetups: async() => Setup.List(),
     }
     try {
       const response = await queryList[context]()

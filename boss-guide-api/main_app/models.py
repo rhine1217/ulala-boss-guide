@@ -68,7 +68,7 @@ class UlalaSkill(UlalaCommonInfo):
     not_allowed_with = models.CharField(max_length=100, blank=True, null=True)
 
 class BossSetup(models.Model):
-    boss = models.ForeignKey(UlalaBoss, on_delete=models.RESTRICT)
+    boss = models.ForeignKey(UlalaBoss, related_name='boss_setup', on_delete=models.RESTRICT)
     # PLACEHOLDER - add a field to choose a related area
     created_by = models.ForeignKey(DiscordUser, on_delete=models.CASCADE)
     created_on = models.DateTimeField(default=timezone.now)

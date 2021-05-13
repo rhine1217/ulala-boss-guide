@@ -2,6 +2,7 @@ import './App.css';
 import React, { useEffect, useState } from 'react'
 import { Route, Switch, Redirect } from 'react-router-dom'
 import Navbar from './components/Navbar'
+import PageFooter from './components/PageFooter'
 import LandingPage from './pages/LandingPage'
 import AddEditSetup from './pages/AddEditSetup'
 import SetupResults from './pages/SetupResults'
@@ -59,12 +60,14 @@ function App() {
           </Route> 
           <Route exact path='/setup/:id' render={() => <SetupDetails />} />
           <Route path='/boss' render={() => <SetupResults context="searchName" />} />
+          <Route path='/all' render={() => <SetupResults context="allSetups" />} />
           <Route path='/favourite'>
             {currentUser ? <SetupResults context="favourites" /> : <Redirect to="/login" />}
           </Route>
           <Route path="*"><NotFound /></Route>
         </Switch>
         }
+        <PageFooter />
       </div>
     </div>
   );

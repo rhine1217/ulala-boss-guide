@@ -8,8 +8,12 @@ const instance = axios.create({
 })
 
 class Setup {
-  static List = (name) => instance.get(`bosssetup/`, { 
+  static List = () => instance.get(`bosssetup/`)
+  static ListByName = (name) => instance.get(`bosssetup/`, { 
     params: { name }
+  })
+  static Random = (size) => instance.get(`bosssetup/random/`, {
+    params: { size }
   })
   static Add = (data) => instance.post(`addsetup/`, data)
   static Retrieve = (id, withComments) => instance.get(`bosssetup/${id}`, {

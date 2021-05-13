@@ -52,7 +52,7 @@ const SetupResult = ({context, result, userActions, currentUser}) => {
 
   return (
     <>
-      {context === 'searchName' || result['created_by'] !== currentUser.username ? 
+      {context !== 'favourites' || result['created_by'] !== currentUser.username ? 
         SetupResultCard : 
         <Badge.Ribbon text={result.status} color={result.status === 'Published' ? 'blue' : 'gold'}>
           {SetupResultCard}
