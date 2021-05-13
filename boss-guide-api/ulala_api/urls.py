@@ -15,13 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from main_app.views import auth as views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('auth/user', views.get_authenticated_user, name='get_authenticated_user'),
-    path('auth/user/logout', views.user_logout, name='user_logout'),
-    path('oauth2/login', views.discord_login, name="oauth_login"),
-    path('oauth2/login/redirect', views.discord_login_redirect, name="oauth_login_redirect"),
     path('api/v1/', include('main_app.urls'))
 ]

@@ -10,9 +10,9 @@ from main_app.models import BossSetup, PlayerSetup
 from main_app.serializers import BossSetupListSerializer, BossSetupListWithInteractionsSerializer, BossSetupListWithCommentsSerializer, BossSetupListWithInteractionsCommentsSerializer,BossSetupCreateUpdateSerializer, PlayerSetupCreateUpdateSerializer
 
 import urllib.parse
-from utils import getenv
 from hashids import Hashids
-hashids = Hashids(salt=getenv()["HASH_ID_SALT"], min_length=16)
+from decouple import config
+hashids = Hashids(salt=config("HASH_ID_SALT"), min_length=16)
 
 class BossSetupList(generics.ListAPIView):
     def get_queryset(self):

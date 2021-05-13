@@ -1,8 +1,8 @@
 from rest_framework import serializers
 from main_app.models import DiscordUser, UlalaMapArea, BossSetup, PlayerSetup, UlalaBoss, UlalaSkill, UlalaToy, UlalaToyDescription, UlalaClass, UserLikes, UserComments, SaveToUser
-from utils import getenv
 from hashids import Hashids
-hashids = Hashids(salt=getenv()["HASH_ID_SALT"], min_length=16)
+from decouple import config
+hashids = Hashids(salt=config("HASH_ID_SALT"), min_length=16)
 
 class UlalaMapAreaSerializer(serializers.ModelSerializer):
     class Meta:

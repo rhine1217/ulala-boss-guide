@@ -9,9 +9,9 @@ from main_app.models import UserLikes, BossSetup, SaveToUser, UserComments
 from main_app.serializers import UserLikesSerializer, UserFavouritesSerializer, UserCommentsCreateSerializer, BossSetupListWithInteractionsSerializer, BossSetupListWithInteractionsCommentsSerializer
 
 import urllib.parse
-from utils import getenv
 from hashids import Hashids
-hashids = Hashids(salt=getenv()["HASH_ID_SALT"], min_length=16)
+from decouple import config
+hashids = Hashids(salt=config("HASH_ID_SALT"), min_length=16)
 
 class UserLikesFavouritesCommentsCreateDestroy(viewsets.ViewSet):
 

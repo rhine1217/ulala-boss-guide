@@ -3,9 +3,9 @@ from main_app.models import UlalaMapArea, UlalaBoss, UlalaSkill, UlalaClass
 from main_app.serializers import UlalaMapAreaSerializer, UlalaBossSerializer, UlalaSkillSerializer, UlalaToyByClassSerializer
 
 import urllib.parse
-from utils import getenv
 from hashids import Hashids
-hashids = Hashids(salt=getenv()["HASH_ID_SALT"], min_length=16)
+from decouple import config
+hashids = Hashids(salt=config("HASH_ID_SALT"), min_length=16)
 
 class MapAreaList(generics.ListAPIView):
     queryset = UlalaMapArea.objects.all()

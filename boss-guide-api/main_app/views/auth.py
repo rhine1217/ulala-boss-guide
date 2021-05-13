@@ -5,9 +5,9 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import JsonResponse, HttpResponse
 
-from utils import getenv
+from decouple import config
 
-auth_url_discord = getenv()["AUTH_URL_DISCORD"]
+auth_url_discord = config("AUTH_URL_DISCORD")
 
 def get_authenticated_user(request):
     user = request.user
@@ -32,11 +32,11 @@ def discord_login_redirect(request):
   
 def exchange_code(code):
     data = {
-      "client_id": getenv()["DISCORD_CLIENT_ID"],
-      "client_secret": getenv()["DISCORD_CLIENT_SECRET"],
+      "client_id": config("DISCORD_CLIENT_ID"),
+      "client_secret": config("DISCORD_CLIENT_SECRET"),
       "grant_type": "authorization_code",
       "code": code,
-      "redirect_uri": getenv()["HOST_NAME"] + '/oauth2/login/redirect',
+      "redirect_uri": config("HOST_NAME") + '/api/v1/oauth2/login/redirect',
       "scope": "identify"
     }
     
