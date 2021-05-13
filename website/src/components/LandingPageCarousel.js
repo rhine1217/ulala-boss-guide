@@ -1,14 +1,12 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import { Row, Card, Col } from 'antd'
+import { Row, Card } from 'antd'
 import Carousel from "react-multi-carousel";
-// import "react-multi-carousel/lib/styles.css";
 import SetupResultCardMeta from './SetupResultCardMeta'
 import SetupResultCardIcons from './SetupResultCardIcons'
 
 const responsive = {
   superLargeDesktop: {
-    // the naming can be any, depends on you.
     breakpoint: { max: 4000, min: 3000 },
     items: 5
   },
@@ -53,15 +51,12 @@ const LandingPageCard = ({result}) => {
 const LandingPageCarousel = ({results}) => {
   return (
     <Carousel responsive={responsive} partialVisible={true} autoPlay={true} autoPlaySpeed={2000} infinite={true}>
-
-  {results.map((result, idx) => (
-    <div style={{margin: '16px 16px 16px 0px'}}>
-    <LandingPageCard key={idx} result={result} />
-    </div>
-  ))}
-
-  </Carousel>
-
+      {results.map((result, idx) => (
+        <div style={{margin: '16px 16px 16px 0px'}}>
+        <LandingPageCard key={idx} result={result} />
+        </div>
+      ))}
+    </Carousel>
   )
 }
 
