@@ -1,0 +1,15 @@
+{
+  "name": "ulala-boss-guide",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "",
+  "author": "Rhine Wang",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "heroku-prebuild": "NODE_ENV=production cd website/ && npm install && npm build && cd .."
+  },
+  "cacheDirectories": [
+    "website/node_modules"
+  ]
+}
