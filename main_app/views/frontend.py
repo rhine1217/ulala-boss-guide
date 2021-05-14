@@ -14,7 +14,7 @@ class FrontEndAppView(View):
     def get(self, request):
         try:
             with open(self.index_file_path) as f:
-                return HttpResponse(f.read())
+                return HttpResponse(f.read(), content_type='application/javascript')
         except FileNotFoundError:
             logging.exception('Production build of app not found')
             return HttpResponse(status=501)
