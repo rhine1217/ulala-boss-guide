@@ -1,1 +1,1 @@
-web: gunicorn ulala-api.wsgi
+web: gunicorn ulala_api.wsgi
