@@ -8,6 +8,8 @@ from django.http import JsonResponse, HttpResponse
 from decouple import config
 
 auth_url_discord = config("AUTH_URL_DISCORD")
+FRONT_END_HOST_NAME = config("FRONT_END_HOST_NAME")
+BACK_END_HOST_NAME = config("BACK_END_HOST_NAME")
 
 def get_authenticated_user(request):
     user = request.user
@@ -28,7 +30,7 @@ def discord_login_redirect(request):
     user = exchange_code(code)
     discord_user = authenticate(request, user=user)
     login(request, discord_user)
-    return redirect('http://127.0.0.1:3000/login/success')
+    return redirect(f"{FRONT_END_HOST_NAME}/login/success")
   
 def exchange_code(code):
     data = {
@@ -36,7 +38,7 @@ def exchange_code(code):
       "client_secret": config("DISCORD_CLIENT_SECRET"),
       "grant_type": "authorization_code",
       "code": code,
-      "redirect_uri": config("HOST_NAME") + '/api/v1/oauth2/login/redirect',
+      "redirect_uri": BACK_END_HOST_NAME + '/api/v1/oauth2/login/redirect',
       "scope": "identify"
     }
     
@@ -55,4 +57,4 @@ def exchange_code(code):
 
 def user_logout(request):
     logout(request)
-    return redirect('http://127.0.0.1:3000')
+    return redirect(FRONT_END_HOST_NAME)

@@ -64,7 +64,7 @@ function App() {
           <Route path='/favourite'>
             {currentUser ? <SetupResults context="favourites" /> : <Redirect to="/login" />}
           </Route>
-          <Route path="*"><NotFound /></Route>
+          {/* <Route path="*"><NotFound /></Route> */}
         </Switch>
         }
         <PageFooter />
