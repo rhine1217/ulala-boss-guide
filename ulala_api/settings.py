@@ -26,7 +26,8 @@ REACT_APP_DIR = os.path.join(BASE_DIR, 'website')
 SECRET_KEY = config("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+ENVIRONMENT = config("DJANGO_ENVIRONMENT")
+DEBUG = True if ENVIRONMENT == 'Development' else False
 
 ALLOWED_HOSTS = ['127.0.0.1', 'ulala-boss-guide.herokuapp.com']
 

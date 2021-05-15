@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import styles from './Navbar.module.css'
 import logo from './logo-lg.png'
-import { Menu, Dropdown, Button } from 'antd'
+import { Menu, Dropdown, Button, Affix } from 'antd'
 import BossInput from './BossInput'
 import UserAvatar from './UserAvatar'
 import debounce from '../utils/debounce';
@@ -39,6 +39,7 @@ const Navbar = ({currentUser}) => {
   )
 
   return (
+    <Affix offsetTop={0}>
     <div className={styles.header}>
     <div className="container">
       <div className={styles.navmenu}>
@@ -57,6 +58,7 @@ const Navbar = ({currentUser}) => {
       </div>
     </div>
     </div>
+    </Affix>
   )
 }
 
