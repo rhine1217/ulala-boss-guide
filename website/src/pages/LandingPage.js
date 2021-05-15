@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import LoginButton from '../components/LoginButton'
 import LandingPageCarousel from '../components/LandingPageCarousel'
+import PageFooter from '../components/PageFooter'
 import { Button, Spin } from 'antd'
 import Setup from '../Models/Setup'
 
@@ -49,6 +50,7 @@ const LandingPage = ({currentUser}) => {
         : <LandingPageCarousel results={results} /> 
         }
       </div> 
+      <PageFooter />
     </>
   )
 }
