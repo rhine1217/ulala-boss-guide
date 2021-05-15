@@ -3,7 +3,6 @@ import { Row, Col, Form, Tag } from 'antd'
 import { useRecoilState } from 'recoil'
 import { classTagState, classForSetupState } from '../states/atoms'
 import { classTagsColor } from '../utils/charClassUtils'
-import styles from './ClassSelection.module.css'
 
 const ClassSelection = ({context}) => {
 
@@ -46,7 +45,7 @@ const ClassSelection = ({context}) => {
           {Object.keys(classTagsColor).map((charClass, idx) => 
             <Col key={idx} >
               <Tag 
-                className={styles['class-tag']}
+                className="app-tag"
                 color={ selectedClasses.includes(charClass) ? classTagsColor[charClass] : 'default' }
                 onClick={ () => toggleSelectedClasses(charClass)}
                 >

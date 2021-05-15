@@ -191,7 +191,7 @@ const SetupResults = ({context}) => {
           filterNames={filterNames}
           charClassChoices={results ? getFilterChoices['charClass'](filteredResults) : []}
           teamClassChoices={results ? getFilterChoices['teamClass'](filteredResults) : []}
-          bossNamesChoices={context === 'favourites' && filteredResults ? getFilterChoices['bossNames'](filteredResults) : []}
+          bossNamesChoices={context !== 'searchName' && filteredResults ? getFilterChoices['bossNames'](filteredResults) : []}
           toggleFilter={toggleFilter}
           filterValues={filterValues}
         />

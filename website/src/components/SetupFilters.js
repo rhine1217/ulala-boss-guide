@@ -20,6 +20,7 @@ const SetupFilters = ({filters, bossNamesChoices, charClassChoices, teamClassCho
           {filterChoices[filter].map((choice, idx) => (
             <Col key={idx}>
               <Tag 
+                className="app-tag"
                 color={filterValues[filter].includes(choice) ? '#1890ff' : 'default'}
                 onClick={() => toggleFilter(filter, choice)}
               >

@@ -50,3 +50,7 @@ body::-webkit-scrollbar {
 .ant-card-body {
   padding: 16px;
 }
+
+.app-tag:hover {
+  cursor: pointer;
+}

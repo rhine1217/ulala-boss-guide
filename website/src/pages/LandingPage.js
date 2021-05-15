@@ -42,7 +42,7 @@ const LandingPage = ({currentUser}) => {
         }
         </div>
       </div>
-      <div style={{width: '100%', padding: '0px 24px 24px'}}>
+      <div style={{width: '100%', padding: '16px 24px 16px'}}>
         { isLoading ? 
         <div style={{marginTop: '24px', display: 'flex', justifyContent: 'center'}}>
           <Spin size="large" />
