@@ -21,10 +21,15 @@ const SetupSelection = ({context, skills, toys, bossSetupData}) => {
   const [changeCounter, setChangeCounter] = useState(1)
   const [isRetrievedSetupLoaded, setIsRetrievedSetupLoaded] = useState(context === 'Add' ? true: false)
 
-  const initCurrCharSelections = async (skills, toys) => {
-    const {refreshedSkills, refreshedToys} = getSkillToyForCurrClass(skills, toys, classForSetup)
-    setSkillsForCurrClass(refreshedSkills)
-    setToysForCurrClass(refreshedToys)
+  const refreshSkillToyForCurrClass = () => {
+    const output = getSkillToyForCurrClass(skills, toys, classForSetup)
+    setSkillsForCurrClass(output.refreshedSkills)
+    setToysForCurrClass(output.refreshedToys)
+    return output
+  }
+
+  const initCurrCharSelections = async () => {
+    const {refreshedSkills, refreshedToys} = refreshSkillToyForCurrClass()
     return {
       skills: refreshedSkills.length > 0  ? getRandomSelection(refreshedSkills) : refreshedSkills.slice(0,4),
       toys: refreshedToys.length > 0 ? getRandomSelection(refreshedToys) : refreshedToys.slice(0,4)
@@ -42,9 +47,7 @@ const SetupSelection = ({context, skills, toys, bossSetupData}) => {
           }
         })
         setAllSelections(refreshedAllSelections)
-        const {refreshedSkills, refreshedToys} = getSkillToyForCurrClass(skills, toys, classForSetup)
-        setSkillsForCurrClass(refreshedSkills)
-        setToysForCurrClass(refreshedToys)
+        refreshSkillToyForCurrClass()
         const currCharSetup = bossSetupData.filter(setup => setup['player_class'] === classForSetup)
         setCurrCharSelections({
           skills: currCharSetup[0].skills,
@@ -76,6 +79,7 @@ const SetupSelection = ({context, skills, toys, bossSetupData}) => {
     const updateCurrCharSelections = async () => {
       if (allSelections[classForSetup]) {
         setCurrCharSelections(allSelections[classForSetup])
+        refreshSkillToyForCurrClass()
       } else {
         setCurrCharSelections(await initCurrCharSelections(skills, toys))
         setChangeCounter(changeCounter * -1)

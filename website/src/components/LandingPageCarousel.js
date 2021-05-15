@@ -52,8 +52,8 @@ const LandingPageCarousel = ({results}) => {
   return (
     <Carousel responsive={responsive} partialVisible={true} autoPlay={true} autoPlaySpeed={2000} infinite={true}>
       {results.map((result, idx) => (
-        <div style={{margin: '16px 16px 16px 0px'}}>
-        <LandingPageCard key={idx} result={result} />
+        <div key={idx} style={{margin: '16px 16px 16px 0px'}}>
+        <LandingPageCard result={result} />
         </div>
       ))}
     </Carousel>

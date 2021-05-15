@@ -45,9 +45,9 @@ const SetupDetailPageHeader = ({bossSetup, userActions, currentUser}) => {
     if (currentUser) {
       const menu = (
         <Menu onClick={handleMenuClick}>
+          <Menu.Item key="duplicate"><span>Duplicate</span></Menu.Item>
           {bossSetup.created_by === currentUser.username ? 
-            <Menu.Item key="delete"><span style={{color: '#ff4d4f'}}>Delete</span></Menu.Item> :
-            <Menu.Item key="duplicate"><span>Duplicate</span></Menu.Item>}
+          <Menu.Item key="delete"><span style={{color: '#ff4d4f'}}>Delete</span></Menu.Item> : <></>}
         </Menu>
       )
       return ([
