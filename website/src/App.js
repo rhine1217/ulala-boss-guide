@@ -1,13 +1,14 @@
 import './App.css';
 import React, { useEffect, useState } from 'react'
-import { Route, Switch, Redirect } from 'react-router-dom'
+import Routes from './pages/Routes'
+// import { Route, Switch, Redirect } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import PageFooter from './components/PageFooter'
-import LandingPage from './pages/LandingPage'
-import AddEditSetup from './pages/AddEditSetup'
-import SetupResults from './pages/SetupResults'
-import SetupDetails from './pages/SetupDetails'
-import NotFound from './pages/NotFound'
+// import LandingPage from './pages/LandingPage'
+// import AddEditSetup from './pages/AddEditSetup'
+// import SetupResults from './pages/SetupResults'
+// import SetupDetails from './pages/SetupDetails'
+// import NotFound from './pages/NotFound'
 import Auth from './Models/Auth'
 import { useRecoilState } from 'recoil'
 import { userState } from './states/atoms' 
@@ -16,7 +17,7 @@ function App() {
 
   const [currentUser, setCurrentUser] = useRecoilState(userState)
   const [isLoading, setIsLoading] = useState(true)
-  let lastOnPage = localStorage.getItem('lastOnPage')
+  // let lastOnPage = localStorage.getItem('lastOnPage')
 
   useEffect(() => {
     const authenticateUser = async () => {
@@ -38,8 +39,8 @@ function App() {
     <div className="App">
       <Navbar currentUser={currentUser}/>
       <div className="container">
-        {isLoading ? <></> :
-        <Switch>
+        {isLoading ? <></> : <Routes currentUser={currentUser} />}
+        {/* <Switch>
           <Route exact path='/' render={() => <LandingPage currentUser={currentUser} />} />
           <Route exact path='/login' component={() => {
             window.location.href = `${process.env.REACT_APP_BACKEND_URL}/oauth2/login`; 
@@ -64,9 +65,9 @@ function App() {
           <Route path='/favourite'>
             {currentUser ? <SetupResults context="favourites" /> : <Redirect to="/login" />}
           </Route>
-          {/* <Route path="*"><NotFound /></Route> */}
-        </Switch>
-        }
+          <Route path="*"><NotFound /></Route>
+        </Switch> */}
+        
         <PageFooter />
       </div>
     </div>
